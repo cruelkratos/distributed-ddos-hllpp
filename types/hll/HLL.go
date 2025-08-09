@@ -1,6 +1,9 @@
 package hll
 
-import "sync"
+import (
+	"HLL-BTP/types/register"
+	"sync"
+)
 
 type IHLL interface {
 	Insert(uint64)
@@ -9,7 +12,7 @@ type IHLL interface {
 }
 
 type hllSet struct {
-	hi uint32
+	_registers register.Registers
 }
 
 func (h hllSet) Insert(val uint64)   {}
@@ -23,7 +26,7 @@ var (
 
 func GetHLL() IHLL {
 	once.Do(func() {
-		instance = hllSet{hi: 1}
+		instance = hllSet{_registers: *register.NewPackedRegisters(1)}
 	})
 	return instance
 }
