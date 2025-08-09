@@ -9,6 +9,6 @@ import (
 
 func main() {
 	instance := hll.GetHLL()
-	registers := register.NewPackedRegisters()
+	registers := register.NewPackedRegisters(10)
 	registers.Get(1)
 }
