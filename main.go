@@ -9,7 +9,7 @@ import (
 //WORK STARTED
 
 func main() {
-	instance := hll.GetHLL()
+	instance := hll.GetHLL() // single instance across all threads will add a multithreaded server now.
 	registers := register.NewPackedRegisters(10)
 	registers.Set(1, 10)
 	fmt.Println(registers.Get(1))

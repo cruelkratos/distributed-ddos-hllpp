@@ -1,9 +1,13 @@
 package register
 
-import "fmt"
+import (
+	"fmt"
+	"sync"
+)
 
-//Dense Register Implementation
+// Dense Register Implementation
 type Registers struct {
+	mu    sync.RWMutex
 	_data []byte // since it is 6 bit register we will pack in bytes.
 	_size int
 }
@@ -29,6 +33,8 @@ func (R *Registers) Set(i int, v uint8) {
 	bitPos := 6 * i
 	byteIndex := bitPos / 8
 	bitOffset := bitPos % 8
+	R.mu.Lock()
+	defer R.mu.Unlock()
 	cur := uint16(R._data[byteIndex])
 	if byteIndex+1 < len(R._data) {
 		cur |= uint16(R._data[byteIndex+1]) << 8
@@ -51,6 +57,8 @@ func (R *Registers) Get(i int) uint8 {
 	bitPos := i * 6
 	byteIndex := bitPos / 8
 	bitOffset := bitPos % 8
+	R.mu.RLock()
+	defer R.mu.RUnlock()
 	cur := uint16(R._data[byteIndex])
 	if byteIndex+1 < len(R._data) {
 		cur |= uint16(R._data[byteIndex+1]) << 8
