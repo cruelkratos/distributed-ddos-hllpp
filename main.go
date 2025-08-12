@@ -14,4 +14,5 @@ func main() {
 	registers.Set(1, 10)
 	fmt.Println(registers.Get(1))
 	fmt.Println(registers.Get(2))
+	fmt.Println(instance.GetElements())
 }
