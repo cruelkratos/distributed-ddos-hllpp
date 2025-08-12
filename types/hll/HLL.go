@@ -1,7 +1,6 @@
 package hll
 
 import (
-	"HLL-BTP/dataclasses"
 	"HLL-BTP/types/register"
 	"sync"
 )
@@ -14,13 +13,17 @@ type IHLL interface {
 
 type hllSet struct {
 	mu         sync.RWMutex
-	_registers register.Registers
-	sum        dataclasses.Sum
+	_registers *register.Registers
 }
 
 func (h *hllSet) Insert(val uint64)   {}
-func (h *hllSet) GetElements() uint64 { return 1 }
-func (h *hllSet) EmptySet()           {}
+func (h *hllSet) GetElements() uint64 { return 1 } // main logic
+func (h *hllSet) EmptySet() {
+	for i := 0; i < h._registers.Size; i++ {
+		h._registers.Set(i, 0)
+	}
+
+} //reset all registers
 
 var (
 	instance IHLL
@@ -30,7 +33,7 @@ var (
 // Singleton HLL
 func GetHLL() IHLL {
 	once.Do(func() {
-		instance = &hllSet{_registers: *register.NewPackedRegisters(1), sum: *dataclasses.NewSum(1)}
+		instance = &hllSet{_registers: register.NewPackedRegisters(1)}
 	})
 	return instance
 }
