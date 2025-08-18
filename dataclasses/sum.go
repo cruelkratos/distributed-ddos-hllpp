@@ -6,7 +6,7 @@ import (
 )
 
 type Sum struct {
-	mu  sync.RWMutex
+	mu  sync.Mutex
 	val float64
 }
 
@@ -24,7 +24,7 @@ func (s *Sum) ChangeSum(a uint8, b uint8) {
 }
 
 func (s *Sum) GetSum() float64 {
-	s.mu.RLock()
-	defer s.mu.RUnlock()
+	s.mu.Lock()
+	defer s.mu.Unlock()
 	return s.val
 }

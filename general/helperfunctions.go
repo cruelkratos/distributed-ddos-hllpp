@@ -2,12 +2,21 @@ package general
 
 import (
 	"encoding/json"
+	"math"
 	"math/bits"
 	"os"
 	"sync"
 )
 
+var (
+	algo  string = ""
+	p_val int    = -1
+)
+
 func ConfigAlgo() string {
+	if algo != "" {
+		return algo
+	}
 	data, err := os.ReadFile("config.json")
 	if err != nil {
 		panic(err)
@@ -20,10 +29,14 @@ func ConfigAlgo() string {
 	}
 
 	hashAlgo := config["hashAlgorithm"].(string)
+	algo = hashAlgo
 	return hashAlgo
 }
 
 func ConfigPercision() int {
+	if p_val != -1 {
+		return p_val
+	}
 	data, err := os.ReadFile("config.json")
 	if err != nil {
 		panic(err)
@@ -35,14 +48,23 @@ func ConfigPercision() int {
 		panic(err)
 	}
 	precision := int(config["precision"].(float64))
+	p_val = precision
 	return precision
 }
 func Rho(w uint64, bitLength int) int {
+	if bitLength <= 0 {
+		return 1
+	}
+	// Keep only the lower (bitLength) bits
+	if bitLength < 64 {
+		w &= (uint64(1) << bitLength) - 1
+	}
 	if w == 0 {
 		return bitLength + 1
 	}
-	leadingZeros := bits.LeadingZeros64(w) // counts from MSB
-	return leadingZeros + 1
+	// Leading zeros counted within (bitLength) window
+	lz := bits.LeadingZeros64(w) - (64 - bitLength)
+	return lz + 1
 }
 
 type BucketLockManager struct {
@@ -81,4 +103,8 @@ func NewBucketLockManager(totalBuckets int) *BucketLockManager {
 func (blm *BucketLockManager) GetLockForBucket(bucketIndex int) *sync.Mutex {
 	lockIndex := bucketIndex & blm.mask
 	return &blm.locks[lockIndex]
+}
+
+func LinearCounting(m int, V uint16) float64 {
+	return float64(m) * math.Log(float64(m)/float64(V))
 }

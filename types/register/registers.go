@@ -2,6 +2,7 @@ package register
 
 import (
 	"HLL-BTP/dataclasses"
+	"HLL-BTP/general"
 	"fmt"
 	"sync"
 )
@@ -11,16 +12,19 @@ type Registers struct {
 	mu    sync.RWMutex
 	_data []byte // since it is 6 bit register we will pack in bytes.
 	Size  int
-	sum   *dataclasses.Sum
+	Sum   *dataclasses.Sum
+	Zeros *dataclasses.ZeroCounter
 }
 
 func NewPackedRegisters(size int) *Registers {
 	totalBits := size * 6
+	precision := general.ConfigPercision()
 	totalBytes := (totalBits + 7) / 8
 	return &Registers{
 		_data: make([]byte, totalBytes),
 		Size:  size,
-		sum:   dataclasses.NewSum(1 << 14),
+		Sum:   dataclasses.NewSum(float64(int(1) << int(precision))),
+		Zeros: dataclasses.NewZeroCounter(1 << precision),
 	}
 }
 
@@ -38,7 +42,7 @@ func (R *Registers) Set(i int, v uint8) {
 	defer R.mu.Unlock()
 	// u := R.Get(i) -> wrong will lead to race condition
 	u := R.getNoLock(i)
-	R.sum.ChangeSum(v, u)
+	R.Sum.ChangeSum(v, u)
 	cur := uint16(R._data[byteIndex])
 	if byteIndex+1 < len(R._data) {
 		cur |= uint16(R._data[byteIndex+1]) << 8
@@ -51,7 +55,13 @@ func (R *Registers) Set(i int, v uint8) {
 	if byteIndex+1 < len(R._data) {
 		R._data[byteIndex+1] = byte(cur >> 8)
 	}
+	if u != v && u == 0 {
+		R.Zeros.Dec()
+	}
 
+	if u != v && v == 0 {
+		R.Zeros.Inc()
+	}
 }
 
 func (R *Registers) Get(i int) uint8 {
