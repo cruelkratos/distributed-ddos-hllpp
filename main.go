@@ -5,8 +5,8 @@ import (
 	"crypto/rand"
 	"fmt"
 	"net"
-	"sync"
-	"unsafe"
+	"runtime"
+	"time"
 )
 
 func randomIPv4() string {
@@ -15,32 +15,62 @@ func randomIPv4() string {
 	return ip.String()
 }
 
-//WORK STARTED
-
 func main() {
-	instance := hll.GetHLL() // single instance across all threads will add a multithreaded server now.
-	uniqueIPs := make(map[string]struct{})
-	total := 11919 // try 100k inserts
+	// Memory baseline
+	var mBefore runtime.MemStats
+	runtime.GC()
+	runtime.ReadMemStats(&mBefore)
 
-	for i := 0; i < total; i++ {
-		ip := randomIPv4()
-		instance.Insert(ip)
-		uniqueIPs[ip] = struct{}{}
+	instance := hll.GetHLL()
+	uniqueIPs := make(map[string]struct{}, 1000000) // Pre-allocate map
+	total := 191326545
+	batchSize := 100000
+
+	// Time measurement
+	start := time.Now()
+
+	// Process in batches
+	for i := 0; i < total; i += batchSize {
+		for j := 0; j < batchSize && (i+j) < total; j++ {
+			ip := randomIPv4()
+			instance.Insert(ip)
+			uniqueIPs[ip] = struct{}{}
+		}
+
+		if i%1000000 == 0 {
+			elapsed := time.Since(start)
+			estimate := instance.GetElements()
+			trueCount := len(uniqueIPs)
+			relError := float64(abs(int64(estimate)-int64(trueCount))) / float64(trueCount) * 100
+			fmt.Printf("Processed %d IPs, Estimate: %d, True: %d, Error: %.2f%%, Time: %.2fs\n",
+				i, estimate, trueCount, relError, elapsed.Seconds())
+		}
 	}
 
-	// Ground truth
-	trueCount := len(uniqueIPs)
-
-	// HLL Estimate
+	// Final measurements
+	elapsed := time.Since(start)
 	estimate := instance.GetElements()
+	trueCount := len(uniqueIPs)
+	relError := float64(abs(int64(estimate)-int64(trueCount))) / float64(trueCount) * 100
 
-	fmt.Printf("Inserted: %d\n", total)
-	fmt.Printf("Unique (ground truth): %d\n", trueCount)
+	var mAfter runtime.MemStats
+	runtime.GC()
+	runtime.ReadMemStats(&mAfter)
+
+	fmt.Printf("\nFinal Results:\n")
+	fmt.Printf("Total insertions: %d\n", total)
+	fmt.Printf("True unique count: %d\n", trueCount)
 	fmt.Printf("HLL Estimate: %d\n", estimate)
-	var m sync.Mutex
-	fmt.Printf("Mutex overhead:    %d bytes\n", 32*int(unsafe.Sizeof(m)))
-	// for 2^14 reg only 256 bytes of memory will be used up by mutexes
-	// we are locking register array in buckets so at a time 32 registers are locked by
-	// a single lock since we are using a hash function we will distribute the reg
-	// even if 200 goroutines are concurrent , there might be atmost 25% collision only leading to 75% efficiency of the code with race condition -> pretty good
+	fmt.Printf("Relative Error: %.2f%%\n", relError)
+	fmt.Printf("Time taken: %.2f seconds\n", elapsed.Seconds())
+	fmt.Printf("Memory used: %.2f KB\n", float64(mAfter.Alloc-mBefore.Alloc)/1024)
+	fmt.Printf("Average insertion rate: %.2f ops/sec\n",
+		float64(total)/elapsed.Seconds())
+}
+
+func abs(x int64) int64 {
+	if x < 0 {
+		return -x
+	}
+	return x
 }
