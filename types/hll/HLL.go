@@ -2,6 +2,7 @@ package hll
 
 import (
 	"HLL-BTP/general"
+	"HLL-BTP/models"
 	"HLL-BTP/types/register"
 	"HLL-BTP/types/register/helper"
 	"math"
@@ -18,6 +19,7 @@ type hllSet struct {
 	bucketLocks general.IBucketLockManager
 	_registers  *register.Registers
 	helper      helper.IHasher
+	ishllpp     bool
 }
 
 func (h *hllSet) Insert(ip string) {
@@ -43,11 +45,28 @@ func (h *hllSet) GetElements() uint64 {
 	m2 := 1 << pp
 	// var temp float64 = float64(1<<32) / 30
 	var E float64 = alpha_m * float64(m2) / float64(h._registers.Sum.GetSum())
-	// Small range correction using Linear Counting
-	if E <= 2.5*float64(m) {
-		zeros := h._registers.Zeros.Get()
+	zeros := h._registers.Zeros.Get()
+	if h.ishllpp {
+		if E <= float64(5*m) {
+			E = E - GetBiasCorrector().GetCorrection(E)
+		}
+		H := E
 		if zeros != 0 {
-			return uint64(general.LinearCounting(m, zeros))
+			H = general.LinearCounting(m, zeros)
+		}
+
+		if H <= models.HLLPlusPlusThresholds[p] {
+			return uint64(math.Round(H))
+		} else {
+			return uint64(math.Round(E))
+		}
+
+	} else {
+		// Small range correction using Linear Counting
+		if E <= 2.5*float64(m) {
+			if zeros != 0 {
+				return uint64(general.LinearCounting(m, zeros))
+			}
 		}
 	}
 
@@ -70,7 +89,7 @@ var (
 )
 
 // Singleton HLL
-func GetHLL(concurrent bool) IHLL {
+func GetHLL(concurrent bool, _ishllpp bool) IHLL {
 	once.Do(func() {
 		precision := general.ConfigPercision()
 		totalBuckets := 1 << precision
@@ -95,6 +114,7 @@ func GetHLL(concurrent bool) IHLL {
 			_registers:  register.NewPackedRegisters(totalBuckets, concurrent),
 			helper:      hasher,
 			bucketLocks: lockManager,
+			ishllpp:     _ishllpp,
 		}
 
 	})
