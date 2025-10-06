@@ -12,19 +12,32 @@ type Registers struct {
 	mu    sync.RWMutex
 	_data []byte // since it is 6 bit register we will pack in bytes.
 	Size  int
-	Sum   *dataclasses.Sum
-	Zeros *dataclasses.ZeroCounter
+	Sum   dataclasses.ISum
+	Zeros dataclasses.IZeroCounter
 }
 
-func NewPackedRegisters(size int) *Registers {
+func NewPackedRegisters(size int, concurrent bool) *Registers {
 	totalBits := size * 6
 	precision := general.ConfigPercision()
 	totalBytes := (totalBits + 7) / 8
+
+	var sum dataclasses.ISum
+	var zeros dataclasses.IZeroCounter
+
+	// Initialize thread-safe or non-thread-safe versions
+	if concurrent {
+		sum = dataclasses.NewSum(float64(int(1) << int(precision)))
+		zeros = dataclasses.NewZeroCounter(uint16(1 << precision))
+	} else {
+		sum = dataclasses.NewSumNonConcurrent(float64(int(1) << int(precision)))
+		zeros = dataclasses.NewZeroCounterNonConcurrent(uint16(1 << precision))
+	}
+
 	return &Registers{
 		_data: make([]byte, totalBytes),
 		Size:  size,
-		Sum:   dataclasses.NewSum(float64(int(1) << int(precision))),
-		Zeros: dataclasses.NewZeroCounter(1 << precision),
+		Sum:   sum,
+		Zeros: zeros,
 	}
 }
 
@@ -38,11 +51,14 @@ func (R *Registers) Set(i int, v uint8) {
 	bitPos := 6 * i
 	byteIndex := bitPos / 8
 	bitOffset := bitPos % 8
-	R.mu.Lock()
-	defer R.mu.Unlock()
-	// u := R.Get(i) -> wrong will lead to race condition
+
+	// This method is now externally locked by the BucketLockManager,
+	// so we don't need the internal RWMutex anymore for this specific operation.
+	// We leave the mutex in the struct for potential future methods that might need it.
+
 	u := R.getNoLock(i)
 	R.Sum.ChangeSum(v, u)
+
 	cur := uint16(R._data[byteIndex])
 	if byteIndex+1 < len(R._data) {
 		cur |= uint16(R._data[byteIndex+1]) << 8
@@ -55,6 +71,7 @@ func (R *Registers) Set(i int, v uint8) {
 	if byteIndex+1 < len(R._data) {
 		R._data[byteIndex+1] = byte(cur >> 8)
 	}
+
 	if u != v && u == 0 {
 		R.Zeros.Dec()
 	}
@@ -71,8 +88,8 @@ func (R *Registers) Get(i int) uint8 {
 	bitPos := i * 6
 	byteIndex := bitPos / 8
 	bitOffset := bitPos % 8
-	R.mu.RLock()
-	defer R.mu.RUnlock()
+
+	// This read operation is now externally locked, so direct access is safe.
 	cur := uint16(R._data[byteIndex])
 	if byteIndex+1 < len(R._data) {
 		cur |= uint16(R._data[byteIndex+1]) << 8

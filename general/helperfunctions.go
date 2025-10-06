@@ -67,6 +67,12 @@ func Rho(w uint64, bitLength int) int {
 	return lz + 1
 }
 
+// IBucketLockManager defines the interface for our lock managers.
+type IBucketLockManager interface {
+	GetLockForBucket(bucketIndex int) sync.Locker
+}
+
+// BucketLockManager is the concurrent implementation.
 type BucketLockManager struct {
 	locks    []sync.Mutex
 	numLocks int
@@ -100,9 +106,22 @@ func NewBucketLockManager(totalBuckets int) *BucketLockManager {
 	}
 }
 
-func (blm *BucketLockManager) GetLockForBucket(bucketIndex int) *sync.Mutex {
+func (blm *BucketLockManager) GetLockForBucket(bucketIndex int) sync.Locker {
 	lockIndex := bucketIndex & blm.mask
 	return &blm.locks[lockIndex]
+}
+
+// NoOpLockManager is the non-concurrent implementation.
+type NoOpLockManager struct{}
+
+// NoOpLock is a dummy lock that does nothing.
+type noOpLock struct{}
+
+func (l *noOpLock) Lock()   {}
+func (l *noOpLock) Unlock() {}
+
+func (m *NoOpLockManager) GetLockForBucket(bucketIndex int) sync.Locker {
+	return &noOpLock{}
 }
 
 func LinearCounting(m int, V uint16) float64 {

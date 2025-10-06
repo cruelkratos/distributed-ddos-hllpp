@@ -15,7 +15,7 @@ type IHLL interface {
 }
 
 type hllSet struct {
-	bucketLocks *general.BucketLockManager
+	bucketLocks general.IBucketLockManager
 	_registers  *register.Registers
 	helper      helper.IHasher
 }
@@ -36,25 +36,26 @@ func (h *hllSet) Insert(ip string) {
 	h._registers.Set(int(idx), max(v, uint8(r)))
 }
 func (h *hllSet) GetElements() uint64 {
-	alpha_m := 0.7213 / (1 + 1.079/(1<<14))
 	p := general.ConfigPercision()
-	pp := p << 1
 	m := 1 << p
+	alpha_m := 0.7213 / (1 + 1.079/float64(m))
+	pp := p << 1
 	m2 := 1 << pp
-	var temp float64 = float64(1<<32) / 30
+	// var temp float64 = float64(1<<32) / 30
 	var E float64 = alpha_m * float64(m2) / float64(h._registers.Sum.GetSum())
-	if E <= float64(m)*2.5 {
-		V := h._registers.Zeros.Get()
-		if h._registers.Zeros.Get() != 0 {
-			return uint64(math.Round(general.LinearCounting(m, V)))
+	// Small range correction using Linear Counting
+	if E <= 2.5*float64(m) {
+		zeros := h._registers.Zeros.Get()
+		if zeros != 0 {
+			return uint64(general.LinearCounting(m, zeros))
 		}
-		return uint64(math.Round(E))
-	} else if E <= temp {
-		return uint64(math.Round(E))
-	} else {
-		two32 := float64(uint64(1) << 32)
-		return uint64(math.Round(-two32 * math.Log(1.0-(E/two32))))
 	}
+
+	// For a 64-bit hash function, the large range correction for 2^32 is not needed.
+	// The estimate E is returned directly for all larger cardinalities.
+	// The original check `else if E <= (1<<32)/30` and the subsequent correction
+	// have been removed.
+	return uint64(math.Round(E))
 }
 func (h *hllSet) EmptySet() {
 	for i := 0; i < h._registers.Size; i++ {
@@ -69,18 +70,33 @@ var (
 )
 
 // Singleton HLL
-func GetHLL() IHLL {
+func GetHLL(concurrent bool) IHLL {
 	once.Do(func() {
 		precision := general.ConfigPercision()
 		totalBuckets := 1 << precision
 		hashAlgo := general.ConfigAlgo()
+
+		var hasher helper.IHasher
 		if hashAlgo == "xxhash" {
-			instance = &hllSet{_registers: register.NewPackedRegisters(totalBuckets), helper: helper.Hasher{},
-				bucketLocks: general.NewBucketLockManager(totalBuckets)}
+			hasher = helper.Hasher{}
 		} else {
-			instance = &hllSet{_registers: register.NewPackedRegisters(totalBuckets), helper: helper.HasherSecure{},
-				bucketLocks: general.NewBucketLockManager(totalBuckets)}
+			hasher = helper.HasherSecure{}
 		}
+
+		// Choose the lock manager based on the concurrency flag
+		var lockManager general.IBucketLockManager
+		if concurrent {
+			lockManager = general.NewBucketLockManager(totalBuckets)
+		} else {
+			lockManager = &general.NoOpLockManager{}
+		}
+
+		instance = &hllSet{
+			_registers:  register.NewPackedRegisters(totalBuckets, concurrent),
+			helper:      hasher,
+			bucketLocks: lockManager,
+		}
+
 	})
 	return instance
 }

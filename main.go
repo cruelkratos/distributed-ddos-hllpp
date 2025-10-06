@@ -3,12 +3,23 @@ package main
 import (
 	"HLL-BTP/types/hll"
 	"crypto/rand"
+	"flag"
 	"fmt"
+	"log"
 	"net"
-	"runtime"
+	"os"
 	"time"
 )
 
+// abs calculates the absolute value of an int64.
+func abs(x int64) int64 {
+	if x < 0 {
+		return -x
+	}
+	return x
+}
+
+// randomIPv4 generates a random IPv4 address string.
 func randomIPv4() string {
 	ip := make(net.IP, 4)
 	rand.Read(ip)
@@ -16,61 +27,67 @@ func randomIPv4() string {
 }
 
 func main() {
-	// Memory baseline
-	var mBefore runtime.MemStats
-	runtime.GC()
-	runtime.ReadMemStats(&mBefore)
+	// --- Command-Line Flags for Configuration ---
+	// HLL algorithm settings
+	mode := flag.String("mode", "concurrent", "Execution mode: 'concurrent' or 'single'")
 
-	instance := hll.GetHLL()
-	uniqueIPs := make(map[string]struct{}, 1000000) // Pre-allocate map
-	total := 191326545
-	batchSize := 100000
+	// Benchmark settings
+	maxIPs := flag.Int("maxIPs", 200000000, "Maximum number of IPs to process for the benchmark.")
+	stepSize := flag.Int("stepSize", 1000000, "How often (in number of IPs) to record a data point.")
+	outputFile := flag.String("outputFile", "benchmarks.txt", "File to save the benchmark results.")
+	flag.Parse()
 
-	// Time measurement
+	// --- File Setup ---
+	// Open the output file for writing. Create it if it doesn't exist, or truncate it if it does.
+	f, err := os.Create(*outputFile)
+	if err != nil {
+		log.Fatalf("Failed to create output file: %v", err)
+	}
+	defer f.Close()
+
+	fmt.Printf("Starting benchmark...\n")
+	fmt.Printf(" - Mode: %s\n", *mode)
+	fmt.Printf(" - Total IPs to process: %d\n", *maxIPs)
+	fmt.Printf(" - Recording data every: %d IPs\n", *stepSize)
+	fmt.Printf(" - Output will be saved to: %s\n\n", *outputFile)
+
+	// --- Initialization ---
+	// Initialize HLL based on the selected flags.
+	instance := hll.GetHLL(*mode == "concurrent")
+	// Use a map to keep track of the true unique count.
+	uniqueIPs := make(map[string]struct{})
+	// Record the start time of the benchmark.
 	start := time.Now()
 
-	// Process in batches
-	for i := 0; i < total; i += batchSize {
-		for j := 0; j < batchSize && (i+j) < total; j++ {
-			ip := randomIPv4()
-			instance.Insert(ip)
-			uniqueIPs[ip] = struct{}{}
-		}
+	// --- Benchmark Loop ---
+	for i := 0; i <= *maxIPs; i++ {
+		// Generate a random IP and insert it into both the HLL and the map.
+		ip := randomIPv4()
+		instance.Insert(ip)
+		uniqueIPs[ip] = struct{}{}
 
-		if i%1000000 == 0 {
+		// At each step, record the performance metrics.
+		if i%*stepSize == 0 {
 			elapsed := time.Since(start)
 			estimate := instance.GetElements()
 			trueCount := len(uniqueIPs)
-			relError := float64(abs(int64(estimate)-int64(trueCount))) / float64(trueCount) * 100
-			fmt.Printf("Processed %d IPs, Estimate: %d, True: %d, Error: %.2f%%, Time: %.2fs\n",
+			relError := 0.0
+			if trueCount > 0 {
+				relError = float64(abs(int64(estimate)-int64(trueCount))) / float64(trueCount) * 100
+			}
+
+			// Format the output string exactly as requested.
+			outputLine := fmt.Sprintf("Processed %d IPs, Estimate: %d, True: %d, Error: %.2f%%, Time: %.2fs\n",
 				i, estimate, trueCount, relError, elapsed.Seconds())
+
+			// Print to console and write to file.
+			fmt.Print(outputLine)
+			_, err := f.WriteString(outputLine)
+			if err != nil {
+				log.Printf("Warning: failed to write to file: %v", err)
+			}
 		}
 	}
 
-	// Final measurements
-	elapsed := time.Since(start)
-	estimate := instance.GetElements()
-	trueCount := len(uniqueIPs)
-	relError := float64(abs(int64(estimate)-int64(trueCount))) / float64(trueCount) * 100
-
-	var mAfter runtime.MemStats
-	runtime.GC()
-	runtime.ReadMemStats(&mAfter)
-
-	fmt.Printf("\nFinal Results:\n")
-	fmt.Printf("Total insertions: %d\n", total)
-	fmt.Printf("True unique count: %d\n", trueCount)
-	fmt.Printf("HLL Estimate: %d\n", estimate)
-	fmt.Printf("Relative Error: %.2f%%\n", relError)
-	fmt.Printf("Time taken: %.2f seconds\n", elapsed.Seconds())
-	fmt.Printf("Memory used: %.2f KB\n", float64(mAfter.Alloc-mBefore.Alloc)/1024)
-	fmt.Printf("Average insertion rate: %.2f ops/sec\n",
-		float64(total)/elapsed.Seconds())
-}
-
-func abs(x int64) int64 {
-	if x < 0 {
-		return -x
-	}
-	return x
+	fmt.Println("\nBenchmark finished successfully!")
 }

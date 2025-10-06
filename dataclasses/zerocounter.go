@@ -2,6 +2,14 @@ package dataclasses
 
 import "sync"
 
+// IZeroCounter defines the interface for ZeroCounter operations.
+type IZeroCounter interface {
+	Inc()
+	Dec()
+	Get() uint16
+}
+
+// ZeroCounter is the thread-safe implementation.
 type ZeroCounter struct {
 	val uint16
 	mu  sync.Mutex
@@ -29,5 +37,29 @@ func (z *ZeroCounter) Dec() {
 func (z *ZeroCounter) Get() uint16 {
 	z.mu.Lock()
 	defer z.mu.Unlock()
+	return z.val
+}
+
+// ZeroCounterNonConcurrent is the non-thread-safe implementation.
+type ZeroCounterNonConcurrent struct {
+	val uint16
+}
+
+func NewZeroCounterNonConcurrent(vals ...uint16) *ZeroCounterNonConcurrent {
+	if len(vals) > 0 {
+		return &ZeroCounterNonConcurrent{val: vals[0]}
+	}
+	return &ZeroCounterNonConcurrent{val: 0}
+}
+
+func (z *ZeroCounterNonConcurrent) Inc() {
+	z.val++
+}
+
+func (z *ZeroCounterNonConcurrent) Dec() {
+	z.val--
+}
+
+func (z *ZeroCounterNonConcurrent) Get() uint16 {
 	return z.val
 }
