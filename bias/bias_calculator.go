@@ -60,12 +60,12 @@ func GetBiasData(p int) {
 	for _, trueCardinality := range cardinalitySamples {
 		var totalEstimate float64 = 0
 		for run := 0; run < 200; run++ {
-			instance := hll.GetHLL(false, false) // Use non-concurrent non bias corrected
+			instance := hll.GetHLL(false, "hll", false) // Use non-concurrent non bias corrected
 			for i := 1; i <= trueCardinality; i++ {
 				ip := intToIP(uint32(i))
 				instance.Insert(ip)
 			}
-			totalEstimate += float64(instance.GetElements())
+			totalEstimate += float64(instance.GetRawEstimate())
 		}
 		avgRawEstimate := totalEstimate / 200.0
 		bias := avgRawEstimate - float64(trueCardinality)
@@ -74,18 +74,23 @@ func GetBiasData(p int) {
 			Bias:        bias,
 		})
 	}
-	dirPath := "bias/biasdata"
-	if err := os.MkdirAll(dirPath, os.ModePerm); err != nil {
-		panic(fmt.Sprintf("Failed to create directory: %v", err))
+	dirPaths := []string{
+		"bias/biasdata",
+		"types/hll/bias/biasdata",
 	}
-	outputFile := filepath.Join(dirPath, fmt.Sprintf("bias_data_p%d.json", p))
+
 	jsonData, err := json.MarshalIndent(biasData, "", "  ")
 	if err != nil {
 		panic(fmt.Sprintf("Failed to marshal JSON: %v", err))
 	}
 
-	err = os.WriteFile(outputFile, jsonData, 0644)
-	if err != nil {
-		panic(fmt.Sprintf("Failed to write to file: %v", err))
+	for _, dirPath := range dirPaths {
+		if err := os.MkdirAll(dirPath, os.ModePerm); err != nil {
+			panic(fmt.Sprintf("Failed to create directory %s: %v", dirPath, err))
+		}
+		outputFile := filepath.Join(dirPath, fmt.Sprintf("bias_data_p%d.json", p))
+		if err := os.WriteFile(outputFile, jsonData, 0644); err != nil {
+			panic(fmt.Sprintf("Failed to write file %s: %v", outputFile, err))
+		}
 	}
 }

@@ -9,6 +9,7 @@ import (
 	"sync"
 )
 
+//go:embed bias/biasdata/bias_data_p14.json
 var biasDataP []byte
 
 type biasCorrector struct {
@@ -20,7 +21,7 @@ var (
 	onceCorrector     sync.Once
 )
 
-func GetBiasCorrector() *biasCorrector {
+func getbiascorrector() *biasCorrector {
 	onceCorrector.Do(func() {
 		var data []models.BiasDataPoint
 		if err := json.Unmarshal(biasDataP, &data); err != nil {
@@ -37,31 +38,51 @@ func GetBiasCorrector() *biasCorrector {
 	return correctorInstance
 }
 
-func (bc *biasCorrector) GetCorrection(rawEstimate float64) float64 {
-	const k = 6
-	idx := sort.Search(len(bc.data), func(i int) bool {
-		return bc.data[i].RawEstimate >= rawEstimate
-	})
-	start := idx - k/2
-	start = max(start, 0)
-	end := start + k
-	end = min(end, len(bc.data))
-	if end == len(bc.data) && end-start != k {
-		start = end - k
-	}
-	if start == 0 && end-start != k {
-		end = start + k
-	}
-	var totalBias float64 = 0
-	neighbors := bc.data[start:end]
-	for _, neighbor := range neighbors {
-		totalBias += neighbor.Bias
+// getCorrection uses k-NN interpolation to find the appropriate bias correction.
+func (c *biasCorrector) getCorrection(rawEstimate float64) float64 {
+	if len(c.data) == 0 {
+		return 0 // No data, no correction.
 	}
 
+	const k = 6 // Number of nearest neighbors to consider.
+
+	// Use binary search to find the insertion point for the rawEstimate.
+	idx := sort.Search(len(c.data), func(i int) bool {
+		return c.data[i].RawEstimate >= rawEstimate
+	})
+
+	// --- CORRECTED WINDOWING LOGIC ---
+	// Define the ideal window start and end.
+	start := idx - k/2
+	end := idx + k/2
+
+	// Adjust the window if it goes out of bounds.
+	if start < 0 {
+		// If the window goes past the beginning, shift it right.
+		start = 0
+		end = k
+	}
+	if end > len(c.data) {
+		// If the window goes past the end, shift it left.
+		end = len(c.data)
+		start = end - k
+	}
+
+	// Final safety check in case the dataset has fewer than k points.
+	if start < 0 {
+		start = 0
+	}
+	// --- END OF CORRECTION ---
+
+	neighbors := c.data[start:end]
 	if len(neighbors) == 0 {
 		return 0
 	}
 
+	// Average the bias of the k-nearest neighbors.
+	var totalBias float64
+	for _, point := range neighbors {
+		totalBias += point.Bias
+	}
 	return totalBias / float64(len(neighbors))
-
 }
