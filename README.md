@@ -1,5 +1,9 @@
 # HyperGoLog++: An Optimized HLL++ Implementation for Scalable Cardinality Estimation
 
+![Go](https://img.shields.io/badge/Go-00ADD8?logo=Go&logoColor=white&style=for-the-badge)
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+
+
 ## Overview
 
 This project provides a high-performance Go implementation of the HyperLogLog++ (HLL++) cardinality estimation algorithm, based on the Google research paper "HyperLogLog in Practice: Algorithmic Engineering of a State of The Art Cardinality Estimation Algorithm".
@@ -165,6 +169,4 @@ The script will display the plots and save them as image files.
 - **DDoS Detection Logic**: Implement time-windowed counting and threshold-based alerting on the aggregator.
 - **Advanced Sparse Compression**: Implement variable-length and difference encoding for the `sparse_list` as described in the paper for further memory optimization.
 
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details *(or simply state MIT License if no file exists)*.
+ [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
