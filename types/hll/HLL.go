@@ -41,6 +41,11 @@ func (h *hllSet) Insert(ip string) {
 	h._registers.Set(int(idx), max(v, uint8(r)))
 }
 
+func (h *hllSet) SetRegisterMax(index int, rho uint8) {
+	v := h._registers.Get(int(index))
+	h._registers.Set(index, max(v, rho))
+}
+
 func (h *hllSet) GetRawEstimate() float64 {
 	p := general.ConfigPercision()
 	m := 1 << p
@@ -70,7 +75,7 @@ func (h *hllSet) GetElements() uint64 {
 		var linearCountingEstimate float64
 		zeros := h._registers.Zeros.Get()
 		if zeros > 0 {
-			linearCountingEstimate = general.LinearCounting(m, zeros)
+			linearCountingEstimate = general.LinearCounting(m, uint64(zeros))
 		} else {
 			// When no registers are zero, LinearCounting is invalid.
 			// The pseudocode implies we use the corrected estimate E' in this case.
@@ -93,7 +98,7 @@ func (h *hllSet) GetElements() uint64 {
 	zeros := h._registers.Zeros.Get()
 	if rawEstimate <= 2.5*float64(m) {
 		if zeros != 0 {
-			return uint64(general.LinearCounting(m, zeros))
+			return uint64(general.LinearCounting(m, uint64(zeros)))
 		}
 		// Fall through to return rawEstimate if zeros is 0 but rawEstimate is low
 	}
