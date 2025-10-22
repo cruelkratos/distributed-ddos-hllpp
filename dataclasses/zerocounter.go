@@ -1,12 +1,16 @@
 package dataclasses
 
-import "sync"
+import (
+	"HLL-BTP/general"
+	"sync"
+)
 
 // IZeroCounter defines the interface for ZeroCounter operations.
 type IZeroCounter interface {
 	Inc()
 	Dec()
 	Get() uint16
+	Reset()
 }
 
 // ZeroCounter is the thread-safe implementation.
@@ -40,6 +44,14 @@ func (z *ZeroCounter) Get() uint16 {
 	return z.val
 }
 
+func (z *ZeroCounter) Reset() {
+	z.mu.Lock()
+	defer z.mu.Unlock()
+	p := general.ConfigPercision()
+	m := 1 << p
+	z.val = uint16(m)
+}
+
 // ZeroCounterNonConcurrent is the non-thread-safe implementation.
 type ZeroCounterNonConcurrent struct {
 	val uint16
@@ -62,4 +74,10 @@ func (z *ZeroCounterNonConcurrent) Dec() {
 
 func (z *ZeroCounterNonConcurrent) Get() uint16 {
 	return z.val
+}
+
+func (z *ZeroCounterNonConcurrent) Reset() {
+	p := general.ConfigPercision()
+	m := 1 << p
+	z.val = uint16(m)
 }

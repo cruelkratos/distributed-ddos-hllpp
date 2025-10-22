@@ -5,8 +5,8 @@ import (
 	"HLL-BTP/models"
 	"HLL-BTP/types/register"
 	"HLL-BTP/types/register/helper"
+	"fmt"
 	"math"
-	"sync"
 )
 
 type IHLL interface {
@@ -14,7 +14,10 @@ type IHLL interface {
 	GetElements() uint64
 	GetRawEstimate() float64
 	EmptySet()
+	SetRegisterMax(int, uint8)
+	Get(int) uint8
 	Reset() // Added for benchmarking
+
 }
 
 type hllSet struct {
@@ -44,6 +47,10 @@ func (h *hllSet) Insert(ip string) {
 func (h *hllSet) SetRegisterMax(index int, rho uint8) {
 	v := h._registers.Get(int(index))
 	h._registers.Set(index, max(v, rho))
+}
+
+func (h *hllSet) Get(index int) uint8 {
+	return h._registers.Get(index)
 }
 
 func (h *hllSet) GetRawEstimate() float64 {
@@ -119,55 +126,43 @@ func (h *hllSet) EmptySet() {
 
 // Reset clears the singleton instance for new benchmark runs.
 func (h *hllSet) Reset() {
-	once = sync.Once{}
-	instance = nil
+	h._registers.Reset()
 }
 
-var (
-	instance IHLL
-	once     sync.Once
-)
+// HLL
+func NewHLL(concurrent bool, algorithm string, useLargeRangeCorrection bool) (IHLL, error) {
+	precision := general.ConfigPercision()
+	totalBuckets := 1 << precision
+	hashAlgo := general.ConfigAlgo()
 
-// Singleton HLL
-func GetHLL(concurrent bool, algorithm string, useLargeRangeCorrection bool) IHLL {
-	// This check is for the benchmark reset.
-	// It's not standard for singletons but necessary here.
-	if instance != nil {
-		// If flags have changed, we need a new instance.
-		h, ok := instance.(*hllSet)
-		if !ok || h.algorithm != algorithm || h.useLargeRangeCorrection != useLargeRangeCorrection {
-			instance = nil // Force re-creation
-		}
+	var hasher helper.IHasher
+	if hashAlgo == "xxhash" {
+		hasher = helper.Hasher{}
+	} else {
+		hasher = helper.HasherSecure{}
 	}
 
-	if instance == nil {
-		once.Do(func() {
-			precision := general.ConfigPercision()
-			totalBuckets := 1 << precision
-			hashAlgo := general.ConfigAlgo()
-
-			var hasher helper.IHasher
-			if hashAlgo == "xxhash" {
-				hasher = helper.Hasher{}
-			} else {
-				hasher = helper.HasherSecure{}
-			}
-
-			var lockManager general.IBucketLockManager
-			if concurrent {
-				lockManager = general.NewBucketLockManager(totalBuckets)
-			} else {
-				lockManager = &general.NoOpLockManager{}
-			}
-
-			instance = &hllSet{
-				_registers:              register.NewPackedRegisters(totalBuckets, concurrent),
-				helper:                  hasher,
-				bucketLocks:             lockManager,
-				algorithm:               algorithm,
-				useLargeRangeCorrection: useLargeRangeCorrection,
-			}
-		})
+	var lockManager general.IBucketLockManager
+	if concurrent {
+		lockManager = general.NewBucketLockManager(totalBuckets)
+	} else {
+		lockManager = &general.NoOpLockManager{}
 	}
-	return instance
+
+	// Create registers, passing concurrency flag for underlying data structures
+	registers := register.NewPackedRegisters(totalBuckets, concurrent)
+	if registers == nil {
+		// If NewPackedRegisters could potentially fail and return nil
+		return nil, fmt.Errorf("failed to initialize registers")
+	}
+
+	// Directly create and return a new hllSet instance
+	h := &hllSet{
+		_registers:              registers,
+		helper:                  hasher,
+		bucketLocks:             lockManager,
+		algorithm:               algorithm,
+		useLargeRangeCorrection: useLargeRangeCorrection,
+	}
+	return h, nil // Return the new instance and nil error
 }

@@ -1,6 +1,7 @@
 package dataclasses
 
 import (
+	"HLL-BTP/general"
 	"math"
 	"sync"
 )
@@ -8,6 +9,7 @@ import (
 type ISum interface {
 	ChangeSum(a, b uint8)
 	GetSum() float64
+	Reset()
 }
 
 type Sum struct {
@@ -34,6 +36,14 @@ func (s *Sum) GetSum() float64 {
 	return s.val
 }
 
+func (s *Sum) Reset() {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	p := general.ConfigPercision()
+	m := 1 << p
+	s.val = float64(m)
+}
+
 type SumNonConcurrent struct {
 	val float64
 }
@@ -50,4 +60,10 @@ func (s *SumNonConcurrent) ChangeSum(a, b uint8) {
 
 func (s *SumNonConcurrent) GetSum() float64 {
 	return s.val
+}
+
+func (s *SumNonConcurrent) Reset() {
+	p := general.ConfigPercision()
+	m := 1 << p
+	s.val = float64(m)
 }

@@ -113,3 +113,13 @@ func (R *Registers) getNoLock(i int) uint8 {
 
 	return uint8((cur >> bitOffset) & 63)
 }
+
+func (R *Registers) Reset() {
+	R.mu.Lock()
+	defer R.mu.Unlock()
+	R.Sum.Reset()
+	R.Zeros.Reset()
+	for i := range R._data {
+		R._data[i] = 0
+	}
+}

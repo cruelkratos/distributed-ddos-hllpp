@@ -56,7 +56,7 @@ func (h *Hllpp_set) convertToDense() error {
 	if err != nil {
 		return fmt.Errorf("merge failed before transition: %w", err)
 	}
-	denseInstance := GetHLL(h.concurrent, "hllpp", false)
+	denseInstance, _ := NewHLL(h.concurrent, "hllpp", false)
 	concreteDense, ok := denseInstance.(*hllSet)
 	if !ok {
 		return fmt.Errorf("failed to cast dense instance to *hllSet for transition")
@@ -81,4 +81,34 @@ func (h *Hllpp_set) GetElements() uint64 {
 		return h.sparse_set.GetElements()
 	}
 	return h.dense_set.GetElements()
+}
+
+func (h *Hllpp_set) MergeSets(other *Hllpp_set) error {
+	if other == nil {
+		return fmt.Errorf("cannot merge with nil sketch")
+	}
+	if h == other {
+		return nil // Merging with self is a no-op
+	}
+	if h.format == FormatDense && other.format == FormatDense {
+		// THIS IS GARBAGE REPLACE BY MOVING THIS LOGIC TO HLL.GO
+		//AVOID BUCKET LOCK IF CONCURRENT
+		p := general.ConfigPercision()
+		m := 1 << p
+		for i := range m {
+			m1 := h.dense_set.Get(i)
+			m2 := other.dense_set.Get(i)
+			if m1 > m2 {
+				h.dense_set.SetRegisterMax(i, m1)
+			} else {
+				h.dense_set.SetRegisterMax(i, m2)
+			}
+		}
+	} else if h.format == FormatSparse && other.format == FormatSparse {
+
+	} else if h.format == FormatSparse && other.format == FormatDense {
+	} else {
+
+	}
+	return nil
 }

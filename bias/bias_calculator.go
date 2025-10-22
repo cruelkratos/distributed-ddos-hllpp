@@ -60,7 +60,7 @@ func GetBiasData(p int) {
 	for _, trueCardinality := range cardinalitySamples {
 		var totalEstimate float64 = 0
 		for run := 0; run < 200; run++ {
-			instance := hll.GetHLL(false, "hll", false) // Use non-concurrent non bias corrected
+			instance, _ := hll.NewHLL(false, "hll", false) // Use non-concurrent non bias corrected
 			for i := 1; i <= trueCardinality; i++ {
 				ip := intToIP(uint32(i))
 				instance.Insert(ip)
