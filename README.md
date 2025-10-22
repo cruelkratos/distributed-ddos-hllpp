@@ -14,7 +14,7 @@ The implementation focuses on accuracy, memory efficiency, and concurrency, inco
 
 ## Based On
 
-- **Paper**: Heule, S., Nunkesser, M., & Hall, A. (2013). HyperLogLog in Practice: Algorithmic Engineering of a State of The Art Cardinality Estimation Algorithm. [Link to Paper PDF if available, e.g., on arXiv or ACM, otherwise omit]
+- **Paper**: Heule, S., Nunkesser, M., & Hall, A. (2013). HyperLogLog in Practice: Algorithmic Engineering of a State of The Art Cardinality Estimation Algorithm. 
 - **Algorithm**: HyperLogLog++ (HLL++)
 
 ## Key Features
