@@ -34,11 +34,19 @@ func (h *hllSet) Insert(ip string) {
 }
 
 func (h *hllSet) SetRegisterMax(index int, rho uint8) {
-	v := h._registers.Get(int(index))
+	lock := h.bucketLocks.GetLockForBucket(index)
+	lock.Lock()
+	defer lock.Unlock()
+
+	v := h._registers.Get(index)
 	h._registers.Set(index, max(v, rho))
 }
 
 func (h *hllSet) Get(index int) uint8 {
+	lock := h.bucketLocks.GetLockForBucket(index)
+	lock.Lock()
+	defer lock.Unlock()
+
 	return h._registers.Get(index)
 }
 
@@ -160,12 +168,15 @@ func (h *hllSet) Merge(other general.IHLL) error {
 	p := general.ConfigPercision()
 	m := 1 << p
 	for i := 0; i < m; i++ {
+		lock := h.bucketLocks.GetLockForBucket(i)
+		lock.Lock()
 		otherRho := other.Get(i) // Get other's value
 		if otherRho > 0 {
 			// SetRegisterMax efficiently updates our register
 			// only if the other value is greater.
 			h.SetRegisterMax(i, otherRho)
 		}
+		lock.Unlock()
 	}
 	return nil
 }

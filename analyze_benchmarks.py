@@ -86,7 +86,7 @@ def plot_combined_comparison(processed_ips, estimates, true_values, errors):
 
 # Main execution
 if __name__ == "__main__":
-    filename = 'benchmarks.txt'
+    filename = 'benchmarking/benchmarks.txt'
     
     try:
         # Parse the data

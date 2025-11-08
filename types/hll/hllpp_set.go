@@ -5,6 +5,7 @@ import (
 	"HLL-BTP/types/sparse"
 	"fmt"
 	"sync"
+	"sync/atomic"
 	"unsafe"
 )
 
@@ -16,45 +17,89 @@ const (
 
 type Hllpp_set struct {
 	dense_set  general.IHLL
-	sparse_set *sparse.SparseHLL
-	format     int
+	sparse_set atomic.Pointer[sparse.SparseHLL]
 	concurrent bool
 	mu         sync.RWMutex
+	format     atomic.Int32
 }
 
-var (
-	sparse_instance *sparse.SparseHLL
-	once1           sync.Once
-)
-
 func GetHLLPP(c bool) *Hllpp_set {
-	once1.Do(func() {
-		sparse_instance = sparse.NewSparseHLL()
-	})
-	return &Hllpp_set{sparse_set: sparse_instance, format: FormatSparse, dense_set: nil, concurrent: c}
+	// Create a NEW sparse instance for each Hllpp_set
+	h := &Hllpp_set{
+		dense_set:  nil,
+		concurrent: c,
+	}
+	h.format.Store(FormatSparse)
+	h.sparse_set.Store(sparse.NewSparseHLL())
+	return h
 }
 
 func (h *Hllpp_set) Insert(ip string) {
-	if h.format == FormatSparse {
-		h.sparse_set.Insert(ip)
+	if h.format.Load() == FormatSparse {
+		sparse := h.sparse_set.Load()
+		if sparse == nil {
+			h.dense_set.Insert(ip)
+			return
+		}
+		sparse.Insert(ip)
 		m := 1 << general.ConfigPercision()
 		p := general.ConfigPercision()
 		denseSizeBits := m * 6
 		bitsPerSparseEntry := p + 6 + 5
-		currentSparseSizeBits := h.sparse_set.GetSortedListLength() * bitsPerSparseEntry
+		currentSparseSizeBits := sparse.GetSortedListLength() * bitsPerSparseEntry
 		if currentSparseSizeBits >= denseSizeBits {
-			h.convertToDense()
+			h.mu.Lock()
+			if h.format.Load() == FormatSparse {
+				h.convertToDenseNoLock()
+			}
+			h.mu.Unlock()
 		}
 	} else {
 		h.dense_set.Insert(ip)
 	}
 }
 
-func (h *Hllpp_set) convertToDense() error {
-	if h.sparse_set == nil {
+// Assumes caller holds h.mu.Lock()
+func (h *Hllpp_set) convertToDenseNoLock() error {
+	sparse := h.sparse_set.Load()
+	if sparse == nil {
 		return fmt.Errorf("convertToDense called but sparse_set is nil")
 	}
-	err := h.sparse_set.MergeTempSetIfNeeded()
+
+	err := sparse.MergeTempSetIfNeeded()
+	if err != nil {
+		return fmt.Errorf("merge failed before transition: %w", err)
+	}
+
+	denseInstance, _ := NewHLL(h.concurrent, "hllpp", false)
+	concreteDense, ok := denseInstance.(*hllSet)
+	if !ok {
+		return fmt.Errorf("failed to cast dense instance to *hllSet for transition")
+	}
+
+	sparseList := sparse.GetSortedList()
+	for _, encoded := range sparseList {
+		index, rho := general.DecodeHash(encoded, general.ConfigPercision(), pPrime)
+		if rho > 0 {
+			concreteDense.SetRegisterMax(int(index), rho)
+		}
+	}
+
+	h.format.Store(FormatDense)
+	h.dense_set = concreteDense
+	h.sparse_set.Store(nil)
+
+	return nil
+}
+
+func (h *Hllpp_set) convertToDense() error {
+	h.mu.Lock()
+	defer h.mu.Unlock()
+	sparse := h.sparse_set.Load()
+	if sparse == nil {
+		return fmt.Errorf("convertToDense called but sparse_set is nil")
+	}
+	err := sparse.MergeTempSetIfNeeded()
 	if err != nil {
 		return fmt.Errorf("merge failed before transition: %w", err)
 	}
@@ -63,7 +108,7 @@ func (h *Hllpp_set) convertToDense() error {
 	if !ok {
 		return fmt.Errorf("failed to cast dense instance to *hllSet for transition")
 	}
-	sparseList := h.sparse_set.GetSortedList()
+	sparseList := sparse.GetSortedList()
 	for _, encoded := range sparseList {
 		// Decode index (p bits) and rho (6 bits)
 		index, rho := general.DecodeHash(encoded, general.ConfigPercision(), pPrime)
@@ -72,15 +117,16 @@ func (h *Hllpp_set) convertToDense() error {
 			concreteDense.SetRegisterMax(int(index), rho)
 		}
 	}
-	h.format = FormatDense
+	h.format.Store(FormatDense)
 	h.dense_set = concreteDense
-	h.sparse_set = nil
+	h.sparse_set.Store(nil)
 	return nil
 }
 
 func (h *Hllpp_set) GetElements() uint64 {
-	if h.format == FormatSparse {
-		return h.sparse_set.GetElements()
+	if h.format.Load() == FormatSparse {
+		sparse := h.sparse_set.Load()
+		return sparse.GetElements()
 	}
 	return h.dense_set.GetElements()
 }
@@ -120,30 +166,32 @@ func (h *Hllpp_set) MergeSets(other *Hllpp_set) error {
 	defer h.mu.Unlock()
 
 	switch {
-	case h.format == FormatDense && other.format == FormatDense:
+	case h.format.Load() == FormatDense && other.format.Load() == FormatDense:
 		if h.dense_set == nil || other.dense_set == nil {
 			return fmt.Errorf("Merge Error : D+D")
 		}
 		// dense_set has its own bucket-level locking
 		return h.dense_set.Merge(other.dense_set)
 
-	case h.format == FormatSparse && other.format == FormatSparse:
-		if h.sparse_set == nil || other.sparse_set == nil {
+	case h.format.Load() == FormatSparse && other.format.Load() == FormatSparse:
+		sparse1 := h.sparse_set.Load()
+		sparse2 := other.sparse_set.Load()
+		if sparse1 == nil || sparse2 == nil {
 			return fmt.Errorf("merge error: sparse set is nil")
 		}
 
 		// Lock both sparse sets in a fixed order, and ensure temp sets are merged.
-		unlock := lockTwo(h.sparse_set, other.sparse_set)
+		unlock := lockTwo(sparse1, sparse2)
 		defer unlock()
 
-		if err := h.sparse_set.MergeTempSetIfNeededNoOuterLock(); err != nil {
+		if err := sparse1.MergeTempSetIfNeededNoOuterLock(); err != nil {
 			return err
 		}
-		if err := other.sparse_set.MergeTempSetIfNeededNoOuterLock(); err != nil {
+		if err := sparse2.MergeTempSetIfNeededNoOuterLock(); err != nil {
 			return err
 		}
 
-		if err := h.sparse_set.MergeSparseNoOuterLock(other.sparse_set); err != nil {
+		if err := sparse1.MergeSparseNoOuterLock(sparse2); err != nil {
 			return err
 		}
 
@@ -151,14 +199,15 @@ func (h *Hllpp_set) MergeSets(other *Hllpp_set) error {
 		p := general.ConfigPercision()
 		denseSizeBits := m * 6
 		bitsPerSparseEntry := p + 6 + 5
-		currentSparseSizeBits := h.sparse_set.GetSortedListLengthUnsafe() * bitsPerSparseEntry
+		currentSparseSizeBits := sparse1.GetSortedListLengthUnsafe() * bitsPerSparseEntry
 		if currentSparseSizeBits >= denseSizeBits {
 			return h.convertToDense()
 		}
 		return nil
 
-	case h.format == FormatSparse && other.format == FormatDense:
-		if h.sparse_set == nil || other.dense_set == nil {
+	case h.format.Load() == FormatSparse && other.format.Load() == FormatDense:
+		sparse := h.sparse_set.Load()
+		if sparse == nil || other.dense_set == nil {
 			return fmt.Errorf("merge error S+D")
 		}
 		// First convert self to dense (mutates h)
@@ -168,17 +217,18 @@ func (h *Hllpp_set) MergeSets(other *Hllpp_set) error {
 		return h.dense_set.Merge(other.dense_set)
 
 	default: // D + S
-		if h.dense_set == nil || other.sparse_set == nil {
+		sparse := other.sparse_set.Load()
+		if h.dense_set == nil || sparse == nil {
 			return fmt.Errorf("merge error: inconsistent state (D+S)")
 		}
 		// Lock other's sparse while reading its list.
-		other.sparse_set.MuRLock()
-		defer other.sparse_set.MuRUnlock()
+		sparse.MuRLock()
+		defer sparse.MuRUnlock()
 
 		// Ensure other's temp is merged so sorted_list is stable
-		if err := other.sparse_set.MergeTempSetIfNeededNoOuterLock(); err != nil {
+		if err := sparse.MergeTempSetIfNeededNoOuterLock(); err != nil {
 			return err
 		}
-		return other.sparse_set.MergeIntoDense(h.dense_set)
+		return sparse.MergeIntoDense(h.dense_set)
 	}
 }
