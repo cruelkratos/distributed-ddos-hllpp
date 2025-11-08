@@ -1,8 +1,0 @@
-Final Results:
-Total insertions: 191326545
-True unique count: 187129511
-HLL Estimate: 193125266
-Relative Error: 3.20%
-Time taken: 287.56 seconds
-Memory used: 55.62 KB
-Average insertion rate: 665354.27 ops/sec

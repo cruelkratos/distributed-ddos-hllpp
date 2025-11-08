@@ -232,3 +232,25 @@ func (h *Hllpp_set) MergeSets(other *Hllpp_set) error {
 		return sparse.MergeIntoDense(h.dense_set)
 	}
 }
+
+func (h *Hllpp_set) Reset() {
+	h.mu.Lock()
+	defer h.mu.Unlock()
+
+	if h.format.Load() == FormatSparse {
+		// If we are sparse, get the pointer and call its Reset()
+		sparse := h.sparse_set.Load()
+		if sparse != nil {
+			// sparse.Reset() has its own internal lock
+			sparse.Reset()
+		} else {
+			if h.dense_set != nil {
+				h.dense_set.Reset()
+			}
+		}
+	} else {
+		if h.dense_set != nil {
+			h.dense_set.Reset()
+		}
+	}
+}

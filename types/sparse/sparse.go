@@ -307,3 +307,11 @@ func (s *SparseHLL) MergeSparseNoOuterLock(other *SparseHLL) error {
 	s.sorted_list = newList
 	return nil
 }
+func (s *SparseHLL) Reset() {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+
+	// Re-initialize the internal data structures to their empty state
+	s.sorted_list = make([]uint32, 0)
+	s.temp_set = make(map[uint32]struct{})
+}

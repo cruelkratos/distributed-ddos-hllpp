@@ -4,12 +4,10 @@ import (
 	"HLL-BTP/dataclasses"
 	"HLL-BTP/general"
 	"fmt"
-	"sync"
 )
 
 // Dense Register Implementation
 type Registers struct {
-	mu    sync.RWMutex
 	_data []byte // since it is 6 bit register we will pack in bytes.
 	Size  int
 	Sum   dataclasses.ISum
@@ -115,8 +113,6 @@ func (R *Registers) getNoLock(i int) uint8 {
 }
 
 func (R *Registers) Reset() {
-	R.mu.Lock()
-	defer R.mu.Unlock()
 	R.Sum.Reset()
 	R.Zeros.Reset()
 	for i := range R._data {

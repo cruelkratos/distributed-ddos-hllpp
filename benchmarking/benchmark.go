@@ -152,6 +152,7 @@ func (b *Benchmarker) Run() error {
 	}
 
 	fmt.Println("\nBenchmark finished successfully!")
+	instance.Reset()
 	return nil
 }
 

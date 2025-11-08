@@ -7,6 +7,7 @@ import (
 	"HLL-BTP/types/register/helper"
 	"fmt"
 	"math"
+	"sync"
 )
 
 type hllSet struct {
@@ -15,9 +16,12 @@ type hllSet struct {
 	helper                  helper.IHasher
 	algorithm               string
 	useLargeRangeCorrection bool
+	stateLock               sync.RWMutex
 }
 
 func (h *hllSet) Insert(ip string) {
+	h.stateLock.RLock()
+	defer h.stateLock.RUnlock()
 	hash := h.helper.HashIP(ip)
 	p := general.ConfigPercision()
 	idx := hash >> (64 - p)
@@ -34,6 +38,8 @@ func (h *hllSet) Insert(ip string) {
 }
 
 func (h *hllSet) SetRegisterMax(index int, rho uint8) {
+	h.stateLock.RLock()
+	defer h.stateLock.RUnlock()
 	lock := h.bucketLocks.GetLockForBucket(index)
 	lock.Lock()
 	defer lock.Unlock()
@@ -43,6 +49,8 @@ func (h *hllSet) SetRegisterMax(index int, rho uint8) {
 }
 
 func (h *hllSet) Get(index int) uint8 {
+	h.stateLock.RLock()
+	defer h.stateLock.RUnlock()
 	lock := h.bucketLocks.GetLockForBucket(index)
 	lock.Lock()
 	defer lock.Unlock()
@@ -51,6 +59,8 @@ func (h *hllSet) Get(index int) uint8 {
 }
 
 func (h *hllSet) GetRawEstimate() float64 {
+	h.stateLock.RLock()
+	defer h.stateLock.RUnlock()
 	p := general.ConfigPercision()
 	m := 1 << p
 	alpha_m := 0.7213 / (1 + 1.079/float64(m))
@@ -58,6 +68,8 @@ func (h *hllSet) GetRawEstimate() float64 {
 }
 
 func (h *hllSet) GetElements() uint64 {
+	h.stateLock.RLock()
+	defer h.stateLock.RUnlock()
 	p := general.ConfigPercision()
 	m := 1 << p
 	alpha_m := 0.7213 / (1 + 1.079/float64(m))
@@ -123,6 +135,8 @@ func (h *hllSet) EmptySet() {
 
 // Reset clears the singleton instance for new benchmark runs.
 func (h *hllSet) Reset() {
+	h.stateLock.Lock()
+	defer h.stateLock.Unlock()
 	h._registers.Reset()
 }
 
