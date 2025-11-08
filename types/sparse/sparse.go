@@ -3,6 +3,7 @@ package sparse
 import (
 	"HLL-BTP/general"
 	"HLL-BTP/types/register/helper"
+	"fmt"
 	"sort"
 	"sync"
 )
@@ -15,6 +16,12 @@ type SparseHLL struct {
 	helper      helper.IHasher
 	mu          sync.RWMutex
 }
+
+// Public lock helpers (used by outer code)
+func (s *SparseHLL) MuLock()    { s.mu.Lock() }
+func (s *SparseHLL) MuUnlock()  { s.mu.Unlock() }
+func (s *SparseHLL) MuRLock()   { s.mu.RLock() }
+func (s *SparseHLL) MuRUnlock() { s.mu.RUnlock() }
 
 func decodeHashForMerge(k uint32) (indexPPrime uint32, rhoPrime uint8) {
 	flag := k & 1 // Get the least significant bit (flag)
@@ -112,11 +119,9 @@ func (s *SparseHLL) MergeTempSet() error {
 		}
 	}
 
-	// Append any remaining elements from either list
 	newList = append(newList, s.sorted_list[i:]...)
 	newList = append(newList, tempSlice[j:]...)
 
-	// 4. Update sorted_list and clear temp_set
 	s.sorted_list = newList
 	s.temp_set = make(map[uint32]struct{})
 
@@ -126,12 +131,12 @@ func (s *SparseHLL) MergeTempSet() error {
 func (s *SparseHLL) GetElements() uint64 {
 	p := max(25, general.ConfigPercision())
 	m := 1 << p
-	err := s.MergeTempSet()
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	err := s.mergeTempSetNoLock()
 	if err != nil {
 		panic("Can't Merge Temp Set in Sparse Mode")
 	}
-	s.mu.RLock()
-	defer s.mu.RUnlock()
 	if len(s.sorted_list) == 0 {
 		return 0
 	}
@@ -141,5 +146,164 @@ func (s *SparseHLL) GetElements() uint64 {
 func (s *SparseHLL) GetSortedList() []uint32 {
 	s.mu.RLock()
 	defer s.mu.RUnlock()
-	return s.sorted_list
+	out := make([]uint32, len(s.sorted_list))
+	copy(out, s.sorted_list)
+	return out
+}
+
+func (s *SparseHLL) GetSortedListLengthUnsafe() int {
+	return len(s.sorted_list)
+}
+
+func (s *SparseHLL) MergeTempSetIfNeeded() error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	if len(s.temp_set) > 0 {
+		return s.mergeTempSetNoLock()
+	}
+	return nil
+}
+
+// MERGE METHODS
+
+func (s *SparseHLL) MergeSparse(other *SparseHLL) error {
+	// we assume that caller holds write lock on s and READ on other
+	if other == nil {
+		return fmt.Errorf("can't merge from an empty memory")
+	}
+	// we assume both sets had their temp sets merged with lists before this method was called.
+
+	newList := make([]uint32, 0, len(s.sorted_list)+len(other.sorted_list))
+	i, j := 0, 0
+	for i < len(s.sorted_list) && j < len(other.sorted_list) {
+		val1, val2 := s.sorted_list[i], other.sorted_list[j]
+		idx1, _ := decodeHashForMerge(val1)
+		idx2, _ := decodeHashForMerge(val2)
+
+		if idx1 < idx2 {
+			newList = append(newList, val1)
+			i++
+		} else if idx2 < idx1 {
+			newList = append(newList, val2)
+			j++
+		} else {
+			// Indices match: keep the one with the larger Rho'
+			_, rho1 := decodeHashForMerge(val1)
+			_, rho2 := decodeHashForMerge(val2)
+			if rho1 >= rho2 {
+				newList = append(newList, val1)
+			} else {
+				newList = append(newList, val2)
+			}
+			i++
+			j++
+		}
+	}
+	// Append remaining elements
+	newList = append(newList, s.sorted_list[i:]...)
+	newList = append(newList, other.sorted_list[j:]...)
+
+	// Update self's list
+	s.sorted_list = newList
+	return nil
+
+}
+
+func (s *SparseHLL) MergeIntoDense(other general.IHLL) error {
+	// assume that s is merged.
+	for _, encoded := range s.sorted_list {
+		idx, rho := general.DecodeHash(encoded, general.ConfigPercision(), pPrime)
+
+		if rho > 0 {
+			other.SetRegisterMax(int(idx), rho)
+		}
+	}
+	return nil
+}
+
+// Used when caller already holds s.mu.Lock()
+func (s *SparseHLL) MergeTempSetIfNeededNoOuterLock() error {
+	return s.mergeTempSetNoLock()
+}
+
+func (s *SparseHLL) mergeTempSetNoLock() error {
+	if len(s.temp_set) == 0 {
+		return nil
+	}
+	// consume temp_set into a slice
+	tempSlice := make([]uint32, 0, len(s.temp_set))
+	for encoded := range s.temp_set {
+		tempSlice = append(tempSlice, encoded)
+	}
+	// clear temp_set up-front to minimize time in critical section
+	s.temp_set = make(map[uint32]struct{})
+
+	sort.Slice(tempSlice, func(i, j int) bool { return tempSlice[i] < tempSlice[j] })
+
+	// merge with existing sorted_list (both under lock)
+	newList := make([]uint32, 0, len(s.sorted_list)+len(tempSlice))
+	i, j := 0, 0
+
+	for i < len(s.sorted_list) && j < len(tempSlice) {
+		oldEncoded := s.sorted_list[i]
+		newEncoded := tempSlice[j]
+
+		oldIndexPPrime, _ := decodeHashForMerge(oldEncoded)
+		newIndexPPrime, _ := decodeHashForMerge(newEncoded)
+
+		if oldIndexPPrime < newIndexPPrime {
+			newList = append(newList, oldEncoded)
+			i++
+		} else if newIndexPPrime < oldIndexPPrime {
+			newList = append(newList, newEncoded)
+			j++
+		} else {
+			_, oldRhoPrime := decodeHashForMerge(oldEncoded)
+			_, newRhoPrime := decodeHashForMerge(newEncoded)
+			if newRhoPrime >= oldRhoPrime {
+				newList = append(newList, newEncoded)
+			} else {
+				newList = append(newList, oldEncoded)
+			}
+			i++
+			j++
+		}
+	}
+	newList = append(newList, s.sorted_list[i:]...)
+	newList = append(newList, tempSlice[j:]...)
+
+	s.sorted_list = newList
+	return nil
+}
+
+func (s *SparseHLL) MergeSparseNoOuterLock(other *SparseHLL) error {
+	newList := make([]uint32, 0, len(s.sorted_list)+len(other.sorted_list))
+	i, j := 0, 0
+	for i < len(s.sorted_list) && j < len(other.sorted_list) {
+		val1, val2 := s.sorted_list[i], other.sorted_list[j]
+		idx1, _ := decodeHashForMerge(val1)
+		idx2, _ := decodeHashForMerge(val2)
+
+		if idx1 < idx2 {
+			newList = append(newList, val1)
+			i++
+		} else if idx2 < idx1 {
+			newList = append(newList, val2)
+			j++
+		} else {
+			_, rho1 := decodeHashForMerge(val1)
+			_, rho2 := decodeHashForMerge(val2)
+			if rho1 >= rho2 {
+				newList = append(newList, val1)
+			} else {
+				newList = append(newList, val2)
+			}
+			i++
+			j++
+		}
+	}
+	newList = append(newList, s.sorted_list[i:]...)
+	newList = append(newList, other.sorted_list[j:]...)
+	s.sorted_list = newList
+	return nil
 }

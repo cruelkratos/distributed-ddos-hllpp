@@ -9,17 +9,6 @@ import (
 	"math"
 )
 
-type IHLL interface {
-	Insert(string)
-	GetElements() uint64
-	GetRawEstimate() float64
-	EmptySet()
-	SetRegisterMax(int, uint8)
-	Get(int) uint8
-	Reset() // Added for benchmarking
-
-}
-
 type hllSet struct {
 	bucketLocks             general.IBucketLockManager
 	_registers              *register.Registers
@@ -130,7 +119,7 @@ func (h *hllSet) Reset() {
 }
 
 // HLL
-func NewHLL(concurrent bool, algorithm string, useLargeRangeCorrection bool) (IHLL, error) {
+func NewHLL(concurrent bool, algorithm string, useLargeRangeCorrection bool) (general.IHLL, error) {
 	precision := general.ConfigPercision()
 	totalBuckets := 1 << precision
 	hashAlgo := general.ConfigAlgo()
@@ -165,4 +154,18 @@ func NewHLL(concurrent bool, algorithm string, useLargeRangeCorrection bool) (IH
 		useLargeRangeCorrection: useLargeRangeCorrection,
 	}
 	return h, nil // Return the new instance and nil error
+}
+
+func (h *hllSet) Merge(other general.IHLL) error {
+	p := general.ConfigPercision()
+	m := 1 << p
+	for i := 0; i < m; i++ {
+		otherRho := other.Get(i) // Get other's value
+		if otherRho > 0 {
+			// SetRegisterMax efficiently updates our register
+			// only if the other value is greater.
+			h.SetRegisterMax(i, otherRho)
+		}
+	}
+	return nil
 }
