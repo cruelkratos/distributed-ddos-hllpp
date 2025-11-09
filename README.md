@@ -165,7 +165,6 @@ The script will display the plots and save them as image files.
 ## Future Work
 
 - **Implement gRPC/REST Server**: Wrap the HLL++ instance in a network service (`/insert`, `/estimate`, `/getSketch`).
-- **Implement Merge() Method**: Add functionality to merge two HLL sketches (essential for distributed counting).
 - **Distributed Architecture**: Design and implement worker nodes and an aggregator node using the server and merge capabilities.
 - **DDoS Detection Logic**: Implement time-windowed counting and threshold-based alerting on the aggregator.
 - **Advanced Sparse Compression**: Implement variable-length and difference encoding for the `sparse_list` as described in the paper for further memory optimization.
