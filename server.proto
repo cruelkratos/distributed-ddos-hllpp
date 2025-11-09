@@ -1,0 +1,114 @@
+syntax = "proto3";
+
+// Defines the Go package path where the generated code will live.
+// Adjust this to match your new gRPC server directory.
+option go_package = "HLL-BTP/server/pb";
+
+// Package name for the protobuf definitions
+package hllservice;
+
+// ---------------------------------
+// Service Definition
+// ---------------------------------
+
+// HllService provides RPC methods to interact with a HLL++ sketch.
+service HllService {
+    // Inserts a single IP into the sketch.
+    rpc Insert (InsertRequest) returns (InsertResponse);
+
+    // Gets the current cardinality estimate from the sketch.
+    rpc GetEstimate (GetEstimateRequest) returns (GetEstimateResponse);
+    
+    // Resets the sketch to its empty, initial state (sparse).
+    rpc Reset (ResetRequest) returns (ResetResponse);
+
+    // --- Distributed Operations ---
+
+    // Retrieves the raw sketch data for merging on an aggregator.
+    // This is the "PULL" method for aggregation.
+    rpc GetSketch (GetSketchRequest) returns (Sketch);
+
+    // Merges an incoming sketch into this node's local sketch.
+    // This is the "PUSH" method for aggregation.
+    rpc MergeSketch (MergeRequest) returns (MergeResponse);
+
+    // Standard health check for Kubernetes liveness/readiness probes.
+    rpc Health (HealthRequest) returns (HealthResponse);
+}
+
+// ---------------------------------
+// Core Sketch Messages
+// ---------------------------------
+
+// Sketch is the "shipping container" for your HLL++ data.
+// It can represent either the sparse or dense state.
+message Sketch {
+    // The target precision (p, e.g., 14).
+    // Used to ensure merged sketches are compatible.
+    int32 p = 1;
+
+    // The sparse precision (p', e.g., 25).
+    // Used to correctly decode sparse lists.
+    int32 p_prime = 2;
+
+    // The data itself, using 'oneof' to save space.
+    // Only one of these fields will be set.
+    oneof data {
+        // For FormatSparse
+        SparseData sparse_data = 3; 
+
+        // For FormatDense
+        // This is the raw byte slice from your 'register.Registers' _data field.
+        bytes dense_data = 4;
+    }
+}
+
+// Represents the data needed for a sparse HLL.
+message SparseData {
+    // This is the `sorted_list` of encoded uint32 values.
+    // The `temp_set` should be merged into this list *before* sending.
+    repeated uint32 sorted_list = 1;
+}
+
+// ---------------------------------
+// RPC Method Messages
+// ---------------------------------
+
+// Insert
+message InsertRequest {
+    string ip = 1;
+}
+message InsertResponse {
+    // Empty on success. Errors are handled by gRPC status.
+}
+
+// GetEstimate
+message GetEstimateRequest {}
+message GetEstimateResponse {
+    uint64 estimate = 1;
+}
+
+// Reset
+message ResetRequest {}
+message ResetResponse {}
+
+// GetSketch
+message GetSketchRequest {}
+// (Response is the Sketch message directly)
+
+// MergeSketch
+message MergeRequest {
+    Sketch sketch = 1;
+}
+message MergeResponse {}
+
+// Health
+message HealthRequest {}
+message HealthResponse {
+    enum ServingStatus {
+        UNKNOWN = 0;
+        SERVING = 1;
+        NOT_SERVING = 2;
+    }
+    ServingStatus status = 1;
+}
