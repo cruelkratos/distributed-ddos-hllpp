@@ -3,6 +3,7 @@
 ![Go](https://img.shields.io/badge/Go-00ADD8?logo=Go&logoColor=white&style=for-the-badge)
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 
+[![Go](https://github.com/cruelkratos/distributed-ddos-hllpp/actions/workflows/go_build_test_pipeline.yml/badge.svg)](https://github.com/cruelkratos/distributed-ddos-hllpp/actions/workflows/go_build_test_pipeline.yml)
 
 ## Overview
 
