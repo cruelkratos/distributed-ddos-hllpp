@@ -20,7 +20,7 @@ func main() {
 	flag.Parse()
 
 	b := benchmark.NewBenchmarker(*numWorkers, *algorithmFlag, *maxIPs, *logInterval, *outputFile, *mode)
-	if err := b.Run(); err != nil {
+	if err := b.RunMemoryBenchmark(); err != nil {
 		log.Fatalf("Benchmark Failed!!! %v", err)
 	}
 }

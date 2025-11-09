@@ -7,6 +7,7 @@ import (
 	"math/rand"
 	"net"
 	"os"
+	"runtime"
 	"sync"
 	"time"
 )
@@ -184,4 +185,149 @@ func insertWorker(id int, ipsToInsert []string, instance *hll.Hllpp_set, uniqueM
 		uniqueMap[ip] = struct{}{}
 	}
 	mapMutex.Unlock()
+}
+
+type MemStats struct {
+	Alloc     uint64
+	HeapAlloc uint64
+	HeapInuse uint64
+}
+
+func getMemStats() MemStats {
+	runtime.GC() // Force GC to get accurate measurement
+	runtime.GC() // Call twice to ensure full collection
+	var m runtime.MemStats
+	runtime.ReadMemStats(&m)
+	return MemStats{
+		Alloc:     m.Alloc,
+		HeapAlloc: m.HeapAlloc,
+		HeapInuse: m.HeapInuse,
+	}
+}
+
+func formatBytes(bytes uint64) string {
+	const unit = 1024
+	if bytes < unit {
+		return fmt.Sprintf("%d B", bytes)
+	}
+	div, exp := uint64(unit), 0
+	for n := bytes / unit; n >= unit; n /= unit {
+		div *= unit
+		exp++
+	}
+	return fmt.Sprintf("%.2f %cB", float64(bytes)/float64(div), "KMGTPE"[exp])
+}
+
+// RunMemoryBenchmark measures memory usage of HLL++ implementation
+func (b *Benchmarker) RunMemoryBenchmark() error {
+	f, err := os.Create(b.outputFile)
+	if err != nil {
+		return fmt.Errorf("failed to create output file '%s': %v", b.outputFile, err)
+	}
+	defer f.Close()
+
+	isConcurrent := b.mode == "concurrent"
+	p := 14 // Fixed precision
+	m := 1 << p
+
+	fmt.Printf("Starting memory benchmark...\n")
+	fmt.Printf(" - Algorithm: %s\n", b.algorithmFlag)
+	fmt.Printf(" - Mode: %s\n", b.mode)
+	fmt.Printf(" - Precision: %d (m=%d registers)\n", p, m)
+	fmt.Printf(" - Total IPs to process: %d\n", b.maxIPs)
+	fmt.Printf(" - Output will be saved to: %s\n\n", b.outputFile)
+
+	// Calculate theoretical size
+	theoreticalBytes := (m * 6) / 8 // 6 bits per register
+	fmt.Printf("Theoretical register size: %s\n\n", formatBytes(uint64(theoreticalBytes)))
+
+	// Measure baseline (before creating HLL)
+	baseline := getMemStats()
+	fmt.Printf("Baseline memory: %s\n", formatBytes(baseline.Alloc))
+
+	// Create HLL instance
+	instance := hll.GetHLLPP(isConcurrent)
+	afterCreate := getMemStats()
+	creationMem := afterCreate.Alloc - baseline.Alloc
+
+	fmt.Printf("After HLL creation: %s (overhead: %s)\n",
+		formatBytes(afterCreate.Alloc),
+		formatBytes(creationMem))
+
+	headerLine := fmt.Sprintf("%-15s | %-15s | %-15s | %-15s | %-15s | %-10s\n",
+		"IPs Processed", "HLL Estimate", "Memory Used", "Delta", "Overhead", "Time(s)")
+	fmt.Print(headerLine)
+	f.WriteString(headerLine)
+	f.WriteString("---------------------------------------------------------------------------------------------------\n")
+
+	totalProcessed := 0
+	lastMem := afterCreate.Alloc
+	start := time.Now()
+
+	// Process IPs in intervals
+	for totalProcessed < b.maxIPs {
+		ipsInInterval := b.logInterval
+		remainingIPs := b.maxIPs - totalProcessed
+		if ipsInInterval > remainingIPs {
+			ipsInInterval = remainingIPs
+		}
+		if ipsInInterval <= 0 {
+			break
+		}
+
+		// Insert IPs for this interval
+		for i := 0; i < ipsInInterval; i++ {
+			ip := b.ipList[totalProcessed+i]
+			instance.Insert(ip)
+		}
+
+		totalProcessed += ipsInInterval
+
+		// Measure memory after insertions
+		afterInsert := getMemStats()
+		currentMem := afterInsert.Alloc
+		totalMem := currentMem - baseline.Alloc
+		deltaMem := currentMem - lastMem
+		overhead := totalMem - uint64(theoreticalBytes)
+		elapsed := time.Since(start)
+
+		estimate := instance.GetElements()
+
+		outputLine := fmt.Sprintf("%-15d | %-15d | %-15s | %-15s | %-15s | %-10.2f\n",
+			totalProcessed,
+			estimate,
+			formatBytes(totalMem),
+			formatBytes(deltaMem),
+			formatBytes(overhead),
+			elapsed.Seconds())
+
+		fmt.Print(outputLine)
+		f.WriteString(outputLine)
+
+		lastMem = currentMem
+	}
+
+	// Final summary
+	finalMem := getMemStats()
+	totalMemUsed := finalMem.Alloc - baseline.Alloc
+	overhead := totalMemUsed - uint64(theoreticalBytes)
+	overheadPercent := float64(overhead) / float64(theoreticalBytes) * 100
+
+	summaryLine := fmt.Sprintf("\n=== Memory Benchmark Summary ===\n"+
+		"Theoretical size: %s\n"+
+		"Actual memory used: %s\n"+
+		"Overhead: %s (%.2f%%)\n"+
+		"Total time: %.2fs\n",
+		formatBytes(uint64(theoreticalBytes)),
+		formatBytes(totalMemUsed),
+		formatBytes(overhead),
+		overheadPercent,
+		time.Since(start).Seconds())
+
+	fmt.Print(summaryLine)
+	f.WriteString(summaryLine)
+
+	fmt.Println("\nMemory benchmark finished successfully!")
+	instance.Reset()
+	return nil
 }
