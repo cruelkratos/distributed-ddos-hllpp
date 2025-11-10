@@ -3,7 +3,6 @@ package dataclasses
 import (
 	"HLL-BTP/general"
 	"math"
-	"sync"
 	"sync/atomic"
 )
 
@@ -11,11 +10,11 @@ type ISum interface {
 	ChangeSum(a, b uint8)
 	GetSum() float64
 	Reset()
-	// Store(float64)
+	Store(float64) // Added for Recalculate
 }
 
 type Sum struct {
-	mu  sync.Mutex
+	// mu  sync.Mutex
 	val atomic.Uint64
 }
 
@@ -52,8 +51,6 @@ func (s *Sum) GetSum() float64 {
 }
 
 func (s *Sum) Reset() {
-	s.mu.Lock()
-	defer s.mu.Unlock()
 	p := general.ConfigPercision()
 	m := 1 << p
 	s.Store(float64(m))
@@ -78,7 +75,13 @@ func (s *SumNonConcurrent) GetSum() float64 {
 }
 
 func (s *SumNonConcurrent) Reset() {
+	// Reset logic already implemented by you
 	p := general.ConfigPercision()
 	m := 1 << p
 	s.val = float64(m)
+}
+
+// Store implementation for non-concurrent version
+func (s *SumNonConcurrent) Store(f float64) {
+	s.val = f
 }

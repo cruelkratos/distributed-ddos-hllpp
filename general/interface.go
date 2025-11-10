@@ -9,4 +9,6 @@ type IHLL interface {
 	Get(int) uint8
 	Reset() // Added for benchmarking
 	Merge(IHLL) error
+	GetRegisters() []byte
+	SetRegisters([]byte) error
 }

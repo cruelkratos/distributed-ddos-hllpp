@@ -4,6 +4,7 @@ import (
 	"HLL-BTP/dataclasses"
 	"HLL-BTP/general"
 	"fmt"
+	"math"
 )
 
 // Dense Register Implementation
@@ -118,4 +119,38 @@ func (R *Registers) Reset() {
 	for i := range R._data {
 		R._data[i] = 0
 	}
+}
+func (R *Registers) GetDataCopy() []byte {
+
+	// Create a new slice of the exact same size
+	dataCopy := make([]byte, len(R._data))
+	// Deep copy the contents
+	copy(dataCopy, R._data)
+	return dataCopy
+}
+func (R *Registers) SetData(data []byte) error {
+	if len(data) != len(R._data) {
+		return fmt.Errorf("data size mismatch: expected %d bytes, got %d", len(R._data), len(data))
+	}
+	copy(R._data, data)
+	return nil
+}
+func (R *Registers) Recalculate() error {
+	var newSum float64
+	var newZeros uint16
+
+	for i := 0; i < R.Size; i++ {
+		rho := R.getNoLock(i) // Read the value
+
+		if rho == 0 {
+			newZeros++
+		}
+		// Calculate the contribution to the sum (2^-rho)
+		newSum += math.Ldexp(1.0, -1*int(rho))
+	}
+
+	// Set the counters to the newly calculated values
+	R.Sum.Store(newSum)
+	R.Zeros.Store(newZeros)
+	return nil
 }

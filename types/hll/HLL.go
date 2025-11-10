@@ -194,3 +194,25 @@ func (h *hllSet) Merge(other general.IHLL) error {
 	}
 	return nil
 }
+
+func (h *hllSet) GetRegisters() []byte {
+	return h._registers.GetDataCopy()
+}
+func (h *hllSet) SetRegisters(data []byte) error {
+	//ONLY CALLED ON A NEW SET DONT USE AS IT IS NOT THREAD SAFE !!!!
+	// This method deserializes a dense sketch.
+	// It assumes the caller holds the main lock (e.g., h.mu).
+
+	// Check if data size matches expected size
+	p := general.ConfigPercision()
+	m := 1 << p
+	expectedBytes := (m*6 + 7) / 8
+	if len(data) != expectedBytes {
+		return fmt.Errorf("data size mismatch: expected %d bytes, got %d", expectedBytes, len(data))
+	}
+
+	h._registers.SetData(data) // Need SetData method in register.Registers
+
+	// Recalculate Sum and Zeros
+	return h._registers.Recalculate() // Need Recalculate method in register.Registers
+}

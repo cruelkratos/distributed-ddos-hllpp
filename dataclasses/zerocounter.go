@@ -2,7 +2,6 @@ package dataclasses
 
 import (
 	"HLL-BTP/general"
-	"sync"
 	"sync/atomic"
 )
 
@@ -12,28 +11,26 @@ type IZeroCounter interface {
 	Dec()
 	Get() uint16
 	Reset()
+	Store(uint16) // Added for Recalculate
 }
 
 // ZeroCounter is the thread-safe implementation.
 type ZeroCounter struct {
 	val atomic.Uint32
-	mu  sync.Mutex
 }
 
 func NewZeroCounter(vals ...uint16) *ZeroCounter {
-	if len(vals) > 0 {
-		z := &ZeroCounter{}
-		z.Store(vals[0])
-		return z
-	}
 	z := &ZeroCounter{}
-	z.Store(0)
+	if len(vals) > 0 {
+		z.Store(vals[0])
+	} else {
+		z.Store(0)
+	}
 	return z
 }
 
 func (z *ZeroCounter) Store(v uint16) {
 	z.val.Store(uint32(v))
-
 }
 
 func (z *ZeroCounter) Inc() {
@@ -41,7 +38,7 @@ func (z *ZeroCounter) Inc() {
 }
 
 func (z *ZeroCounter) Dec() {
-	z.val.Add(^uint32(0))
+	z.val.Add(^uint32(0)) // Atomic decrement
 }
 
 func (z *ZeroCounter) Get() uint16 {
@@ -49,12 +46,10 @@ func (z *ZeroCounter) Get() uint16 {
 }
 
 func (z *ZeroCounter) Reset() {
-	z.mu.Lock()
-	defer z.mu.Unlock()
-
+	// Reset logic already implemented by you
 	p := general.ConfigPercision()
 	m := 1 << p
-	z.val.Store(uint32(m))
+	z.Store(uint16(m))
 }
 
 // ZeroCounterNonConcurrent is the non-thread-safe implementation.
@@ -85,4 +80,9 @@ func (z *ZeroCounterNonConcurrent) Reset() {
 	p := general.ConfigPercision()
 	m := 1 << p
 	z.val = uint16(m)
+}
+
+// Store implementation for non-concurrent version
+func (z *ZeroCounterNonConcurrent) Store(v uint16) {
+	z.val = v
 }

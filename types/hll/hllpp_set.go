@@ -2,6 +2,7 @@ package hll
 
 import (
 	"HLL-BTP/general"
+	pb "HLL-BTP/server"
 	"HLL-BTP/types/sparse"
 	"fmt"
 	"sync"
@@ -34,12 +35,12 @@ func GetHLLPP(c bool) *Hllpp_set {
 	return h
 }
 
-func (h *Hllpp_set) Insert(ip string) {
+func (h *Hllpp_set) Insert(ip string) error {
 	if h.format.Load() == FormatSparse {
 		sparse := h.sparse_set.Load()
 		if sparse == nil {
 			h.dense_set.Insert(ip)
-			return
+			return nil
 		}
 		sparse.Insert(ip)
 		m := 1 << general.ConfigPercision()
@@ -57,6 +58,7 @@ func (h *Hllpp_set) Insert(ip string) {
 	} else {
 		h.dense_set.Insert(ip)
 	}
+	return nil
 }
 
 // Assumes caller holds h.mu.Lock()
@@ -253,4 +255,71 @@ func (h *Hllpp_set) Reset() {
 			h.dense_set.Reset()
 		}
 	}
+}
+
+func (h *Hllpp_set) ExportSketch() (*pb.Sketch, error) {
+	sketch := &pb.Sketch{
+		P:      int32(general.ConfigPercision()),
+		PPrime: int32(pPrime),
+	}
+	format := h.format.Load() // Atomic Op
+	if format == FormatSparse {
+		sparse := h.sparse_set.Load()
+		if sparse == nil {
+			return nil, fmt.Errorf("Sparse Set Nil During Export Try Again.")
+		}
+		h.mu.Lock()
+		if h.format.Load() == FormatSparse {
+			sparse := h.sparse_set.Load()
+			if sparse != nil {
+				sparse.MergeTempSetIfNeeded()
+				sketch.Data = &pb.Sketch_SparseData{
+					SparseData: &pb.SparseData{
+						SortedList: h.sparse_set.Load().GetSortedList(),
+					},
+				}
+			}
+			h.mu.Unlock()
+			return sketch, nil
+		}
+		h.mu.Unlock()
+		h.mu.RLock()
+	}
+	// now if we transitioned to dense.
+	defer h.mu.RUnlock()
+	if h.dense_set == nil {
+		return nil, fmt.Errorf("dense set is NULL")
+	}
+	sketch.Data = &pb.Sketch_DenseData{
+		DenseData: h.dense_set.GetRegisters(),
+	}
+	return sketch, nil
+}
+
+func NewHllppSetFromSketch(sketch *pb.Sketch) (*Hllpp_set, error) {
+	if sketch == nil {
+		return nil, fmt.Errorf("Can't Create HLL from nil.")
+	}
+	tempHLL := GetHLLPP(true)
+	switch data := sketch.Data.(type) {
+	case *pb.Sketch_SparseData:
+		tempHLL.format.Store(FormatSparse)
+		tempHLL.sparse_set.Load().SetSortedList(data.SparseData.SortedList)
+
+	case *pb.Sketch_DenseData:
+		denseInstance, _ := NewHLL(true, "hllpp", false)
+		err := denseInstance.SetRegisters(data.DenseData) // Need SetRegisters method
+		if err != nil {
+			return nil, fmt.Errorf("failed to load dense registers: %w", err)
+		}
+
+		tempHLL.format.Store(FormatDense)
+		tempHLL.dense_set = denseInstance
+		tempHLL.sparse_set.Store(nil)
+
+	default:
+		return nil, fmt.Errorf("unknown sketch data type")
+	}
+
+	return tempHLL, nil
 }

@@ -276,6 +276,13 @@ func (s *SparseHLL) mergeTempSetNoLock() error {
 	return nil
 }
 
+func (s *SparseHLL) SetSortedList(list []uint32) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	s.sorted_list = list
+	s.temp_set = make(map[uint32]struct{}) // Ensure temp_set is empty
+}
+
 func (s *SparseHLL) MergeSparseNoOuterLock(other *SparseHLL) error {
 	newList := make([]uint32, 0, len(s.sorted_list)+len(other.sorted_list))
 	i, j := 0, 0
