@@ -62,13 +62,11 @@ func (s *server) GetSketch(ctx context.Context, req *pb.GetSketchRequest) (*pb.S
 
 // MergeSketch is the RPC handler for receiving and merging another sketch
 func (s *server) MergeSketch(ctx context.Context, req *pb.MergeRequest) (*pb.MergeResponse, error) {
-	// 1. "Re-hydrate" the incoming sketch message into a temporary HLL object
 	tempHLL, err := hll.NewHllppSetFromSketch(req.Sketch)
 	if err != nil {
 		return nil, status.Errorf(codes.InvalidArgument, "Failed to decode sketch: %v", err)
 	}
 
-	// 2. Call your existing, thread-safe Go merge method
 	if err := s.hllInstance.MergeSets(tempHLL); err != nil {
 		return nil, status.Errorf(codes.Internal, "Failed to merge sketch: %v", err)
 	}
@@ -82,7 +80,6 @@ func (s *server) Health(ctx context.Context, req *pb.HealthRequest) (*pb.HealthR
 	return &pb.HealthResponse{Status: pb.HealthResponse_SERVING}, nil
 }
 
-// main function to run the server
 func main() {
 	lis, err := net.Listen("tcp", ":8080") // Listen on port 8080
 	if err != nil {
