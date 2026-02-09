@@ -1,0 +1,5 @@
+distinct_ips,hll_memory_bytes,exact_memory_bytes,hll_estimate
+1000,24576,16,1000
+10000,24576,0,10011
+100000,24576,5168,100005
+1000000,24576,192,987072

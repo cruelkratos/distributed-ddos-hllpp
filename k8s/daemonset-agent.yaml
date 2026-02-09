@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: ddos-agent
+  labels:
+    app: ddos-agent
+spec:
+  selector:
+    matchLabels:
+      app: ddos-agent
+  template:
+    metadata:
+      labels:
+        app: ddos-agent
+    spec:
+      # Run packet capture agent on every node
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+      containers:
+        - name: agent
+          image: your-registry/ddos-agent:latest
+          imagePullPolicy: IfNotPresent
+          command:
+            - /agent
+          args:
+            - -iface=eth0
+            - -window=10s
+            - -threshold=5000
+            - -metrics=:9090
+          # Optional: override via env or ConfigMap: IFACE, WINDOW_DURATION, THRESHOLD, AGGREGATOR_ADDR
+          ports:
+            - containerPort: 9090
+              name: metrics
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 100m
+              memory: 64Mi
+            limits:
+              cpu: 500m
+              memory: 128Mi
+          securityContext:
+            capabilities:
+              add:
+                - NET_RAW
+            # required for pcap on many clusters
+            privileged: false
+          livenessProbe:
+            httpGet:
+              path: /metrics
+              port: 9090
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /metrics
+              port: 9090
+            initialDelaySeconds: 5
+            periodSeconds: 10
+      tolerations:
+        - operator: Exists
