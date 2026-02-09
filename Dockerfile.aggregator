@@ -1,0 +1,21 @@
+FROM golang:1.21 AS builder
+WORKDIR /app
+
+# Copy go mod files first for better caching
+COPY go.mod go.sum ./
+
+# Download dependencies directly (bypass proxy if needed)
+RUN go env -w GOPROXY=direct
+RUN go mod download
+
+# Copy source code
+COPY . .
+
+# Build the gRPC aggregator/server binary for Linux
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /aggregator ./.
+
+FROM gcr.io/distroless/base-debian12
+COPY --from=builder /aggregator /aggregator
+
+ENTRYPOINT ["/aggregator"]
+

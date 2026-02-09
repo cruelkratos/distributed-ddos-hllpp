@@ -18,15 +18,20 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: agent
-          image: your-registry/ddos-agent:latest
+          # Built and pushed as docker.io/gaud4/ddos-agent:latest
+          image: docker.io/gaud4/ddos-agent:latest
           imagePullPolicy: IfNotPresent
           command:
             - /agent
           args:
-            - -iface=eth0
+            # Leave iface empty to let pcap choose a default interface,
+            # or set explicitly (e.g. -iface=eth0)
+            - -iface=
             - -window=10s
             - -threshold=5000
             - -metrics=:9090
+            - -check=1s
+            - -ips-buf=10000
           # Optional: override via env or ConfigMap: IFACE, WINDOW_DURATION, THRESHOLD, AGGREGATOR_ADDR
           ports:
             - containerPort: 9090
@@ -43,8 +48,9 @@ spec:
             capabilities:
               add:
                 - NET_RAW
-            # required for pcap on many clusters
-            privileged: false
+                - NET_ADMIN
+            # required for pcap on many clusters; relax if your CNI allows
+            privileged: true
           livenessProbe:
             httpGet:
               path: /metrics

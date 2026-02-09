@@ -1,0 +1,31 @@
+# Build artifacts
+agent
+aggregator
+*.exe
+*.so
+*.so.*
+libpcap.so*
+libdbus-*.so*
+
+# Downloaded binaries
+grpcurl*.tar.gz
+*.tar.gz
+
+# Temporary scripts (one-time use)
+upgrade-go.sh
+test.sh
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs and temporary files
+*.log
+*.tmp

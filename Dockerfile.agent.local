@@ -1,0 +1,36 @@
+# Alternative Dockerfile: build binary locally first, then copy into image
+# Usage: 
+#   1. Build locally: CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build -o agent ./cmd/agent
+#   2. Copy libpcap: The build script will copy libpcap.so* files to current directory
+#   3. Build image: docker build -f Dockerfile.agent.local -t docker.io/gaud4/ddos-agent:latest .
+
+# Use Ubuntu base (matches host system)
+FROM ubuntu:22.04
+
+# Copy libpcap libraries from host (build script copies these to current dir)
+COPY libpcap.so* /usr/lib/x86_64-linux-gnu/
+
+# Copy libdbus libraries if build script provided them
+# (Build script will copy these if available on host)
+COPY libdbus-1.so* /usr/lib/x86_64-linux-gnu/
+
+# Install libdbus only if not already present (libdbus-1.so.3 check)
+# Since we copied libdbus above, this should be a no-op, but we keep it as fallback
+RUN if [ ! -f /usr/lib/x86_64-linux-gnu/libdbus-1.so.3 ]; then \
+        apt-get update && \
+        apt-get install -y --no-install-recommends libdbus-1-3 && \
+        rm -rf /var/lib/apt/lists/*; \
+    else \
+        echo "libdbus already present, skipping apt install"; \
+    fi
+
+# Copy config.json (required by agent at startup, same as aggregator)
+COPY config.json /config.json
+
+# Copy the agent binary
+COPY agent /agent
+
+# Run from / so config.json is found as /config.json - agent looks for "config.json" in cwd
+WORKDIR /
+# Use wrapper so we run from / where config.json lives
+ENTRYPOINT ["/agent"]

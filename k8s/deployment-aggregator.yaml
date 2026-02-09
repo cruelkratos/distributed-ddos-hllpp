@@ -16,14 +16,12 @@ spec:
     spec:
       containers:
         - name: aggregator
-          image: your-registry/ddos-aggregator:latest
+          # Built and pushed as docker.io/gaud4/ddos-aggregator:latest
+          image: docker.io/gaud4/ddos-aggregator:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
               name: grpc
-              protocol: TCP
-            - containerPort: 9090
-              name: metrics
               protocol: TCP
           resources:
             requests:
@@ -33,12 +31,12 @@ spec:
               cpu: 500m
               memory: 256Mi
           livenessProbe:
-            grpc:
+            tcpSocket:
               port: 8080
             initialDelaySeconds: 10
             periodSeconds: 30
           readinessProbe:
-            grpc:
+            tcpSocket:
               port: 8080
             initialDelaySeconds: 5
             periodSeconds: 10
@@ -55,10 +53,6 @@ spec:
     - port: 8080
       targetPort: 8080
       name: grpc
-      protocol: TCP
-    - port: 9090
-      targetPort: 9090
-      name: metrics
       protocol: TCP
   selector:
     app: ddos-aggregator

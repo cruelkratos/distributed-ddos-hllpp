@@ -1,0 +1,13 @@
+# Alternative Dockerfile: build binary locally first, then copy into image
+# Usage:
+#   1. Build locally: CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o aggregator .
+#   2. Build image: docker build -f Dockerfile.aggregator.local -t docker.io/gaud4/ddos-aggregator:latest .
+
+FROM gcr.io/distroless/base-debian12
+# Copy config.json to current directory (where the binary expects it)
+COPY config.json /config.json
+# Copy the aggregator binary
+COPY aggregator /aggregator
+# Set working directory so config.json is in the current directory
+WORKDIR /
+ENTRYPOINT ["/aggregator"]

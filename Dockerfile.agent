@@ -1,0 +1,23 @@
+FROM golang:1.21 AS builder
+WORKDIR /app
+
+# Copy go mod files first for better caching
+COPY go.mod go.sum ./
+
+# Download dependencies directly (bypass proxy if needed)
+RUN go env -w GOPROXY=direct
+RUN go mod download
+
+# Copy source code
+COPY . .
+
+# Build binary
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /agent ./cmd/agent
+
+# Minimal runtime image (no shell, small surface)
+FROM gcr.io/distroless/base-debian12
+COPY --from=builder /agent /agent
+
+# Default entrypoint; flags are provided via Kubernetes args
+ENTRYPOINT ["/agent"]
+
