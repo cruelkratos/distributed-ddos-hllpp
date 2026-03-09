@@ -1,12 +1,15 @@
 package general
 
 import (
+	_ "embed"
 	"encoding/json"
 	"math"
 	"math/bits"
-	"os"
 	"sync"
 )
+
+//go:embed config.json
+var configData []byte
 
 var (
 	algo  string = ""
@@ -17,17 +20,10 @@ func ConfigAlgo() string {
 	if algo != "" {
 		return algo
 	}
-	data, err := os.ReadFile("config.json")
-	if err != nil {
-		panic(err)
-	}
-
-	// Unmarshal into a map
 	var config map[string]interface{}
-	if err := json.Unmarshal(data, &config); err != nil {
+	if err := json.Unmarshal(configData, &config); err != nil {
 		panic(err)
 	}
-
 	hashAlgo := config["hashAlgorithm"].(string)
 	algo = hashAlgo
 	return hashAlgo
@@ -37,14 +33,8 @@ func ConfigPercision() int {
 	if p_val != -1 {
 		return p_val
 	}
-	data, err := os.ReadFile("config.json")
-	if err != nil {
-		panic(err)
-	}
-
-	// Unmarshal into a map
 	var config map[string]interface{}
-	if err := json.Unmarshal(data, &config); err != nil {
+	if err := json.Unmarshal(configData, &config); err != nil {
 		panic(err)
 	}
 	precision := int(config["precision"].(float64))

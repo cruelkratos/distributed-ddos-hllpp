@@ -1,0 +1,131 @@
+# In-cluster SYN flood pod for testing DDoS detection.
+#
+# This pod runs hping3 inside the cluster and sends SYN packets directly to the
+# Docker Desktop node IP.  Because the agent has hostNetwork=true, it will see
+# all traffic on the node and count the distinct source IPs.
+#
+# Since hping3 uses a single (real) source IP, we pair it with a Python script
+# that injects traffic via the loopback OR we use the flood-pod approach below
+# which uses multiple parallel hping3 processes.
+#
+# Simpler alternative: the flood-pod runs a small Python/Scapy script that
+# generates random source IPs — no Npcap needed, runs inside Linux.
+#
+# Deploy:   kubectl apply -f k8s/flood-pod.yaml
+# Monitor:  kubectl logs -f pod/flood-pod
+# Remove:   kubectl delete pod flood-pod
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: flood-pod
+  labels:
+    app: flood-pod
+spec:
+  # Use host network so traffic goes through the node's eth0 where the agent
+  # is capturing.  Without hostNetwork the traffic stays on the pod overlay
+  # network and the agent (also on hostNetwork) still sees it, but using
+  # hostNetwork makes it unambiguous.
+  hostNetwork: true
+  containers:
+    - name: flooder
+      image: python:3.12-slim
+      command:
+        - python3
+        - -c
+        - |
+          import socket, random, struct, time
+
+          # Raw IP socket — sends IP packets directly, no pcap/Npcap needed.
+          # We craft minimalist TCP SYN packets with random source IPs.
+          TARGET = "192.168.65.1"  # Docker Desktop default gateway — routes through eth0
+          PORT   = 80
+          BATCH  = 20000    # packets per burst — ~1s of traffic at comfortable rate
+          ROUNDS = 20       # repeat flood to cover multiple 10s windows
+          PAUSE  = 3        # seconds between rounds (well within each window)
+
+          def checksum(data):
+              if len(data) % 2:
+                  data += b'\x00'
+              s = 0
+              for i in range(0, len(data), 2):
+                  s += (data[i] << 8) + data[i+1]
+              while s >> 16:
+                  s = (s & 0xFFFF) + (s >> 16)
+              return ~s & 0xFFFF
+
+          def make_packet(src_ip, dst_ip, dport):
+              # IP header (no options)
+              ihl     = 5
+              ver     = 4
+              tos     = 0
+              tot_len = 40          # IP(20) + TCP(20)
+              ip_id   = random.randint(0, 65535)
+              frag    = 0
+              ttl     = 64
+              proto   = 6           # TCP
+              src     = socket.inet_aton(src_ip)
+              dst     = socket.inet_aton(dst_ip)
+              ip_hdr  = struct.pack('!BBHHHBBH4s4s',
+                          (ver << 4) | ihl, tos, tot_len, ip_id, frag,
+                          ttl, proto, 0, src, dst)
+              ip_cs   = checksum(ip_hdr)
+              ip_hdr  = struct.pack('!BBHHHBBH4s4s',
+                          (ver << 4) | ihl, tos, tot_len, ip_id, frag,
+                          ttl, proto, ip_cs, src, dst)
+
+              # TCP header (SYN, seq=0)
+              sport   = random.randint(1024, 65535)
+              seq     = 0
+              ack     = 0
+              offset  = (5 << 4)    # data offset = 5 words
+              flags   = 0x002        # SYN
+              window  = 65535
+              tcp_hdr = struct.pack('!HHLLBBHHH',
+                          sport, dport, seq, ack, offset, flags, window, 0, 0)
+              # pseudo-header for TCP checksum
+              pseudo  = src + dst + struct.pack('!BBH', 0, proto, len(tcp_hdr))
+              tcp_cs  = checksum(pseudo + tcp_hdr)
+              tcp_hdr = struct.pack('!HHLLBBHHH',
+                          sport, dport, seq, ack, offset, flags, window, tcp_cs, 0)
+
+              return ip_hdr + tcp_hdr
+
+          print(f"[*] Flooding {TARGET}:{PORT} — {ROUNDS} rounds of {BATCH} pkts each (pause={PAUSE}s)")
+          sock = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_RAW)
+          sock.setsockopt(socket.IPPROTO_IP, socket.IP_HDRINCL, 1)
+
+          for rnd in range(ROUNDS):
+              sent = 0
+              while sent < BATCH:
+                  src = f"10.{random.randint(0,255)}.{random.randint(0,255)}.{random.randint(1,254)}"
+                  pkt = make_packet(src, TARGET, PORT)
+                  try:
+                      sock.sendto(pkt, (TARGET, 0))
+                  except Exception:
+                      pass
+                  sent += 1
+              print(f"[round {rnd+1}/{ROUNDS}] sent {BATCH} packets, sleeping {PAUSE}s...")
+              time.sleep(PAUSE)
+
+          sock.close()
+          print("[+] All rounds complete. Sleeping so pod stays alive for inspection.")
+          time.sleep(3600)
+      env:
+        - name: PYTHONUNBUFFERED
+          value: "1"
+      securityContext:
+        capabilities:
+          add:
+            - NET_RAW
+            - NET_ADMIN
+      resources:
+        requests:
+          cpu: 200m
+          memory: 64Mi
+        limits:
+          cpu: "1"
+          memory: 128Mi
+  restartPolicy: Never
+  tolerations:
+    - operator: Exists

@@ -18,8 +18,8 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: agent
-          image: your-registry/ddos-agent:latest
-          imagePullPolicy: IfNotPresent
+          image: ddos-agent:latest
+          imagePullPolicy: Never
           command:
             - /agent
           args:
@@ -27,7 +27,7 @@ spec:
             - -window=10s
             - -threshold=5000
             - -metrics=:9090
-          # Optional: override via env or ConfigMap: IFACE, WINDOW_DURATION, THRESHOLD, AGGREGATOR_ADDR
+            - -aggregator-addr=ddos-aggregator:8080
           ports:
             - containerPort: 9090
               name: metrics
@@ -43,8 +43,8 @@ spec:
             capabilities:
               add:
                 - NET_RAW
-            # required for pcap on many clusters
-            privileged: false
+            # privileged required for raw pcap on Docker Desktop / most container runtimes
+            privileged: true
           livenessProbe:
             httpGet:
               path: /metrics

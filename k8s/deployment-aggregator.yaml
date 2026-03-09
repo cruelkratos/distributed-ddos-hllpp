@@ -16,8 +16,14 @@ spec:
     spec:
       containers:
         - name: aggregator
-          image: your-registry/ddos-aggregator:latest
-          imagePullPolicy: IfNotPresent
+          image: ddos-aggregator:latest
+          imagePullPolicy: Never
+          args:
+            - -grpc=:8080
+            - -metrics=:9090
+            - -window=10s
+            - -threshold=5000
+            - -check=1s
           ports:
             - containerPort: 8080
               name: grpc
@@ -33,12 +39,12 @@ spec:
               cpu: 500m
               memory: 256Mi
           livenessProbe:
-            grpc:
+            tcpSocket:
               port: 8080
             initialDelaySeconds: 10
             periodSeconds: 30
           readinessProbe:
-            grpc:
+            tcpSocket:
               port: 8080
             initialDelaySeconds: 5
             periodSeconds: 10

@@ -81,20 +81,33 @@ func (p *PcapPacketSource) Run(ips chan<- string) error {
 		return fmt.Errorf("set BPF filter: %w", err)
 	}
 
-	source := gopacket.NewPacketSource(p.handle, p.handle.LinkType())
+	// Use ReadPacketData directly instead of gopacket.PacketSource so we can
+	// distinguish a pcap read-timeout (NextError == 0, meaning "no packet in
+	// this interval — keep going") from a real fatal error.
+	decoder := p.handle.LinkType()
+
 	for {
 		select {
 		case <-p.stopCh:
 			return nil
 		default:
 		}
-		packet, err := source.NextPacket()
+
+		data, _, err := p.handle.ReadPacketData()
 		if err != nil {
+			// In gopacket/pcap, a read-timeout fires as NextError(0)
+			// (pcap_next_ex returned 0 — no packet in this interval).
+			// This is NOT fatal; just loop back and poll again.
+			if ne, ok := err.(pcap.NextError); ok && int32(ne) == 0 {
+				continue
+			}
 			return err
 		}
-		if packet == nil {
+		if len(data) == 0 {
 			continue
 		}
+
+		packet := gopacket.NewPacket(data, decoder, gopacket.NoCopy)
 		ip := getSourceIP(packet)
 		if ip != "" {
 			select {

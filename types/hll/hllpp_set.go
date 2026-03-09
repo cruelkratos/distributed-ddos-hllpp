@@ -282,10 +282,16 @@ func (h *Hllpp_set) ExportSketch() (*pb.Sketch, error) {
 			h.mu.Unlock()
 			return sketch, nil
 		}
+		// Transitioned to dense while we held the write lock — release it,
+		// then fall through to the dense path below.
 		h.mu.Unlock()
-		h.mu.RLock()
 	}
-	// now if we transitioned to dense.
+
+	// Dense format path: always explicitly take the read lock here so the
+	// paired RUnlock() via defer is always valid (fixes the crash that occurs
+	// when the sketch starts in dense format and we never entered the sparse
+	// branch above).
+	h.mu.RLock()
 	defer h.mu.RUnlock()
 	if h.dense_set == nil {
 		return nil, fmt.Errorf("dense set is NULL")

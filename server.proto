@@ -34,6 +34,11 @@ service HllService {
 
     // Standard health check for Kubernetes liveness/readiness probes.
     rpc Health (HealthRequest) returns (HealthResponse);
+
+    // Submits a completed time-window sketch from an agent to the aggregator.
+    // The aggregator merges all incoming sketches to compute the cluster-wide
+    // distinct-IP cardinality and performs cluster-level attack detection.
+    rpc SubmitWindow (SubmitWindowRequest) returns (SubmitWindowResponse);
 }
 
 // ---------------------------------
@@ -112,3 +117,12 @@ message HealthResponse {
     }
     ServingStatus status = 1;
 }
+
+// SubmitWindow — agent → aggregator sketch push
+message SubmitWindowRequest {
+    // The window ID: time.UnixNano() / windowDuration.Nanoseconds()
+    // Used by the aggregator to align sketches to the correct time bucket.
+    int64 window_id = 1;
+    Sketch sketch = 2;
+}
+message SubmitWindowResponse {}

@@ -3,7 +3,9 @@ package window
 import (
 	"HLL-BTP/ddos/detector"
 	"HLL-BTP/general"
+	pb "HLL-BTP/server"
 	"HLL-BTP/types/hll"
+	"log"
 	"sync"
 	"sync/atomic"
 	"time"
@@ -30,6 +32,12 @@ type WindowManager struct {
 	stop      chan struct{}
 	wg        sync.WaitGroup
 	windowID  int64
+
+	// OnRotate, if set, is called in a separate goroutine after each window
+	// rotation with the time-based window ID of the just-completed window and
+	// a serialised copy of its HLL++ sketch. Safe to assign before the first
+	// rotation tick; not safe to reassign after the WindowManager is started.
+	OnRotate func(windowID int64, sketch *pb.Sketch)
 }
 
 // NewWindowManager creates a WindowManager with two HLL++ sketches, starts the rotation goroutine
@@ -70,11 +78,29 @@ func (wm *WindowManager) rotationLoop() {
 
 func (wm *WindowManager) rotate() {
 	wm.mu.Lock()
-	defer wm.mu.Unlock()
 	// Swap: current -> previous, previous -> current; then reset (new) current.
 	wm.current, wm.previous = wm.previous, wm.current
 	wm.current.Reset()
 	atomic.AddInt64(&wm.windowID, 1)
+	// Capture the pointer and compute the time-based window ID for the window
+	// that just closed before releasing the lock.
+	prevSnap := wm.previous
+	cb := wm.OnRotate
+	wm.mu.Unlock()
+
+	if cb != nil {
+		// Time-based window ID: the completed window is the one that ended at
+		// approximately now, so currentID-1 in wall-clock terms.
+		completedID := time.Now().UnixNano()/wm.windowDur.Nanoseconds() - 1
+		go func() {
+			sketch, err := prevSnap.ExportSketch()
+			if err != nil {
+				log.Printf("[window] ExportSketch failed for window_id=%d: %v", completedID, err)
+				return
+			}
+			cb(completedID, sketch)
+		}()
+	}
 }
 
 func (wm *WindowManager) checkLoop() {

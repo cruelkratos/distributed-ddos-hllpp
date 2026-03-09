@@ -1,0 +1,67 @@
+# Second agent deployed as a Deployment (not DaemonSet) to simulate a second
+# "remote node" agent for distributed-attack testing on Docker Desktop.
+#
+# On Docker Desktop (single-node), both agents capture the same host traffic.
+# The aggregator will receive two SubmitWindow RPCs per window and merge both
+# sketches. Because HLL merge is a set-union (max of registers), duplicate
+# sources cancel out — so this is a pipeline/aggregation integration test,
+# not a cardinality-doubling trick.
+#
+# To simulate a realistic multi-source attack:
+#   1.  Apply this manifest (deploys second-agent).
+#   2.  Run syn_flood.py  (sends 10.0.x.x sources).
+#   3.  Run syn_flood2.py (sends 172.16.x.x sources — fully distinct range).
+#   Both agents contribute their distinct sources to the aggregator.
+#   The merged cardinality will be ~(agent1 ∪ agent2) unique IPs.
+#
+# Deploy:  kubectl apply -f k8s/second-agent-deploy.yaml
+# Remove:  kubectl delete -f k8s/second-agent-deploy.yaml
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ddos-agent-second
+  labels:
+    app: ddos-agent-second
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ddos-agent-second
+  template:
+    metadata:
+      labels:
+        app: ddos-agent-second
+    spec:
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+      containers:
+        - name: agent
+          image: ddos-agent:latest
+          imagePullPolicy: Never
+          command:
+            - /agent
+          args:
+            - -iface=eth0
+            - -window=10s
+            - -threshold=5000
+            - -metrics=:9091        # different port to avoid conflict with DaemonSet agent
+            - -aggregator-addr=ddos-aggregator:8080
+          ports:
+            - containerPort: 9091
+              name: metrics
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 100m
+              memory: 64Mi
+            limits:
+              cpu: 500m
+              memory: 128Mi
+          securityContext:
+            capabilities:
+              add:
+                - NET_RAW
+            privileged: true
+      tolerations:
+        - operator: Exists
