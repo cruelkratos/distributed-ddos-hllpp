@@ -1,0 +1,23 @@
+# ── Build stage ─────────────────────────────────────────────────────────────────
+FROM golang:1.24-alpine AS builder
+
+# Required for gopacket / libpcap binding.
+RUN apk add --no-cache git gcc musl-dev libpcap-dev
+
+WORKDIR /src
+COPY go.mod go.sum ./
+RUN go mod download
+
+COPY . .
+RUN CGO_ENABLED=1 GOOS=linux go build -trimpath -o /bin/agent ./cmd/agent
+
+# ── Runtime stage ────────────────────────────────────────────────────────────────
+FROM alpine:3.19
+
+RUN apk add --no-cache libpcap
+
+COPY --from=builder /bin/agent /usr/local/bin/agent
+
+# Default flags – override via CMD or env in the DaemonSet manifest.
+ENTRYPOINT ["agent"]
+CMD ["-iface", "eth0", "-window", "10s", "-detector", "zscore"]
