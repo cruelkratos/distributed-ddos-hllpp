@@ -1,172 +1,209 @@
-# HyperGoLog++: An Optimized HLL++ Implementation for Scalable Cardinality Estimation
+# Distributed DDoS Detection with HyperLogLog++
 
 ![Go](https://img.shields.io/badge/Go-00ADD8?logo=Go&logoColor=white&style=for-the-badge)
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 
-[![Go](https://github.com/cruelkratos/distributed-ddos-hllpp/actions/workflows/go_build_test_pipeline.yml/badge.svg)](https://github.com/cruelkratos/distributed-ddos-hllpp/actions/workflows/go_build_test_pipeline.yml)
+[![CI](https://github.com/cruelkratos/distributed-ddos-hllpp/actions/workflows/ci.yml/badge.svg)](https://github.com/cruelkratos/distributed-ddos-hllpp/actions/workflows/ci.yml)
+[![Go build](https://github.com/cruelkratos/distributed-ddos-hllpp/actions/workflows/go_build_test_pipeline.yml/badge.svg)](https://github.com/cruelkratos/distributed-ddos-hllpp/actions/workflows/go_build_test_pipeline.yml)
 
 ## Overview
 
-This project provides a high-performance Go implementation of the HyperLogLog++ (HLL++) cardinality estimation algorithm, based on the Google research paper "HyperLogLog in Practice: Algorithmic Engineering of a State of The Art Cardinality Estimation Algorithm".
+A production-ready Go system for real-time distributed DDoS detection.
+Each host runs a lightweight **agent** that captures packets, inserts source IPs
+into a time-windowed HLL++ sketch, and ships the sketch over gRPC to a central
+**aggregator**. The aggregator merges sketches from all agents, maintains a global
+unique-IP estimate, and runs a pluggable detector to fire alerts.
 
-The primary goal is to build a core component for a distributed system capable of tasks like real-time DDoS attack detection by efficiently estimating the number of unique source IPs across a network.
+The cardinality estimation core is a custom HyperLogLog++ implementation based on
+the Google research paper *"HyperLogLog in Practice"* (Heule et al., 2013).
 
-The implementation focuses on accuracy, memory efficiency, and concurrency, incorporating key optimizations from the HLL++ paper.
+---
 
-## Based On
+## Architecture
 
-- **Paper**: Heule, S., Nunkesser, M., & Hall, A. (2013). HyperLogLog in Practice: Algorithmic Engineering of a State of The Art Cardinality Estimation Algorithm. 
-- **Algorithm**: HyperLogLog++ (HLL++)
+```
+┌──────────────────────────────────────────────────────────────────┐
+│  Kubernetes Cluster                                              │
+│                                                                  │
+│  ┌──────────────┐   ┌──────────────┐   ┌──────────────┐        │
+│  │  Agent       │   │  Agent       │   │  Agent       │        │
+│  │  (DaemonSet) │   │  (DaemonSet) │   │  (DaemonSet) │        │
+│  │  pcap→HLL++  │   │  pcap→HLL++  │   │  pcap→HLL++  │        │
+│  └──────┬───────┘   └──────┬───────┘   └──────┬───────┘        │
+│         │  gRPC MergeSketch│                  │                 │
+│         └──────────────────▼──────────────────┘                 │
+│                    ┌──────────────┐                              │
+│                    │  Aggregator  │                              │
+│                    │  (Deployment)│                              │
+│                    │  Merge+Detect│                              │
+│                    │  :50051 gRPC │                              │
+│                    │  :2112 Prom  │                              │
+│                    └──────────────┘                              │
+└──────────────────────────────────────────────────────────────────┘
+```
+
+---
 
 ## Key Features
 
-- **Core HLL++ Logic**: Implements the fundamental HyperLogLog counting structure.
-- **Sparse Representation**: Uses a memory-efficient sparse format (based on p' = 25) for low cardinalities, drastically reducing memory usage for small sets.
-- **Automatic Dense Transition**: Seamlessly converts from the sparse representation to the standard dense format when memory usage dictates, ensuring optimal performance and memory across all cardinality ranges.
-- **Empirical Bias Correction**: Incorporates pre-computed bias correction data (using k-NN interpolation with k=6) to significantly improve accuracy for small-to-medium cardinalities, closely matching the paper's methodology.
-- **Thread Safety**: Designed for concurrent use with internal locking mechanisms (configurable).
-- **Configurable Modes**: Allows running in thread-safe (concurrent) or non-locking (single) modes via command-line flags.
-- **Algorithm Selection**: Supports switching between the original HLL estimation logic and the improved HLL++ logic (with bias correction) via the `-algorithm` flag for comparison.
-- **64-bit Hashing**: Utilizes 64-bit hash functions (configurable: xxhash or SHA256-based) to handle extremely large cardinalities without issues from hash collisions inherent in 32-bit implementations.
-- **Benchmarking Suite**: Includes tools to generate benchmark data and analyze performance and accuracy.
+- **HLL++ core** — sparse→dense auto-transition, 6-bit packed registers, bias correction via k-NN interpolation; full `Merge()` support for distributed aggregation.
+- **Thread-safe windowed counting** — `WindowManager` rotates HLL sketches on a configurable interval; exports serializable snapshots for shipping.
+- **gRPC sketch shipping** — agents serialize and push current sketches to the aggregator via `MergeSketch`; aggregator exposes `GetEstimate`, `GetSketch`, `Reset`, and `Health` RPCs.
+- **Pluggable detectors** — swap detection strategy at runtime:
+  - `threshold` — fires when unique-IP count exceeds a fixed value.
+  - `zscore` — statistical Z-score over a rolling history window.
+  - `ewma` — Exponentially Weighted Moving Average; alert when count exceeds `baseline × (1 + deviationFactor)`.
+- **Prometheus metrics** — aggregator exposes `/metrics` on `:2112`.
+- **Kubernetes-ready** — DaemonSet for agents, Deployment for aggregator, manifests in `k8s/`.
+- **Docker images** — `Dockerfile.agent` (alpine + libpcap) and `Dockerfile.aggregator` (scratch, CGO-free).
+- **CI pipeline** — GitHub Actions: race-detector tests, binary builds, multi-detector eval comparison, Docker image builds.
+
+---
 
 ## Project Structure
+
 ```
-HLL-BTP/
-├── go.mod                 # Go module definition
-├── go.sum                 # Go module checksums
-├── main.go                # Main executable for running benchmarks
-├── config.json            # Configuration (precision, hash algorithm)
-├── benchmarks.txt         # Example benchmark output file
-├── analyze_benchmarks.py  # Python script to plot benchmark results
-│
-├── bias/
-│   └── biasdata/
-│       ├── data.go        # Embeds bias data
-│       └── *.json         # Generated bias correction data (e.g., bias_data_p14.json)
-│
-├── dataclasses/           # Helper data structures (Sum, ZeroCounter)
-│   ├── sum.go
-│   └── zerocounter.go
-│
-├── general/               # Utility functions (hashing helpers, config readers, math)
-│   ├── helperfunctions.go
-│   └── ...
-│
-├── generate_bias_data/    # Standalone tool to generate bias correction data
-│   └── main.go
-│
-├── models/                # Shared data models (e.g., BiasDataPoint, Thresholds) - You might need this dir
-│   └── models.go          # Contains HLLPlusPlusThresholds map etc.
-│
+.
+├── cmd/
+│   ├── agent/            # Agent binary (pcap capture → windowed HLL → detector → gRPC)
+│   ├── aggregator/       # Aggregator binary (gRPC server, global HLL, detection loop)
+│   ├── eval-detection/   # Evaluation harness — simulate traffic, compare detectors
+│   └── benchmark-memory/ # Memory benchmark for HLL++ register storage
+├── ddos/
+│   ├── capture/          # Packet capture (gopacket/pcap)
+│   ├── detector/         # Detector interface + ThresholdDetector, ZScoreDetector, EWMADetector
+│   ├── eval/             # Synthetic traffic evaluation (Scenario, Result, WriteCSV)
+│   ├── metrics/          # Prometheus counter/gauge helpers
+│   └── window/           # WindowManager — rotating HLL++ windows + attack events
 ├── types/
-│   ├── hll/               # Core HLL/HLL++ implementation (dense, bias correction, wrapper)
-│   │   ├── HLL.go
-│   │   ├── bias_correction.go
-│   │   └── hllpp.go       # Contains hllpp_set struct
-│   │
-│   ├── sparse/            # Sparse representation implementation
-│   │   └── sparse.go
-│   │
-│   └── register/          # Dense register implementation (6-bit packing)
-│       ├── registers.go
-│       └── helper/
-│           └── hashing.go # Hashing implementations
-│
-└── README.md              # This file
+│   ├── hll/              # Core HLL++ (sparse, dense, bias correction, merge, export)
+│   ├── register/         # 6-bit packed register array + hashing
+│   └── sparse/           # Sparse list representation
+├── tools/
+│   └── push_sketch/      # Integration test tool — push synthetic sketches to aggregator
+├── k8s/
+│   ├── daemonset-agent.yaml
+│   └── deployment-aggregator.yaml
+├── .github/workflows/
+│   ├── ci.yml                    # Main CI: race tests, build, eval, docker
+│   └── go_build_test_pipeline.yml
+├── Dockerfile.agent
+├── Dockerfile.aggregator
+├── server.proto          # gRPC service definition
+└── bias/                 # Bias correction data (JSON) for HLL++ accuracy
 ```
 
-
+---
 
 ## Getting Started
 
 ### Prerequisites
 
-- Go 1.21 or later (for `max` function, otherwise adjust code)
-- Python 3.x (for plotting)
-- `matplotlib` Python library (`pip install matplotlib`)
+- Go 1.24+
+- `libpcap-dev` (for the agent: `apt-get install libpcap-dev` or `brew install libpcap`)
 
-### 1. Generate Bias Correction Data (if needed)
+### Build all binaries
 
-The HLL++ algorithm requires pre-computed bias data for optimal accuracy.
 ```bash
-# Navigate to the bias generation tool directory
-cd generate_bias_data
+# Agent (requires CGO for pcap)
+CGO_ENABLED=1 go build -o bin/agent ./cmd/agent
 
-# Run the generator (this may take several minutes)
-# It will create/update bias/biasdata/bias_data_p<PRECISION>.json
-go run .
+# Aggregator (pure Go, no CGO needed)
+CGO_ENABLED=0 go build -o bin/aggregator ./cmd/aggregator
 
-# Navigate back to the project root
-cd ..
+# Eval harness
+go build -o bin/eval-detection ./cmd/eval-detection
 ```
 
-*(The main benchmark script also includes a check to generate this if missing when running in HLL++ mode)*
+### Run locally
 
-### 2. Build the Benchmark Executable
-
-From the project root directory:
+**Start the aggregator:**
 ```bash
-go build -o HyperGoLogBenchmark .
+./bin/aggregator -listen :50051 -metrics :2112 -detector zscore
 ```
 
-*(On Windows, this might create `HyperGoLogBenchmark.exe`)*
-
-### 3. Run Benchmarks
-
-Execute the compiled benchmark program with various flags:
-
-**Basic HLL++ run (Concurrent):**
+**Start an agent** (requires root/CAP_NET_RAW for pcap):
 ```bash
-./HyperGoLogBenchmark -outputFile=bench_hllpp_concurrent.txt
+sudo ./bin/agent -iface eth0 -window 10s -detector zscore -aggregator localhost:50051
 ```
 
-**Basic HLL run (Concurrent):**
+**Push synthetic sketches for integration testing:**
 ```bash
-./HyperGoLogBenchmark -algorithm=hll -outputFile=bench_hll_concurrent.txt
+go run ./tools/push_sketch -addr localhost:50051 -ips 8000
 ```
 
-**HLL++ run (Single Mode, 1 Worker):**
+### Run the detector comparison evaluation
+
 ```bash
-./HyperGoLogBenchmark -mode=single -numWorkers=1 -outputFile=bench_hllpp_single.txt
+# Side-by-side table: threshold vs zscore vs ewma
+go run ./cmd/eval-detection --detector compare
+
+# Single detector with custom params
+go run ./cmd/eval-detection --detector ewma --ewma-alpha 0.15 --ewma-deviation 1.5
+
+# Save results to CSV
+go run ./cmd/eval-detection --detector zscore --out results.csv
 ```
 
-**HLL++ run with 8 Workers (Concurrent):**
+### Run tests
+
 ```bash
-./HyperGoLogBenchmark -numWorkers=8 -outputFile=bench_hllpp_8workers.txt
+# All tests
+go test ./...
+
+# With race detector
+go test -race -timeout 120s ./...
+
+# Detector unit tests only
+go test -v ./ddos/detector/
 ```
 
-**Shorter Test (50M IPs, log every 500k):**
+---
+
+## Detectors
+
+| Detector | Flag | When to use |
+|---|---|---|
+| Threshold | `threshold` | Known baseline; simple fixed limit |
+| Z-Score | `zscore` | Stationary traffic with occasional spikes |
+| EWMA | `ewma` | Slowly varying baseline; rewards gradual adaptation |
+
+**EWMA tuning flags:** `--ewma-alpha` (0<α≤1), `--ewma-deviation` (e.g. `2.0` = alert when count is 2× above baseline), `--ewma-warmup` (windows before alerts fire).
+
+**Z-Score tuning flags:** `--zs-history` (rolling window length), `--zs-threshold` (sigma).
+
+---
+
+## Docker
+
 ```bash
-./HyperGoLogBenchmark -maxIPs=50000000 -logInterval=500000 -outputFile=bench_short.txt
+docker build -f Dockerfile.agent -t ddos/agent:latest .
+docker build -f Dockerfile.aggregator -t ddos/aggregator:latest .
 ```
 
-#### Available Flags:
+---
 
-- `-algorithm`: `hllpp` (default) or `hll`
-- `-mode`: `concurrent` (default) or `single`
-- `-numWorkers`: Number of concurrent insertion goroutines (default: number of CPU cores)
-- `-maxIPs`: Total number of IPs to process (default: 200,000,000)
-- `-logInterval`: How often to log results (default: 1,000,000)
-- `-outputFile`: File to save benchmark results (default: `benchmarks.txt`)
-- *(Optional)* `-useLargeRangeCorrection`: `true` or `false` (default: `false`) - Only relevant for original hll mode comparison.
+## Kubernetes
 
-### 4. Analyze Results
-
-Use the Python script to generate plots from a benchmark output file:
 ```bash
-python analyze_benchmarks.py <your_benchmark_output_file.txt>
+kubectl apply -f k8s/deployment-aggregator.yaml
+kubectl apply -f k8s/daemonset-agent.yaml
 ```
 
-*(If no filename is provided, it defaults to `benchmarks.txt`)*
+Set `AGGREGATOR_ADDR` in the DaemonSet env to point agents at the aggregator service (e.g. `aggregator-svc:50051`).
 
-The script will display the plots and save them as image files.
+---
 
-## Future Work
+## HLL++ Algorithm
 
-- **Implement gRPC/REST Server**: Wrap the HLL++ instance in a network service (`/insert`, `/estimate`, `/getSketch`).
-- **Distributed Architecture**: Design and implement worker nodes and an aggregator node using the server and merge capabilities.
-- **DDoS Detection Logic**: Implement time-windowed counting and threshold-based alerting on the aggregator.
-- **Advanced Sparse Compression**: Implement variable-length and difference encoding for the `sparse_list` as described in the paper for further memory optimization.
+Based on: Heule, S., Nunkesser, M., & Hall, A. (2013). *HyperLogLog in Practice: Algorithmic Engineering of a State of The Art Cardinality Estimation Algorithm*.
 
- [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+Key implementation details:
+- Precision `p=14` (16 384 registers, ~0.8% relative error)
+- Sparse mode (`p'=25`) for low-cardinality sets with automatic dense transition
+- Bias correction using k-NN interpolation (k=6) over pre-computed JSON data
+- 64-bit xxhash for collision resistance at high cardinalities
+
+---
+
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
