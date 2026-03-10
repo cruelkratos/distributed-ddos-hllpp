@@ -1,0 +1,42 @@
+---
+# load-test-job.yaml
+# Runs push_sketch inside the cluster to send synthetic HLL++ sketches to the
+# aggregator — first a baseline phase, then a spike, then back to normal.
+# Usage:
+#   kubectl apply -f k8s/load-test-job.yaml
+#   kubectl logs -f job/ddos-load-test
+#   kubectl delete -f k8s/load-test-job.yaml   # clean up afterwards
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ddos-load-test
+  labels:
+    app: ddos-load-test
+spec:
+  ttlSecondsAfterFinished: 120
+  template:
+    metadata:
+      labels:
+        app: ddos-load-test
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: load-test
+          image: gaud4/ddos-load-test:latest
+          imagePullPolicy: IfNotPresent
+          command:
+            - /load-test
+          args:
+            # aggregator gRPC address inside the cluster
+            - -addr=ddos-aggregator:50051
+            # --- Phase 1: normal baseline (10 rounds × 500 IPs = 5 000/window) ---
+            - -baseline-rounds=10
+            - -baseline-ips=500
+            # --- Phase 2: spike (3 rounds × 20 000 IPs) ---
+            - -spike-rounds=3
+            - -spike-ips=20000
+            # --- Phase 3: return to normal ---
+            - -cooldown-rounds=5
+            - -cooldown-ips=500
+            # interval between rounds (should match aggregator window duration)
+            - -interval=5s

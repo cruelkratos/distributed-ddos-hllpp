@@ -16,17 +16,15 @@ spec:
     spec:
       containers:
         - name: aggregator
-          image: your-registry/ddos-aggregator:latest
+          image: gaud4/ddos-aggregator:latest
           imagePullPolicy: IfNotPresent
           command:
             - /aggregator
           args:
+            - -grpc=:50051
+            - -metrics=:9091
             - -detector=zscore
-          env:
-            - name: GRPC_ADDR
-              value: ":50051"
-            - name: METRICS_ADDR
-              value: ":9091"
+            - -window=5s
           ports:
             - containerPort: 50051
               name: grpc
@@ -42,12 +40,12 @@ spec:
               cpu: 500m
               memory: 256Mi
           livenessProbe:
-            grpc:
+            tcpSocket:
               port: 50051
             initialDelaySeconds: 10
             periodSeconds: 30
           readinessProbe:
-            grpc:
+            tcpSocket:
               port: 50051
             initialDelaySeconds: 5
             periodSeconds: 10

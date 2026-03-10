@@ -18,7 +18,7 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: agent
-          image: your-registry/ddos-agent:latest
+          image: gaud4/ddos-agent:latest
           imagePullPolicy: IfNotPresent
           command:
             - /agent
@@ -28,9 +28,8 @@ spec:
             - -threshold=5000
             - -metrics=:9090
             - -detector=zscore
-          env:
-            - name: AGGREGATOR_ADDR
-              value: "ddos-aggregator:50051"
+            - -aggregator=ddos-aggregator:50051
+            - -ship-interval=10s
           ports:
             - containerPort: 9090
               name: metrics

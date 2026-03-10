@@ -142,4 +142,3 @@ func (p *PcapPacketSource) Stop() {
 		}
 	})
 }
-

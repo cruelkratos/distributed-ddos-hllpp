@@ -19,4 +19,4 @@ COPY --from=builder /bin/aggregator /aggregator
 EXPOSE 50051 2112
 
 ENTRYPOINT ["/aggregator"]
-CMD ["-listen", ":50051", "-metrics", ":2112", "-detector", "zscore"]
+CMD ["-grpc", ":50051", "-metrics", ":9091", "-detector", "zscore"]
