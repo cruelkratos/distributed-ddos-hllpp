@@ -1,7 +1,5 @@
 package detector
 
-import "fmt"
-
 // ThresholdDetector implements Detector with a simple count > threshold rule.
 type ThresholdDetector struct {
 	Threshold uint64
@@ -15,7 +13,6 @@ func NewThresholdDetector(threshold uint64) *ThresholdDetector {
 
 // IsAttack returns true when current window distinct IP count exceeds threshold.
 func (t *ThresholdDetector) IsAttack(f WindowFeatures) bool {
-	fmt.Printf("%d and %d\n", f.CurrentWindowCount, t.Threshold)
 	return f.CurrentWindowCount > t.Threshold
 }
 

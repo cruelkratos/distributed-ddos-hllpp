@@ -3,6 +3,7 @@ package window
 import (
 	"HLL-BTP/ddos/detector"
 	"HLL-BTP/general"
+	pb "HLL-BTP/server"
 	"HLL-BTP/types/hll"
 	"sync"
 	"sync/atomic"
@@ -154,6 +155,17 @@ func (wm *WindowManager) ApproxMemoryBytes() uint64 {
 	m := 1 << p
 	denseBytes := (m*6 + 7) / 8
 	return uint64(2 * denseBytes)
+}
+
+// ExportCurrentSketch serializes the current window's HLL++ sketch for gRPC shipping.
+func (wm *WindowManager) ExportCurrentSketch() (*pb.Sketch, error) {
+	wm.mu.RLock()
+	cur := wm.current
+	wm.mu.RUnlock()
+	if cur == nil {
+		return nil, nil
+	}
+	return cur.ExportSketch()
 }
 
 // Stop stops the rotation and check goroutines. Call once before exit.

@@ -18,11 +18,20 @@ spec:
         - name: aggregator
           image: your-registry/ddos-aggregator:latest
           imagePullPolicy: IfNotPresent
+          command:
+            - /aggregator
+          args:
+            - -detector=zscore
+          env:
+            - name: GRPC_ADDR
+              value: ":50051"
+            - name: METRICS_ADDR
+              value: ":9091"
           ports:
-            - containerPort: 8080
+            - containerPort: 50051
               name: grpc
               protocol: TCP
-            - containerPort: 9090
+            - containerPort: 9091
               name: metrics
               protocol: TCP
           resources:
@@ -34,12 +43,12 @@ spec:
               memory: 256Mi
           livenessProbe:
             grpc:
-              port: 8080
+              port: 50051
             initialDelaySeconds: 10
             periodSeconds: 30
           readinessProbe:
             grpc:
-              port: 8080
+              port: 50051
             initialDelaySeconds: 5
             periodSeconds: 10
 ---
@@ -52,12 +61,12 @@ metadata:
 spec:
   type: ClusterIP
   ports:
-    - port: 8080
-      targetPort: 8080
+    - port: 50051
+      targetPort: 50051
       name: grpc
       protocol: TCP
-    - port: 9090
-      targetPort: 9090
+    - port: 9091
+      targetPort: 9091
       name: metrics
       protocol: TCP
   selector:

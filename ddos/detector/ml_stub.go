@@ -1,20 +1,19 @@
 package detector
 
-// MLAnomalyDetector is a stub for a future ML-based anomaly detector.
-// Replace this implementation with a real model (ONNX, TensorFlow Lite, or external API)
-// without changing the pipeline.
-type MLAnomalyDetector struct{}
-
-// NewMLAnomalyDetector returns a stub detector that never signals attack.
-// Use this to wire the pipeline; replace with real ML logic later.
-func NewMLAnomalyDetector() *MLAnomalyDetector {
-	return &MLAnomalyDetector{}
+// MLAnomalyDetector is deprecated. Use ZScoreDetector (zscore.go) instead.
+// Kept for API compatibility; delegates to ZScoreDetector internally.
+type MLAnomalyDetector struct {
+	inner *ZScoreDetector
 }
 
-// IsAttack always returns false in the stub. Future: load model, compute features, return score.
+// NewMLAnomalyDetector returns a detector backed by ZScoreDetector with default settings.
+func NewMLAnomalyDetector() *MLAnomalyDetector {
+	return &MLAnomalyDetector{inner: NewZScoreDetector(20, 3.0)}
+}
+
+// IsAttack delegates to the underlying ZScoreDetector.
 func (m *MLAnomalyDetector) IsAttack(f WindowFeatures) bool {
-	_ = f // use f when implementing real ML
-	return false
+	return m.inner.IsAttack(f)
 }
 
 // Name returns the detector name for metrics and AttackEvent.Reason.

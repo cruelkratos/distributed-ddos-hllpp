@@ -27,7 +27,10 @@ spec:
             - -window=10s
             - -threshold=5000
             - -metrics=:9090
-          # Optional: override via env or ConfigMap: IFACE, WINDOW_DURATION, THRESHOLD, AGGREGATOR_ADDR
+            - -detector=zscore
+          env:
+            - name: AGGREGATOR_ADDR
+              value: "ddos-aggregator:50051"
           ports:
             - containerPort: 9090
               name: metrics

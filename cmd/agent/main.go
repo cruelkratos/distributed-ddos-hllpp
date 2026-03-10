@@ -6,12 +6,17 @@ import (
 	"HLL-BTP/ddos/detector"
 	"HLL-BTP/ddos/metrics"
 	"HLL-BTP/ddos/window"
+	pb "HLL-BTP/server"
+	"context"
 	"flag"
 	"log"
 	"os"
 	"os/signal"
 	"syscall"
 	"time"
+
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 )
 
 func main() {
@@ -21,9 +26,27 @@ func main() {
 	metricsAddr := flag.String("metrics", ":9090", "HTTP address for /metrics.")
 	checkInterval := flag.Duration("check", time.Second, "Interval for detection check and metrics update.")
 	ipsBuf := flag.Int("ips-buf", 10000, "Buffer size for IP channel.")
+	detectorType := flag.String("detector", "zscore", "Detector type: threshold, zscore")
+	aggregatorAddr := flag.String("aggregator", "", "gRPC address of aggregator (e.g. aggregator-service:50051). Empty = standalone.")
+	shipInterval := flag.Duration("ship-interval", 0, "Interval for shipping sketches to aggregator. Defaults to window duration.")
 	flag.Parse()
 
-	det := detector.NewThresholdDetector(*threshold)
+	// Allow env override for aggregator address (K8s-friendly).
+	if *aggregatorAddr == "" {
+		*aggregatorAddr = os.Getenv("AGGREGATOR_ADDR")
+	}
+	if *shipInterval <= 0 {
+		*shipInterval = *windowDur
+	}
+
+	var det detector.Detector
+	switch *detectorType {
+	case "zscore":
+		det = detector.NewZScoreDetector(20, 3.0)
+	default:
+		det = detector.NewThresholdDetector(*threshold)
+	}
+
 	attackCh := make(chan window.AttackEvent, 16)
 	wm := window.NewWindowManager(*windowDur, *checkInterval, det, attackCh)
 
@@ -79,7 +102,20 @@ func main() {
 		}
 	}()
 
-	log.Printf("agent started: iface=%q window=%s threshold=%d metrics=%s", *iface, *windowDur, *threshold, *metricsAddr)
+	log.Printf("agent started: iface=%q window=%s detector=%s threshold=%d metrics=%s aggregator=%q", *iface, *windowDur, *detectorType, *threshold, *metricsAddr, *aggregatorAddr)
+
+	// gRPC sketch shipping to aggregator (if configured).
+	var grpcConn *grpc.ClientConn
+	if *aggregatorAddr != "" {
+		var err error
+		grpcConn, err = grpc.NewClient(*aggregatorAddr, grpc.WithTransportCredentials(insecure.NewCredentials()))
+		if err != nil {
+			log.Fatalf("failed to connect to aggregator at %s: %v", *aggregatorAddr, err)
+		}
+		client := pb.NewHllServiceClient(grpcConn)
+		go sketchShipLoop(wm, client, *shipInterval)
+		log.Printf("sketch shipping enabled: aggregator=%s interval=%s", *aggregatorAddr, *shipInterval)
+	}
 
 	sig := make(chan os.Signal, 1)
 	signal.Notify(sig, syscall.SIGINT, syscall.SIGTERM)
@@ -88,4 +124,29 @@ func main() {
 	wm.Stop()
 	close(attackCh)
 	ps.Stop()
+	if grpcConn != nil {
+		grpcConn.Close()
+	}
+}
+
+// sketchShipLoop periodically exports the current window sketch and sends it to the aggregator.
+func sketchShipLoop(wm *window.WindowManager, client pb.HllServiceClient, interval time.Duration) {
+	ticker := time.NewTicker(interval)
+	defer ticker.Stop()
+	for range ticker.C {
+		sketch, err := wm.ExportCurrentSketch()
+		if err != nil {
+			log.Printf("sketch export failed: %v", err)
+			continue
+		}
+		if sketch == nil {
+			continue
+		}
+		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+		_, err = client.MergeSketch(ctx, &pb.MergeRequest{Sketch: sketch})
+		cancel()
+		if err != nil {
+			log.Printf("sketch ship failed: %v", err)
+		}
+	}
 }
