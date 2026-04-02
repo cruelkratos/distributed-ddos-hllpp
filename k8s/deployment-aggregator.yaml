@@ -23,8 +23,8 @@ spec:
           args:
             - -grpc=:50051
             - -metrics=:9091
-            - -detector=zscore
-            - -window=5s
+            - -detector=ensemble
+            - -window=10s
           ports:
             - containerPort: 50051
               name: grpc

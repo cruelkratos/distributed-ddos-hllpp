@@ -1,0 +1,158 @@
+version: "3.8"
+
+services:
+  # --- Aggregator ---
+  aggregator:
+    build:
+      context: .
+      dockerfile: Dockerfile.aggregator
+    command:
+      - -grpc=:50051
+      - -metrics=:9091
+      - -detector=zscore
+      - -window=10s
+    ports:
+      - "50051:50051"
+      - "9191:9091"
+    networks:
+      - ddos-net
+
+  # --- IoT Node 1: Normal traffic ---
+  iot-node-1:
+    build:
+      context: .
+      dockerfile: Dockerfile.agent
+    command:
+      - -sim-mode=true
+      - -sim-grpc=:50052
+      - -detector=ensemble
+      - -window=10s
+      - -metrics=:9090
+      - -aggregator=aggregator:50051
+      - -ship-interval=10s
+      - -node-id=iot-node-1
+    ports:
+      - "9001:9090"
+      - "50061:50052"
+    depends_on:
+      - aggregator
+    networks:
+      - ddos-net
+
+  iot-sim-1:
+    build:
+      context: .
+      dockerfile: Dockerfile.iot-sim
+    command:
+      - -agent=iot-node-1:50052
+      - -profile=normal
+      - -normal-rate=50
+    depends_on:
+      - iot-node-1
+    networks:
+      - ddos-net
+
+  # --- IoT Node 2: Mixed traffic (attack starts at t=30s) ---
+  iot-node-2:
+    build:
+      context: .
+      dockerfile: Dockerfile.agent
+    command:
+      - -sim-mode=true
+      - -sim-grpc=:50052
+      - -detector=ensemble
+      - -window=10s
+      - -metrics=:9090
+      - -aggregator=aggregator:50051
+      - -ship-interval=10s
+      - -node-id=iot-node-2
+    ports:
+      - "9002:9090"
+      - "50062:50052"
+    depends_on:
+      - aggregator
+    networks:
+      - ddos-net
+
+  iot-sim-2:
+    build:
+      context: .
+      dockerfile: Dockerfile.iot-sim
+    command:
+      - -agent=iot-node-2:50052
+      - -profile=mixed
+      - -normal-rate=50
+      - -attack-rate=10000
+      - -attack-delay=30s
+      - -attack-duration=60s
+    depends_on:
+      - iot-node-2
+    networks:
+      - ddos-net
+
+  # --- IoT Node 3: Mixed traffic (attack starts at t=30s) ---
+  iot-node-3:
+    build:
+      context: .
+      dockerfile: Dockerfile.agent
+    command:
+      - -sim-mode=true
+      - -sim-grpc=:50052
+      - -detector=ensemble
+      - -window=10s
+      - -metrics=:9090
+      - -aggregator=aggregator:50051
+      - -ship-interval=10s
+      - -node-id=iot-node-3
+    ports:
+      - "9003:9090"
+      - "50063:50052"
+    depends_on:
+      - aggregator
+    networks:
+      - ddos-net
+
+  iot-sim-3:
+    build:
+      context: .
+      dockerfile: Dockerfile.iot-sim
+    command:
+      - -agent=iot-node-3:50052
+      - -profile=mixed
+      - -normal-rate=50
+      - -attack-rate=10000
+      - -attack-delay=30s
+      - -attack-duration=60s
+    depends_on:
+      - iot-node-3
+    networks:
+      - ddos-net
+
+  # --- Monitoring ---
+  prometheus:
+    image: prom/prometheus:v2.51.0
+    volumes:
+      - ./monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - "9190:9090"
+    networks:
+      - ddos-net
+
+  grafana:
+    build:
+      context: .
+      dockerfile: Dockerfile.grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Viewer
+    ports:
+      - "3100:3000"
+    depends_on:
+      - prometheus
+    networks:
+      - ddos-net
+
+networks:
+  ddos-net:
+    driver: bridge

@@ -20,6 +20,11 @@ spec:
         - name: agent
           image: gaud4/ddos-agent:latest
           imagePullPolicy: IfNotPresent
+          env:
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
           command:
             - /agent
           args:
@@ -27,9 +32,11 @@ spec:
             - -window=10s
             - -threshold=5000
             - -metrics=:9090
-            - -detector=zscore
+            - -detector=ensemble
+            - -ensemble-threshold=0.6
             - -aggregator=ddos-aggregator:50051
             - -ship-interval=10s
+            - -node-id=$(NODE_NAME)
           ports:
             - containerPort: 9090
               name: metrics

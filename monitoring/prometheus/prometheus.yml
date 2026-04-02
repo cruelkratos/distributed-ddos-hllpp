@@ -1,0 +1,22 @@
+global:
+  scrape_interval: 5s
+  evaluation_interval: 5s
+
+scrape_configs:
+  - job_name: "aggregator"
+    static_configs:
+      - targets: ["aggregator:9091"]
+        labels:
+          node: "aggregator"
+
+  - job_name: "iot-agents"
+    static_configs:
+      - targets: ["iot-node-1:9090"]
+        labels:
+          node: "iot-node-1"
+      - targets: ["iot-node-2:9090"]
+        labels:
+          node: "iot-node-2"
+      - targets: ["iot-node-3:9090"]
+        labels:
+          node: "iot-node-3"

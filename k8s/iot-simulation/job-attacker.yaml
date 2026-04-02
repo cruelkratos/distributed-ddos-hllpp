@@ -1,0 +1,32 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: iot-attacker
+  labels:
+    app: iot-attacker
+spec:
+  backoffLimit: 0
+  template:
+    metadata:
+      labels:
+        app: iot-attacker
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: sim
+          image: gaud4/ddos-iot-sim:latest
+          imagePullPolicy: IfNotPresent
+          command:
+            - /iot-sim
+          args:
+            - -target=iot-agent:50052
+            - -profile=mixed
+            - -attack-at=30s
+            - -duration=120s
+          resources:
+            requests:
+              cpu: 50m
+              memory: 32Mi
+            limits:
+              cpu: 200m
+              memory: 64Mi
