@@ -66,6 +66,8 @@ services:
       - -aggregator=aggregator:50051
       - -ship-interval=10s
       - -node-id=iot-node-2
+      - -global-rps=100
+      - -per-ip-limit=5
     ports:
       - "9002:9090"
       - "50062:50052"
@@ -104,6 +106,8 @@ services:
       - -aggregator=aggregator:50051
       - -ship-interval=10s
       - -node-id=iot-node-3
+      - -global-rps=100
+      - -per-ip-limit=5
     ports:
       - "9003:9090"
       - "50063:50052"
