@@ -29,6 +29,7 @@ const (
 	HllService_Health_FullMethodName            = "/hllservice.HllService/Health"
 	HllService_GetDefenseCommand_FullMethodName = "/hllservice.HllService/GetDefenseCommand"
 	HllService_InjectIP_FullMethodName          = "/hllservice.HllService/InjectIP"
+	HllService_InjectIPs_FullMethodName         = "/hllservice.HllService/InjectIPs"
 )
 
 // HllServiceClient is the client API for HllService service.
@@ -53,6 +54,8 @@ type HllServiceClient interface {
 	GetDefenseCommand(ctx context.Context, in *NodeRequest, opts ...grpc.CallOption) (*DefenseCommand, error)
 	// InjectIP is used in simulation mode to inject synthetic IPs into an agent.
 	InjectIP(ctx context.Context, in *InjectIPRequest, opts ...grpc.CallOption) (*InjectIPResponse, error)
+	// InjectIPs injects a batch of synthetic IPs in a single call (much faster).
+	InjectIPs(ctx context.Context, in *InjectIPsBatchRequest, opts ...grpc.CallOption) (*InjectIPResponse, error)
 }
 
 type hllServiceClient struct {
@@ -143,6 +146,16 @@ func (c *hllServiceClient) InjectIP(ctx context.Context, in *InjectIPRequest, op
 	return out, nil
 }
 
+func (c *hllServiceClient) InjectIPs(ctx context.Context, in *InjectIPsBatchRequest, opts ...grpc.CallOption) (*InjectIPResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InjectIPResponse)
+	err := c.cc.Invoke(ctx, HllService_InjectIPs_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // HllServiceServer is the server API for HllService service.
 // All implementations must embed UnimplementedHllServiceServer
 // for forward compatibility.
@@ -165,6 +178,8 @@ type HllServiceServer interface {
 	GetDefenseCommand(context.Context, *NodeRequest) (*DefenseCommand, error)
 	// InjectIP is used in simulation mode to inject synthetic IPs into an agent.
 	InjectIP(context.Context, *InjectIPRequest) (*InjectIPResponse, error)
+	// InjectIPs injects a batch of synthetic IPs in a single call (much faster).
+	InjectIPs(context.Context, *InjectIPsBatchRequest) (*InjectIPResponse, error)
 	mustEmbedUnimplementedHllServiceServer()
 }
 
@@ -198,6 +213,9 @@ func (UnimplementedHllServiceServer) GetDefenseCommand(context.Context, *NodeReq
 }
 func (UnimplementedHllServiceServer) InjectIP(context.Context, *InjectIPRequest) (*InjectIPResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method InjectIP not implemented")
+}
+func (UnimplementedHllServiceServer) InjectIPs(context.Context, *InjectIPsBatchRequest) (*InjectIPResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method InjectIPs not implemented")
 }
 func (UnimplementedHllServiceServer) mustEmbedUnimplementedHllServiceServer() {}
 func (UnimplementedHllServiceServer) testEmbeddedByValue()                    {}
@@ -364,6 +382,24 @@ func _HllService_InjectIP_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _HllService_InjectIPs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InjectIPsBatchRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HllServiceServer).InjectIPs(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HllService_InjectIPs_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HllServiceServer).InjectIPs(ctx, req.(*InjectIPsBatchRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // HllService_ServiceDesc is the grpc.ServiceDesc for HllService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -402,6 +438,10 @@ var HllService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "InjectIP",
 			Handler:    _HllService_InjectIP_Handler,
+		},
+		{
+			MethodName: "InjectIPs",
+			Handler:    _HllService_InjectIPs_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

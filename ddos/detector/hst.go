@@ -136,21 +136,23 @@ func (h *HSTDetector) Score(fv FeatureVector) float64 {
 }
 
 // scoreHST computes the anomaly score for one tree.
-// Uses the ratio of reference mass to current mass at each node on the path.
+// Uses the Tan et al. (2011) formulation: anomalies land in sparse regions
+// where mass is much lower than refMass. Score is bounded per node to [0,1].
 func scoreHST(node *hstNode, fv FeatureVector, depth int) float64 {
 	if node == nil {
 		return 0
 	}
 
-	// At each node, anomaly contribution is refMass - mass (larger when sample
-	// lands in a region that was popular in reference but not current window).
-	// We weight by 2^depth to give more importance to deeper (more specific) nodes.
+	// Depth weight: deeper nodes carry more weight (more specific regions).
 	depthWeight := math.Pow(2.0, float64(depth))
 	var nodeScore float64
-	if node.refMass > 0 {
-		// Score: how unusual is this region? If refMass >> mass, normal. If mass >> refMass, anomalous.
-		// We invert: refMass / (mass+1) gives high score when mass is low relative to reference.
-		nodeScore = depthWeight * float64(node.refMass) / (float64(node.mass) + 1.0)
+	ref := float64(node.refMass)
+	cur := float64(node.mass)
+	if ref+cur > 0 {
+		// Anomaly score: mass relative deviation from reference.
+		// Normal data: cur ≈ ref → score ≈ 0.
+		// Attack data: cur >> ref → score ≈ 1 (distribution shift).
+		nodeScore = depthWeight * math.Abs(cur-ref) / (ref + cur)
 	}
 
 	if node.left == nil && node.right == nil {

@@ -38,6 +38,9 @@ service HllService {
 
     // InjectIP is used in simulation mode to inject synthetic IPs into an agent.
     rpc InjectIP (InjectIPRequest) returns (InjectIPResponse);
+
+    // InjectIPs injects a batch of synthetic IPs in a single call (much faster).
+    rpc InjectIPs (InjectIPsBatchRequest) returns (InjectIPResponse);
 }
 
 // ---------------------------------
@@ -142,3 +145,9 @@ message InjectIPRequest {
     uint64 byte_len = 2;
 }
 message InjectIPResponse {}
+
+// InjectIPs — simulation mode: inject a batch of synthetic IPs.
+message InjectIPsBatchRequest {
+    repeated string ips = 1;
+    uint64 byte_len = 2;
+}

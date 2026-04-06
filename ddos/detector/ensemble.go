@@ -92,7 +92,7 @@ func (e *EnsembleDetector) Score(f WindowFeatures) float64 {
 
 	// Normalize each to [0,1] via sigmoid.
 	lodaNorm := sigmoid(lodaRaw, 1.5, 0.8)      // LODA scores: 0.5-2 normal, 2+ anomalous
-	hstNorm := sigmoid(hstRaw, 50.0, 20.0)      // HST scores vary widely based on tree depth
+	hstNorm := sigmoid(hstRaw, 15.0, 5.0)        // HST bounded scores: ~15 is anomaly midpoint
 	zNorm := sigmoid(zScoreNorm, 3.0, 1.0)      // z-score: 3σ threshold
 	ewmaNorm := sigmoid(ewmaResidual, 2.0, 1.0) // EWMA: 2× baseline
 
@@ -127,10 +127,10 @@ func (e *EnsembleDetector) Score(f WindowFeatures) float64 {
 
 	e.mu.Lock()
 	e.lastComponents = ScoreComponents{
-		LODAScore:     lodaRaw,
-		HSTScore:      hstRaw,
-		ZScoreValue:   zScoreNorm,
-		EWMAResidual:  ewmaResidual,
+		LODAScore:     lodaNorm,
+		HSTScore:      hstNorm,
+		ZScoreValue:   zNorm,
+		EWMAResidual:  ewmaNorm,
 		EnsembleScore: combined,
 	}
 	e.mu.Unlock()

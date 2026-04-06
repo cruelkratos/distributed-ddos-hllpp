@@ -12,7 +12,10 @@ COPY . .
 RUN CGO_ENABLED=0 GOOS=linux go build -trimpath -o /bin/aggregator ./cmd/aggregator
 
 # ── Runtime stage ────────────────────────────────────────────────────────────────
-FROM scratch
+FROM alpine:3.19
+
+# CA certificates are required for Azure SDK (NSG API) HTTPS calls.
+RUN apk add --no-cache ca-certificates
 
 COPY --from=builder /bin/aggregator /aggregator
 

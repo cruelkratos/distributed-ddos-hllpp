@@ -318,6 +318,24 @@ func (s *simServer) InjectIP(_ context.Context, req *pb.InjectIPRequest) (*pb.In
 	return &pb.InjectIPResponse{}, nil
 }
 
+func (s *simServer) InjectIPs(_ context.Context, req *pb.InjectIPsBatchRequest) (*pb.InjectIPResponse, error) {
+	byteLen := req.ByteLen
+	if byteLen == 0 {
+		byteLen = 64
+	}
+	for _, ip := range req.Ips {
+		select {
+		case s.ipsChan <- ip:
+		default:
+		}
+		select {
+		case s.bytesChan <- byteLen:
+		default:
+		}
+	}
+	return &pb.InjectIPResponse{}, nil
+}
+
 // Forward Health checks in sim mode.
 func (s *simServer) Health(_ context.Context, _ *pb.HealthRequest) (*pb.HealthResponse, error) {
 	return &pb.HealthResponse{Status: pb.HealthResponse_SERVING}, nil

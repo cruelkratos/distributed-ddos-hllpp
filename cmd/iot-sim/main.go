@@ -82,16 +82,19 @@ func runTraffic(client pb.HllServiceClient, pool []string, rate int, rng *rand.R
 }
 
 func runAttack(client pb.HllServiceClient, rate int, rng *rand.Rand, stop chan os.Signal) {
-	interval := time.Second / time.Duration(rate)
-	ticker := time.NewTicker(interval)
+	flushInterval := 100 * time.Millisecond
+	batchSize := rate / 10 // IPs per 100ms batch
+	if batchSize < 1 {
+		batchSize = 1
+	}
+	ticker := time.NewTicker(flushInterval)
 	defer ticker.Stop()
 	for {
 		select {
 		case <-stop:
 			return
 		case <-ticker.C:
-			ip := randomIP(rng)
-			inject(client, ip, 1500)
+			injectBatch(client, batchSize, rng, 1500)
 		}
 	}
 }
@@ -119,8 +122,12 @@ func runMixed(client pb.HllServiceClient, pool []string, normalRate, attackRate 
 
 ATTACK:
 	log.Println("[MIXED] Attack phase started")
-	attackInterval := time.Second / time.Duration(attackRate)
-	attackTicker := time.NewTicker(attackInterval)
+	attackFlush := 100 * time.Millisecond
+	batchSize := attackRate / 10
+	if batchSize < 1 {
+		batchSize = 1
+	}
+	attackTicker := time.NewTicker(attackFlush)
 	endTimer := time.NewTimer(attackDuration)
 	defer attackTicker.Stop()
 
@@ -131,8 +138,7 @@ ATTACK:
 		case <-endTimer.C:
 			goto RECOVERY
 		case <-attackTicker.C:
-			ip := randomIP(rng)
-			inject(client, ip, 1500)
+			injectBatch(client, batchSize, rng, 1500)
 		}
 	}
 
@@ -161,6 +167,20 @@ func inject(client pb.HllServiceClient, ip string, byteLen uint64) {
 	_, err := client.InjectIP(ctx, &pb.InjectIPRequest{Ip: ip, ByteLen: byteLen})
 	if err != nil {
 		// silently ignore — transient errors expected under load
+		_ = err
+	}
+}
+
+// injectBatch sends n IPs in a single batch gRPC call.
+func injectBatch(client pb.HllServiceClient, n int, rng *rand.Rand, byteLen uint64) {
+	ips := make([]string, n)
+	for i := range ips {
+		ips[i] = randomIP(rng)
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	_, err := client.InjectIPs(ctx, &pb.InjectIPsBatchRequest{Ips: ips, ByteLen: byteLen})
+	if err != nil {
 		_ = err
 	}
 }

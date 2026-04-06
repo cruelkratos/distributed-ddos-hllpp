@@ -5,6 +5,7 @@ package main
 
 import (
 	"HLL-BTP/ddos/detector"
+	"HLL-BTP/ddos/firewall"
 	"HLL-BTP/ddos/metrics"
 	pb "HLL-BTP/server"
 	"HLL-BTP/types/hll"
@@ -69,6 +70,9 @@ type aggregatorServer struct {
 	defenseScore     float64
 	defenseReason    string
 	windowDur        time.Duration
+
+	// NSG firewall controller (nil if disabled).
+	nsg *firewall.NSGController
 }
 
 func newAggregatorServer(windowDur time.Duration) *aggregatorServer {
@@ -211,10 +215,38 @@ func (s *aggregatorServer) runCorrelation(staleTimeout time.Duration) {
 		reason = "majority_nodes_under_attack"
 	}
 
+	wasActivated := s.defenseActivated
 	s.defenseActivated = activated
 	s.defenseScore = maxScore
 	s.defenseReason = reason
 	s.nodesMu.Unlock()
+
+	// NSG firewall toggle on state transition.
+	if s.nsg != nil {
+		if activated && !wasActivated {
+			log.Printf("[GLOBAL-DEFENSE] NSG lockdown triggered — calling Azure API...")
+			ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+			if err := s.nsg.Lockdown(ctx); err != nil {
+				log.Printf("[GLOBAL-DEFENSE] NSG lockdown FAILED: %v", err)
+			} else {
+				log.Printf("[GLOBAL-DEFENSE] NSG lockdown SUCCESS")
+			}
+			metrics.NSGLockdownGauge.Set(1)
+			cancel()
+		} else if !activated && wasActivated {
+			log.Printf("[GLOBAL-DEFENSE] NSG unlock triggered — calling Azure API...")
+			ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+			if err := s.nsg.Unlock(ctx); err != nil {
+				log.Printf("[GLOBAL-DEFENSE] NSG unlock FAILED: %v", err)
+			} else {
+				log.Printf("[GLOBAL-DEFENSE] NSG unlock SUCCESS")
+			}
+			metrics.NSGLockdownGauge.Set(0)
+			cancel()
+		}
+	} else if activated && !wasActivated {
+		log.Printf("[GLOBAL-DEFENSE] NSG controller is nil — skipping lockdown")
+	}
 
 	// Update Prometheus.
 	nodesTotalGauge.Set(float64(total))
@@ -291,6 +323,10 @@ func main() {
 	windowDur := flag.Duration("window", 10*time.Second, "Detection window duration.")
 	threshold := flag.Uint64("threshold", 5000, "Threshold for threshold detector.")
 	detectorType := flag.String("detector", "zscore", "Detector type: threshold, zscore")
+	nsgEnabled := flag.Bool("nsg-enabled", false, "Enable Azure NSG firewall integration.")
+	azSubscription := flag.String("azure-subscription-id", "", "Azure subscription ID for NSG.")
+	azResourceGroup := flag.String("azure-resource-group", "", "Azure resource group for NSG.")
+	azNSGName := flag.String("azure-nsg-name", "", "Azure NSG name.")
 	flag.Parse()
 
 	// Allow env overrides for K8s.
@@ -310,6 +346,28 @@ func main() {
 	}
 
 	srv := newAggregatorServer(*windowDur)
+
+	// Initialize NSG firewall controller if enabled.
+	if *nsgEnabled {
+		subID := *azSubscription
+		if v := os.Getenv("AZURE_SUBSCRIPTION_ID"); v != "" {
+			subID = v
+		}
+		rg := *azResourceGroup
+		if v := os.Getenv("AZURE_RESOURCE_GROUP"); v != "" {
+			rg = v
+		}
+		nsgName := *azNSGName
+		if v := os.Getenv("AZURE_NSG_NAME"); v != "" {
+			nsgName = v
+		}
+		nsgCtrl, err := firewall.NewNSGController(subID, rg, nsgName)
+		if err != nil {
+			log.Fatalf("failed to create NSG controller: %v", err)
+		}
+		srv.nsg = nsgCtrl
+		log.Printf("NSG firewall integration enabled: subscription=%s rg=%s nsg=%s", subID, rg, nsgName)
+	}
 
 	// Start detection and correlation loops.
 	stop := make(chan struct{})

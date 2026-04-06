@@ -19,10 +19,12 @@ spec:
           command:
             - /iot-sim
           args:
-            - -target=iot-agent:50052
+            - -agent=iot-agent:50052
             - -profile=mixed
-            - -attack-at=30s
-            - -duration=120s
+            - -normal-rate=50
+            - -attack-rate=10000
+            - -attack-delay=30s
+            - -attack-duration=120s
           resources:
             requests:
               cpu: 50m

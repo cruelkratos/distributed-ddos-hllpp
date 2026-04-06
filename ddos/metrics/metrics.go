@@ -54,6 +54,10 @@ var (
 		Name: "ddos_drops_total",
 		Help: "Cumulative number of packets dropped by rate limiter.",
 	})
+	NSGLockdownGauge = prometheus.NewGauge(prometheus.GaugeOpts{
+		Name: "ddos_nsg_lockdown_active",
+		Help: "1 if Azure NSG lockdown is active, 0 otherwise.",
+	})
 )
 
 func init() {
@@ -62,6 +66,7 @@ func init() {
 		PacketCountGauge, ByteVolumeGauge,
 		LodaScoreGauge, HSTScoreGauge, EnsembleScoreGauge,
 		AnomalyStateGauge, DropsGauge,
+		NSGLockdownGauge,
 	)
 }
 

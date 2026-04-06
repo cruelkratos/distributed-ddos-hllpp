@@ -907,6 +907,59 @@ func (*InjectIPResponse) Descriptor() ([]byte, []int) {
 	return file_server_proto_rawDescGZIP(), []int{16}
 }
 
+// InjectIPs — simulation mode: inject a batch of synthetic IPs.
+type InjectIPsBatchRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Ips           []string               `protobuf:"bytes,1,rep,name=ips,proto3" json:"ips,omitempty"`
+	ByteLen       uint64                 `protobuf:"varint,2,opt,name=byte_len,json=byteLen,proto3" json:"byte_len,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *InjectIPsBatchRequest) Reset() {
+	*x = InjectIPsBatchRequest{}
+	mi := &file_server_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *InjectIPsBatchRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*InjectIPsBatchRequest) ProtoMessage() {}
+
+func (x *InjectIPsBatchRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_server_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use InjectIPsBatchRequest.ProtoReflect.Descriptor instead.
+func (*InjectIPsBatchRequest) Descriptor() ([]byte, []int) {
+	return file_server_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *InjectIPsBatchRequest) GetIps() []string {
+	if x != nil {
+		return x.Ips
+	}
+	return nil
+}
+
+func (x *InjectIPsBatchRequest) GetByteLen() uint64 {
+	if x != nil {
+		return x.ByteLen
+	}
+	return 0
+}
+
 var File_server_proto protoreflect.FileDescriptor
 
 const file_server_proto_rawDesc = "" +
@@ -960,7 +1013,10 @@ const file_server_proto_rawDesc = "" +
 	"\x0fInjectIPRequest\x12\x0e\n" +
 	"\x02ip\x18\x01 \x01(\tR\x02ip\x12\x19\n" +
 	"\bbyte_len\x18\x02 \x01(\x04R\abyteLen\"\x12\n" +
-	"\x10InjectIPResponse2\xb0\x04\n" +
+	"\x10InjectIPResponse\"D\n" +
+	"\x15InjectIPsBatchRequest\x12\x10\n" +
+	"\x03ips\x18\x01 \x03(\tR\x03ips\x12\x19\n" +
+	"\bbyte_len\x18\x02 \x01(\x04R\abyteLen2\xfe\x04\n" +
 	"\n" +
 	"HllService\x12?\n" +
 	"\x06Insert\x12\x19.hllservice.InsertRequest\x1a\x1a.hllservice.InsertResponse\x12N\n" +
@@ -970,7 +1026,8 @@ const file_server_proto_rawDesc = "" +
 	"\vMergeSketch\x12\x18.hllservice.MergeRequest\x1a\x19.hllservice.MergeResponse\x12?\n" +
 	"\x06Health\x12\x19.hllservice.HealthRequest\x1a\x1a.hllservice.HealthResponse\x12H\n" +
 	"\x11GetDefenseCommand\x12\x17.hllservice.NodeRequest\x1a\x1a.hllservice.DefenseCommand\x12E\n" +
-	"\bInjectIP\x12\x1b.hllservice.InjectIPRequest\x1a\x1c.hllservice.InjectIPResponseB\x13Z\x11HLL-BTP/server/pbb\x06proto3"
+	"\bInjectIP\x12\x1b.hllservice.InjectIPRequest\x1a\x1c.hllservice.InjectIPResponse\x12L\n" +
+	"\tInjectIPs\x12!.hllservice.InjectIPsBatchRequest\x1a\x1c.hllservice.InjectIPResponseB\x13Z\x11HLL-BTP/server/pbb\x06proto3"
 
 var (
 	file_server_proto_rawDescOnce sync.Once
@@ -985,7 +1042,7 @@ func file_server_proto_rawDescGZIP() []byte {
 }
 
 var file_server_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_server_proto_msgTypes = make([]protoimpl.MessageInfo, 17)
+var file_server_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
 var file_server_proto_goTypes = []any{
 	(HealthResponse_ServingStatus)(0), // 0: hllservice.HealthResponse.ServingStatus
 	(*Sketch)(nil),                    // 1: hllservice.Sketch
@@ -1005,6 +1062,7 @@ var file_server_proto_goTypes = []any{
 	(*NodeRequest)(nil),               // 15: hllservice.NodeRequest
 	(*InjectIPRequest)(nil),           // 16: hllservice.InjectIPRequest
 	(*InjectIPResponse)(nil),          // 17: hllservice.InjectIPResponse
+	(*InjectIPsBatchRequest)(nil),     // 18: hllservice.InjectIPsBatchRequest
 }
 var file_server_proto_depIdxs = []int32{
 	2,  // 0: hllservice.Sketch.sparse_data:type_name -> hllservice.SparseData
@@ -1018,16 +1076,18 @@ var file_server_proto_depIdxs = []int32{
 	12, // 8: hllservice.HllService.Health:input_type -> hllservice.HealthRequest
 	15, // 9: hllservice.HllService.GetDefenseCommand:input_type -> hllservice.NodeRequest
 	16, // 10: hllservice.HllService.InjectIP:input_type -> hllservice.InjectIPRequest
-	4,  // 11: hllservice.HllService.Insert:output_type -> hllservice.InsertResponse
-	6,  // 12: hllservice.HllService.GetEstimate:output_type -> hllservice.GetEstimateResponse
-	8,  // 13: hllservice.HllService.Reset:output_type -> hllservice.ResetResponse
-	1,  // 14: hllservice.HllService.GetSketch:output_type -> hllservice.Sketch
-	11, // 15: hllservice.HllService.MergeSketch:output_type -> hllservice.MergeResponse
-	13, // 16: hllservice.HllService.Health:output_type -> hllservice.HealthResponse
-	14, // 17: hllservice.HllService.GetDefenseCommand:output_type -> hllservice.DefenseCommand
-	17, // 18: hllservice.HllService.InjectIP:output_type -> hllservice.InjectIPResponse
-	11, // [11:19] is the sub-list for method output_type
-	3,  // [3:11] is the sub-list for method input_type
+	18, // 11: hllservice.HllService.InjectIPs:input_type -> hllservice.InjectIPsBatchRequest
+	4,  // 12: hllservice.HllService.Insert:output_type -> hllservice.InsertResponse
+	6,  // 13: hllservice.HllService.GetEstimate:output_type -> hllservice.GetEstimateResponse
+	8,  // 14: hllservice.HllService.Reset:output_type -> hllservice.ResetResponse
+	1,  // 15: hllservice.HllService.GetSketch:output_type -> hllservice.Sketch
+	11, // 16: hllservice.HllService.MergeSketch:output_type -> hllservice.MergeResponse
+	13, // 17: hllservice.HllService.Health:output_type -> hllservice.HealthResponse
+	14, // 18: hllservice.HllService.GetDefenseCommand:output_type -> hllservice.DefenseCommand
+	17, // 19: hllservice.HllService.InjectIP:output_type -> hllservice.InjectIPResponse
+	17, // 20: hllservice.HllService.InjectIPs:output_type -> hllservice.InjectIPResponse
+	12, // [12:21] is the sub-list for method output_type
+	3,  // [3:12] is the sub-list for method input_type
 	3,  // [3:3] is the sub-list for extension type_name
 	3,  // [3:3] is the sub-list for extension extendee
 	0,  // [0:3] is the sub-list for field type_name
@@ -1048,7 +1108,7 @@ func file_server_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_server_proto_rawDesc), len(file_server_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   17,
+			NumMessages:   18,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

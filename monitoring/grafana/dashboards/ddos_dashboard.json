@@ -31,7 +31,7 @@
       },
       "targets": [
         {
-          "expr": "ddos_unique_ips",
+          "expr": "ddos_unique_ips_current_window",
           "legendFormat": "{{instance}}",
           "refId": "A"
         }
@@ -291,6 +291,42 @@
         {
           "expr": "ddos_nodes_total",
           "legendFormat": "Total Nodes",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "title": "NSG Lockdown Status",
+      "type": "stat",
+      "gridPos": { "h": 8, "w": 8, "x": 0, "y": 30 },
+      "id": 9,
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "red", "value": 1 }
+            ]
+          },
+          "mappings": [
+            { "type": "value", "options": { "0": { "text": "OPEN", "color": "green" } } },
+            { "type": "value", "options": { "1": { "text": "LOCKED DOWN", "color": "red" } } }
+          ]
+        },
+        "overrides": []
+      },
+      "options": {
+        "graphMode": "none",
+        "textMode": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"] }
+      },
+      "targets": [
+        {
+          "expr": "ddos_nsg_lockdown_active",
+          "legendFormat": "NSG Firewall",
           "refId": "A"
         }
       ]

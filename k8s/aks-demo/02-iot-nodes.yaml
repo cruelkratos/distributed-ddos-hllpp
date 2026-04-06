@@ -1,0 +1,192 @@
+# --- IoT Node 1: Normal traffic only, NO rate limiting (demo contrast) ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: iot-node-1
+  namespace: ddos-demo
+  labels:
+    app: iot-node-1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: iot-node-1
+  template:
+    metadata:
+      labels:
+        app: iot-node-1
+    spec:
+      containers:
+        - name: agent
+          image: __ACR__/ddos-agent:latest
+          command: ["/agent"]
+          args:
+            - -sim-mode=true
+            - -sim-grpc=:50052
+            - -detector=ensemble
+            - -window=10s
+            - -metrics=:9090
+            - -aggregator=aggregator:50051
+            - -ship-interval=10s
+            - -node-id=iot-node-1
+          ports:
+            - containerPort: 50052
+              name: sim-grpc
+            - containerPort: 9090
+              name: metrics
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 200m
+              memory: 128Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: iot-node-1
+  namespace: ddos-demo
+  labels:
+    app: iot-node-1
+spec:
+  type: ClusterIP
+  ports:
+    - port: 50052
+      targetPort: 50052
+      name: sim-grpc
+    - port: 9090
+      targetPort: 9090
+      name: metrics
+  selector:
+    app: iot-node-1
+---
+# --- IoT Node 2: Mixed traffic, WITH rate limiting ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: iot-node-2
+  namespace: ddos-demo
+  labels:
+    app: iot-node-2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: iot-node-2
+  template:
+    metadata:
+      labels:
+        app: iot-node-2
+    spec:
+      containers:
+        - name: agent
+          image: __ACR__/ddos-agent:latest
+          command: ["/agent"]
+          args:
+            - -sim-mode=true
+            - -sim-grpc=:50052
+            - -detector=ensemble
+            - -window=10s
+            - -metrics=:9090
+            - -aggregator=aggregator:50051
+            - -ship-interval=10s
+            - -node-id=iot-node-2
+            - -global-rps=100
+            - -per-ip-limit=5
+          ports:
+            - containerPort: 50052
+              name: sim-grpc
+            - containerPort: 9090
+              name: metrics
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 200m
+              memory: 128Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: iot-node-2
+  namespace: ddos-demo
+  labels:
+    app: iot-node-2
+spec:
+  type: ClusterIP
+  ports:
+    - port: 50052
+      targetPort: 50052
+      name: sim-grpc
+    - port: 9090
+      targetPort: 9090
+      name: metrics
+  selector:
+    app: iot-node-2
+---
+# --- IoT Node 3: Mixed traffic, WITH rate limiting ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: iot-node-3
+  namespace: ddos-demo
+  labels:
+    app: iot-node-3
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: iot-node-3
+  template:
+    metadata:
+      labels:
+        app: iot-node-3
+    spec:
+      containers:
+        - name: agent
+          image: __ACR__/ddos-agent:latest
+          command: ["/agent"]
+          args:
+            - -sim-mode=true
+            - -sim-grpc=:50052
+            - -detector=ensemble
+            - -window=10s
+            - -metrics=:9090
+            - -aggregator=aggregator:50051
+            - -ship-interval=10s
+            - -node-id=iot-node-3
+            - -global-rps=100
+            - -per-ip-limit=5
+          ports:
+            - containerPort: 50052
+              name: sim-grpc
+            - containerPort: 9090
+              name: metrics
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 200m
+              memory: 128Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: iot-node-3
+  namespace: ddos-demo
+  labels:
+    app: iot-node-3
+spec:
+  type: ClusterIP
+  ports:
+    - port: 50052
+      targetPort: 50052
+      name: sim-grpc
+    - port: 9090
+      targetPort: 9090
+      name: metrics
+  selector:
+    app: iot-node-3
