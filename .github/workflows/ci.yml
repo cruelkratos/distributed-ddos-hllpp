@@ -1,0 +1,115 @@
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: ["main", "testfeatures"]
+
+jobs:
+  # ── Unit & race tests ─────────────────────────────────────────────────────────
+  test:
+    name: Test (race detector)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.24"
+
+      - name: Install libpcap (required by gopacket)
+        run: sudo apt-get update -qq && sudo apt-get install -y libpcap-dev
+
+      - name: Download modules
+        run: go mod download
+
+      - name: Vet
+        run: go vet ./...
+
+      - name: Test with race detector
+        run: go test -race -timeout 120s ./...
+
+  # ── Build all binaries ────────────────────────────────────────────────────────
+  build:
+    name: Build binaries
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.24"
+
+      - name: Install libpcap
+        run: sudo apt-get update -qq && sudo apt-get install -y libpcap-dev
+
+      - name: Build agent
+        run: CGO_ENABLED=1 go build -trimpath -o bin/agent ./cmd/agent
+
+      - name: Build aggregator
+        run: CGO_ENABLED=0 go build -trimpath -o bin/aggregator ./cmd/aggregator
+
+      - name: Build eval-detection
+        run: CGO_ENABLED=0 go build -trimpath -o bin/eval-detection ./cmd/eval-detection
+
+      - name: Upload binaries
+        uses: actions/upload-artifact@v4
+        with:
+          name: binaries
+          path: bin/
+
+  # ── Detector comparison evaluation ───────────────────────────────────────────
+  eval:
+    name: Detector comparison
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.24"
+
+      - name: Install libpcap
+        run: sudo apt-get update -qq && sudo apt-get install -y libpcap-dev
+
+      - name: Run comparative evaluation
+        run: |
+          go run ./cmd/eval-detection \
+            --detector compare \
+            --window 2s \
+            --threshold 5000 \
+            --normal 300 \
+            --attack 15000 \
+            --windows 12 \
+            --attack-from 4 \
+            --attack-count 4
+
+  # ── Docker image builds ───────────────────────────────────────────────────────
+  docker:
+    name: Docker build
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build agent image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: Dockerfile.agent
+          push: false
+          tags: distributed-ddos/agent:ci
+
+      - name: Build aggregator image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: Dockerfile.aggregator
+          push: false
+          tags: distributed-ddos/aggregator:ci

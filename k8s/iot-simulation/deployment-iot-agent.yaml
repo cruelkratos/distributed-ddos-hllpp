@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: iot-agent
+  labels:
+    app: iot-agent
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: iot-agent
+  template:
+    metadata:
+      labels:
+        app: iot-agent
+    spec:
+      containers:
+        - name: agent
+          image: gaud4/ddos-agent:latest
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+          command:
+            - /agent
+          args:
+            - -sim-mode
+            - -sim-grpc=:50052
+            - -window=10s
+            - -threshold=5000
+            - -metrics=:9090
+            - -detector=ensemble
+            - -ensemble-threshold=0.6
+            - -aggregator=ddos-aggregator:50051
+            - -ship-interval=10s
+            - -node-id=$(POD_NAME)
+          ports:
+            - containerPort: 9090
+              name: metrics
+              protocol: TCP
+            - containerPort: 50052
+              name: sim-grpc
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 200m
+              memory: 128Mi
+          livenessProbe:
+            httpGet:
+              path: /metrics
+              port: 9090
+            initialDelaySeconds: 10
+            periodSeconds: 30
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: iot-agent
+  labels:
+    app: iot-agent
+spec:
+  type: ClusterIP
+  clusterIP: None
+  ports:
+    - port: 50052
+      targetPort: 50052
+      name: sim-grpc
+      protocol: TCP
+    - port: 9090
+      targetPort: 9090
+      name: metrics
+      protocol: TCP
+  selector:
+    app: iot-agent

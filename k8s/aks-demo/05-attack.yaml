@@ -1,0 +1,74 @@
+# On-demand attack jobs — apply to trigger DDoS simulation.
+# Usage:
+#   kubectl apply -f 05-attack.yaml                              # start attack
+#   kubectl delete jobs attack-node-2 attack-node-3 -n ddos-demo # cleanup for re-trigger
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: attack-node-2
+  namespace: ddos-demo
+  labels:
+    app: attack-sim
+spec:
+  ttlSecondsAfterFinished: 30
+  backoffLimit: 0
+  template:
+    metadata:
+      labels:
+        app: attack-sim
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: sim
+          image: __ACR__/ddos-iot-sim:latest
+          command: ["/iot-sim"]
+          args:
+            - -agent=iot-node-2:50052
+            - -profile=mixed
+            - -normal-rate=50
+            - -attack-rate=10000
+            - -attack-delay=30s
+            - -attack-duration=60s
+          resources:
+            requests:
+              cpu: 50m
+              memory: 32Mi
+            limits:
+              cpu: 200m
+              memory: 64Mi
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: attack-node-3
+  namespace: ddos-demo
+  labels:
+    app: attack-sim
+spec:
+  ttlSecondsAfterFinished: 30
+  backoffLimit: 0
+  template:
+    metadata:
+      labels:
+        app: attack-sim
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: sim
+          image: __ACR__/ddos-iot-sim:latest
+          command: ["/iot-sim"]
+          args:
+            - -agent=iot-node-3:50052
+            - -profile=mixed
+            - -normal-rate=50
+            - -attack-rate=10000
+            - -attack-delay=30s
+            - -attack-duration=60s
+          resources:
+            requests:
+              cpu: 50m
+              memory: 32Mi
+            limits:
+              cpu: 200m
+              memory: 64Mi

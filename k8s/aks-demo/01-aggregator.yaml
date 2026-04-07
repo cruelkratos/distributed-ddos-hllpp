@@ -1,0 +1,94 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aggregator
+  namespace: ddos-demo
+  labels:
+    app: aggregator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: aggregator
+  template:
+    metadata:
+      labels:
+        app: aggregator
+    spec:
+      containers:
+        - name: aggregator
+          image: __ACR__/ddos-aggregator:latest
+          command: ["/aggregator"]
+          args:
+            - -grpc=:50051
+            - -metrics=:9091
+            - -detector=zscore
+            - -window=10s
+            - -nsg-enabled=true
+          env:
+            - name: AZURE_SUBSCRIPTION_ID
+              valueFrom:
+                secretKeyRef:
+                  name: azure-nsg-config
+                  key: subscription-id
+            - name: AZURE_RESOURCE_GROUP
+              valueFrom:
+                secretKeyRef:
+                  name: azure-nsg-config
+                  key: resource-group
+            - name: AZURE_NSG_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: azure-nsg-config
+                  key: nsg-name
+            - name: AZURE_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: azure-credentials
+                  key: client-id
+            - name: AZURE_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: azure-credentials
+                  key: client-secret
+            - name: AZURE_TENANT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: azure-credentials
+                  key: tenant-id
+          ports:
+            - containerPort: 50051
+              name: grpc
+            - containerPort: 9091
+              name: metrics
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
+          readinessProbe:
+            tcpSocket:
+              port: 50051
+            initialDelaySeconds: 5
+            periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: aggregator
+  namespace: ddos-demo
+  labels:
+    app: aggregator
+spec:
+  type: ClusterIP
+  ports:
+    - port: 50051
+      targetPort: 50051
+      name: grpc
+    - port: 9091
+      targetPort: 9091
+      name: metrics
+  selector:
+    app: aggregator

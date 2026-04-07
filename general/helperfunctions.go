@@ -1,6 +1,7 @@
 package general
 
 import (
+	_ "embed"
 	"encoding/json"
 	"math"
 	"math/bits"
@@ -8,21 +9,34 @@ import (
 	"sync"
 )
 
+// defaultConfig is the config.json baked into the binary at build time.
+// This means the binary works correctly inside containers without needing
+// config.json present on disk.
+//
+//go:embed config.json
+var defaultConfigData []byte
+
 var (
 	algo  string = ""
 	p_val int    = -1
 )
 
+// readConfig returns the config JSON: on-disk file takes precedence (for local dev),
+// falling back to the embedded bytes.
+func readConfig() []byte {
+	data, err := os.ReadFile("config.json")
+	if err == nil {
+		return data
+	}
+	return defaultConfigData
+}
+
 func ConfigAlgo() string {
 	if algo != "" {
 		return algo
 	}
-	data, err := os.ReadFile("config.json")
-	if err != nil {
-		panic(err)
-	}
+	data := readConfig()
 
-	// Unmarshal into a map
 	var config map[string]interface{}
 	if err := json.Unmarshal(data, &config); err != nil {
 		panic(err)
@@ -37,12 +51,8 @@ func ConfigPercision() int {
 	if p_val != -1 {
 		return p_val
 	}
-	data, err := os.ReadFile("config.json")
-	if err != nil {
-		panic(err)
-	}
+	data := readConfig()
 
-	// Unmarshal into a map
 	var config map[string]interface{}
 	if err := json.Unmarshal(data, &config); err != nil {
 		panic(err)

@@ -23,10 +23,51 @@ var (
 		Name: "ddos_memory_usage_bytes",
 		Help: "Approximate HLL sketch memory usage in bytes.",
 	})
+
+	// --- Extended telemetry gauges ---
+
+	PacketCountGauge = prometheus.NewGauge(prometheus.GaugeOpts{
+		Name: "ddos_packet_count",
+		Help: "Total packets in the current window.",
+	})
+	ByteVolumeGauge = prometheus.NewGauge(prometheus.GaugeOpts{
+		Name: "ddos_byte_volume",
+		Help: "Total bytes in the current window.",
+	})
+	LodaScoreGauge = prometheus.NewGauge(prometheus.GaugeOpts{
+		Name: "ddos_loda_score",
+		Help: "LODA anomaly score (higher = more anomalous).",
+	})
+	HSTScoreGauge = prometheus.NewGauge(prometheus.GaugeOpts{
+		Name: "ddos_hst_score",
+		Help: "Half-Space Trees anomaly score (higher = more anomalous).",
+	})
+	EnsembleScoreGauge = prometheus.NewGauge(prometheus.GaugeOpts{
+		Name: "ddos_ensemble_score",
+		Help: "Weighted ensemble anomaly score in [0,1].",
+	})
+	AnomalyStateGauge = prometheus.NewGauge(prometheus.GaugeOpts{
+		Name: "ddos_anomaly_state",
+		Help: "Current anomaly state: 0=NORMAL, 1=UNDER_ATTACK, 2=RECOVERY.",
+	})
+	DropsGauge = prometheus.NewGauge(prometheus.GaugeOpts{
+		Name: "ddos_drops_total",
+		Help: "Cumulative number of packets dropped by rate limiter.",
+	})
+	NSGLockdownGauge = prometheus.NewGauge(prometheus.GaugeOpts{
+		Name: "ddos_nsg_lockdown_active",
+		Help: "1 if Azure NSG lockdown is active, 0 otherwise.",
+	})
 )
 
 func init() {
-	prometheus.MustRegister(UniqueIPsGauge, AttackStatusGauge, MemoryUsageGauge)
+	prometheus.MustRegister(
+		UniqueIPsGauge, AttackStatusGauge, MemoryUsageGauge,
+		PacketCountGauge, ByteVolumeGauge,
+		LodaScoreGauge, HSTScoreGauge, EnsembleScoreGauge,
+		AnomalyStateGauge, DropsGauge,
+		NSGLockdownGauge,
+	)
 }
 
 // UpdateWindowMetrics updates the Prometheus gauges from current/previous count,
@@ -39,6 +80,17 @@ func UpdateWindowMetrics(uniqueIPs uint64, attack bool, memoryBytes uint64) {
 		AttackStatusGauge.Set(0)
 	}
 	MemoryUsageGauge.Set(float64(memoryBytes))
+}
+
+// UpdateExtendedMetrics updates the ML-telemetry Prometheus gauges.
+func UpdateExtendedMetrics(packets, bytes uint64, lodaScore, hstScore, ensembleScore float64, state int, drops uint64) {
+	PacketCountGauge.Set(float64(packets))
+	ByteVolumeGauge.Set(float64(bytes))
+	LodaScoreGauge.Set(lodaScore)
+	HSTScoreGauge.Set(hstScore)
+	EnsembleScoreGauge.Set(ensembleScore)
+	AnomalyStateGauge.Set(float64(state))
+	DropsGauge.Set(float64(drops))
 }
 
 // Handler returns the HTTP handler for /metrics.

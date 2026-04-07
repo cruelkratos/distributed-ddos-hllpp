@@ -25,15 +25,22 @@ service HllService {
     // --- Distributed Operations ---
 
     // Retrieves the raw sketch data for merging on an aggregator.
-    // This is the "PULL" method for aggregation.
     rpc GetSketch (GetSketchRequest) returns (Sketch);
 
     // Merges an incoming sketch into this node's local sketch.
-    // This is the "PUSH" method for aggregation.
     rpc MergeSketch (MergeRequest) returns (MergeResponse);
 
     // Standard health check for Kubernetes liveness/readiness probes.
     rpc Health (HealthRequest) returns (HealthResponse);
+
+    // GetDefenseCommand returns the global defense state for a given node.
+    rpc GetDefenseCommand (NodeRequest) returns (DefenseCommand);
+
+    // InjectIP is used in simulation mode to inject synthetic IPs into an agent.
+    rpc InjectIP (InjectIPRequest) returns (InjectIPResponse);
+
+    // InjectIPs injects a batch of synthetic IPs in a single call (much faster).
+    rpc InjectIPs (InjectIPsBatchRequest) returns (InjectIPResponse);
 }
 
 // ---------------------------------
@@ -99,6 +106,13 @@ message GetSketchRequest {}
 // MergeSketch
 message MergeRequest {
     Sketch sketch = 1;
+    // Telemetry fields from the sending agent.
+    string node_id = 2;
+    double loda_score = 3;
+    double hst_score = 4;
+    double ensemble_score = 5;
+    int32  anomaly_state = 6;  // 0=NORMAL, 1=UNDER_ATTACK, 2=RECOVERY
+    uint64 packet_count = 7;
 }
 message MergeResponse {}
 
@@ -111,4 +125,29 @@ message HealthResponse {
         NOT_SERVING = 2;
     }
     ServingStatus status = 1;
+}
+
+// DefenseCommand — aggregator response to node defense queries.
+message DefenseCommand {
+    bool   activated = 1;
+    double global_score = 2;
+    string reason = 3;
+}
+
+// NodeRequest — identifies a node querying for defense commands.
+message NodeRequest {
+    string node_id = 1;
+}
+
+// InjectIP — simulation mode: inject a synthetic IP into an agent.
+message InjectIPRequest {
+    string ip = 1;
+    uint64 byte_len = 2;
+}
+message InjectIPResponse {}
+
+// InjectIPs — simulation mode: inject a batch of synthetic IPs.
+message InjectIPsBatchRequest {
+    repeated string ips = 1;
+    uint64 byte_len = 2;
 }

@@ -1,8 +1,10 @@
 package window
 
 import (
+	"HLL-BTP/ddos/capture"
 	"HLL-BTP/ddos/detector"
 	"HLL-BTP/general"
+	pb "HLL-BTP/server"
 	"HLL-BTP/types/hll"
 	"sync"
 	"sync/atomic"
@@ -30,6 +32,15 @@ type WindowManager struct {
 	stop      chan struct{}
 	wg        sync.WaitGroup
 	windowID  int64
+
+	// Extended traffic stats for ML features.
+	Stats     *capture.TrafficStats
+	prevStats struct {
+		packets uint64
+		bytes   uint64
+	}
+	// Last computed features (for telemetry export).
+	lastFeatures atomic.Value // stores detector.WindowFeatures
 }
 
 // NewWindowManager creates a WindowManager with two HLL++ sketches, starts the rotation goroutine
@@ -46,6 +57,7 @@ func NewWindowManager(windowDur, checkInterval time.Duration, det detector.Detec
 		detector:  det,
 		onAttack:  onAttack,
 		stop:      make(chan struct{}),
+		Stats:     &capture.TrafficStats{},
 	}
 	wm.wg.Add(1)
 	go wm.rotationLoop()
@@ -75,6 +87,11 @@ func (wm *WindowManager) rotate() {
 	wm.current, wm.previous = wm.previous, wm.current
 	wm.current.Reset()
 	atomic.AddInt64(&wm.windowID, 1)
+
+	// Snapshot traffic stats for the completed window and reset counters.
+	p, b := wm.Stats.Snapshot()
+	wm.prevStats.packets = p
+	wm.prevStats.bytes = b
 }
 
 func (wm *WindowManager) checkLoop() {
@@ -95,23 +112,31 @@ func (wm *WindowManager) runCheck() {
 	current := wm.CurrentCount()
 	previous := wm.PreviousCount()
 	windowSec := wm.windowDur.Seconds()
+
+	wm.mu.RLock()
+	pkts := wm.prevStats.packets
+	byts := wm.prevStats.bytes
+	wm.mu.RUnlock()
+
 	features := detector.WindowFeatures{
 		CurrentWindowCount:  current,
 		PreviousWindowCount: previous,
 		WindowDurationSec:   windowSec,
+		PacketCount:         pkts,
+		ByteVolume:          byts,
 	}
-	if wm.detector != nil && wm.detector.IsAttack(features) && wm.onAttack != nil {
-		select {
-		case wm.onAttack <- AttackEvent{
-			At:       time.Now(),
-			Count:    current,
-			WindowID: atomic.LoadInt64(&wm.windowID),
-			Reason:   wm.detector.Name(),
-		}:
-		default:
-			// channel full or closed, skip
-		}
+	wm.lastFeatures.Store(features)
+	// Detection is handled by the agent's goroutine to avoid double-updating
+	// stateful sub-detectors (ZScore history, EWMA baseline).
+}
+
+// LastFeatures returns the most recently computed WindowFeatures (for telemetry).
+func (wm *WindowManager) LastFeatures() detector.WindowFeatures {
+	v := wm.lastFeatures.Load()
+	if v == nil {
+		return detector.WindowFeatures{}
 	}
+	return v.(detector.WindowFeatures)
 }
 
 // Insert adds the IP into the current window's sketch.
@@ -154,6 +179,17 @@ func (wm *WindowManager) ApproxMemoryBytes() uint64 {
 	m := 1 << p
 	denseBytes := (m*6 + 7) / 8
 	return uint64(2 * denseBytes)
+}
+
+// ExportCurrentSketch serializes the current window's HLL++ sketch for gRPC shipping.
+func (wm *WindowManager) ExportCurrentSketch() (*pb.Sketch, error) {
+	wm.mu.RLock()
+	cur := wm.current
+	wm.mu.RUnlock()
+	if cur == nil {
+		return nil, nil
+	}
+	return cur.ExportSketch()
 }
 
 // Stop stops the rotation and check goroutines. Call once before exit.

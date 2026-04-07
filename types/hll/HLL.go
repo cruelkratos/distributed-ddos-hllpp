@@ -182,15 +182,18 @@ func (h *hllSet) Merge(other general.IHLL) error {
 	p := general.ConfigPercision()
 	m := 1 << p
 	for i := 0; i < m; i++ {
-		lock := h.bucketLocks.GetLockForBucket(i)
-		lock.Lock()
-		otherRho := other.Get(i) // Get other's value
+		// Read from 'other' BEFORE acquiring our own bucket lock to avoid
+		// lock-ordering inversion. other.Get() takes other's locks internally.
+		otherRho := other.Get(i)
 		if otherRho > 0 {
-			// SetRegisterMax efficiently updates our register
-			// only if the other value is greater.
-			h.SetRegisterMax(i, otherRho)
+			lock := h.bucketLocks.GetLockForBucket(i)
+			lock.Lock()
+			v := h._registers.Get(i)
+			if otherRho > v {
+				h._registers.Set(i, otherRho)
+			}
+			lock.Unlock()
 		}
-		lock.Unlock()
 	}
 	return nil
 }

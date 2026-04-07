@@ -1,0 +1,25 @@
+# ── Build stage ─────────────────────────────────────────────────────────────────
+FROM golang:1.24-alpine AS builder
+
+RUN apk add --no-cache git gcc musl-dev
+
+WORKDIR /src
+COPY go.mod go.sum ./
+RUN go mod download
+
+COPY . .
+# CGO not needed for the aggregator (no pcap dependency).
+RUN CGO_ENABLED=0 GOOS=linux go build -trimpath -o /bin/aggregator ./cmd/aggregator
+
+# ── Runtime stage ────────────────────────────────────────────────────────────────
+FROM alpine:3.19
+
+# CA certificates are required for Azure SDK (NSG API) HTTPS calls.
+RUN apk add --no-cache ca-certificates
+
+COPY --from=builder /bin/aggregator /aggregator
+
+EXPOSE 50051 2112
+
+ENTRYPOINT ["/aggregator"]
+CMD ["-grpc", ":50051", "-metrics", ":9091", "-detector", "zscore"]

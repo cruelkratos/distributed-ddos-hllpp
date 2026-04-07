@@ -203,7 +203,8 @@ func (h *Hllpp_set) MergeSets(other *Hllpp_set) error {
 		bitsPerSparseEntry := p + 6 + 5
 		currentSparseSizeBits := sparse1.GetSortedListLengthUnsafe() * bitsPerSparseEntry
 		if currentSparseSizeBits >= denseSizeBits {
-			return h.convertToDense()
+			// h.mu.Lock() is already held by MergeSets; use NoLock variant.
+			return h.convertToDenseNoLock()
 		}
 		return nil
 
@@ -212,8 +213,8 @@ func (h *Hllpp_set) MergeSets(other *Hllpp_set) error {
 		if sparse == nil || other.dense_set == nil {
 			return fmt.Errorf("merge error S+D")
 		}
-		// First convert self to dense (mutates h)
-		if err := h.convertToDense(); err != nil {
+		// h.mu.Lock() is already held by MergeSets; use NoLock variant.
+		if err := h.convertToDenseNoLock(); err != nil {
 			return err
 		}
 		return h.dense_set.Merge(other.dense_set)
@@ -264,10 +265,6 @@ func (h *Hllpp_set) ExportSketch() (*pb.Sketch, error) {
 	}
 	format := h.format.Load() // Atomic Op
 	if format == FormatSparse {
-		sparse := h.sparse_set.Load()
-		if sparse == nil {
-			return nil, fmt.Errorf("Sparse Set Nil During Export Try Again.")
-		}
 		h.mu.Lock()
 		if h.format.Load() == FormatSparse {
 			sparse := h.sparse_set.Load()
@@ -282,10 +279,11 @@ func (h *Hllpp_set) ExportSketch() (*pb.Sketch, error) {
 			h.mu.Unlock()
 			return sketch, nil
 		}
+		// Format transitioned to dense between the two checks; fall through.
 		h.mu.Unlock()
-		h.mu.RLock()
 	}
-	// now if we transitioned to dense.
+	// Dense path — take read lock here (and only here) so the defer is safe.
+	h.mu.RLock()
 	defer h.mu.RUnlock()
 	if h.dense_set == nil {
 		return nil, fmt.Errorf("dense set is NULL")

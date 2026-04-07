@@ -21,6 +21,8 @@ type Scenario struct {
 	TotalWindows     int
 	AttackWindowList []int // 0-based window indices that are "attack" (ground truth)
 	Seed             int64
+	// Detector overrides the default ThresholdDetector when non-nil.
+	Detector detector.Detector
 }
 
 // Result holds evaluation metrics.
@@ -42,7 +44,10 @@ func Run(scenario Scenario) (Result, error) {
 		attackSet[i] = true
 	}
 
-	det := detector.NewThresholdDetector(scenario.Threshold)
+	det := scenario.Detector
+	if det == nil {
+		det = detector.NewThresholdDetector(scenario.Threshold)
+	}
 	eventCh := make(chan window.AttackEvent, 32)
 	wm := window.NewWindowManager(scenario.WindowDuration, scenario.CheckInterval, det, eventCh)
 

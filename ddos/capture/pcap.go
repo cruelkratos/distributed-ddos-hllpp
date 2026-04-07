@@ -90,6 +90,11 @@ func (p *PcapPacketSource) Run(ips chan<- string) error {
 		}
 		packet, err := source.NextPacket()
 		if err != nil {
+			// pcap returns NextErrorTimeoutExpired when no packets arrive in the
+			// buffer-flush window — this is normal, not a fatal error. Keep looping.
+			if err == pcap.NextErrorTimeoutExpired {
+				continue
+			}
 			return err
 		}
 		if packet == nil {
@@ -137,4 +142,3 @@ func (p *PcapPacketSource) Stop() {
 		}
 	})
 }
-

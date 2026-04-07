@@ -1,0 +1,104 @@
+# Always-on normal traffic simulators — one per IoT node.
+# These generate baseline traffic so Grafana shows ~50 unique IPs/window.
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: iot-sim-1
+  namespace: ddos-demo
+  labels:
+    app: iot-sim-1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: iot-sim-1
+  template:
+    metadata:
+      labels:
+        app: iot-sim-1
+    spec:
+      containers:
+        - name: sim
+          image: __ACR__/ddos-iot-sim:latest
+          command: ["/iot-sim"]
+          args:
+            - -agent=iot-node-1:50052
+            - -profile=normal
+            - -normal-rate=50
+            - -normal-pool=50
+          resources:
+            requests:
+              cpu: 25m
+              memory: 32Mi
+            limits:
+              cpu: 100m
+              memory: 64Mi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: iot-sim-2
+  namespace: ddos-demo
+  labels:
+    app: iot-sim-2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: iot-sim-2
+  template:
+    metadata:
+      labels:
+        app: iot-sim-2
+    spec:
+      containers:
+        - name: sim
+          image: __ACR__/ddos-iot-sim:latest
+          command: ["/iot-sim"]
+          args:
+            - -agent=iot-node-2:50052
+            - -profile=normal
+            - -normal-rate=50
+            - -normal-pool=50
+          resources:
+            requests:
+              cpu: 25m
+              memory: 32Mi
+            limits:
+              cpu: 100m
+              memory: 64Mi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: iot-sim-3
+  namespace: ddos-demo
+  labels:
+    app: iot-sim-3
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: iot-sim-3
+  template:
+    metadata:
+      labels:
+        app: iot-sim-3
+    spec:
+      containers:
+        - name: sim
+          image: __ACR__/ddos-iot-sim:latest
+          command: ["/iot-sim"]
+          args:
+            - -agent=iot-node-3:50052
+            - -profile=normal
+            - -normal-rate=50
+            - -normal-pool=50
+          resources:
+            requests:
+              cpu: 25m
+              memory: 32Mi
+            limits:
+              cpu: 100m
+              memory: 64Mi
