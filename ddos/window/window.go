@@ -192,8 +192,24 @@ func (wm *WindowManager) ExportCurrentSketch() (*pb.Sketch, error) {
 	return cur.ExportSketch()
 }
 
+// ExportPreviousSketch serializes the previous (last completed) window's HLL++ sketch for gRPC shipping.
+func (wm *WindowManager) ExportPreviousSketch() (*pb.Sketch, error) {
+	wm.mu.RLock()
+	prev := wm.previous
+	wm.mu.RUnlock()
+	if prev == nil {
+		return nil, nil
+	}
+	return prev.ExportSketch()
+}
+
 // Stop stops the rotation and check goroutines. Call once before exit.
 func (wm *WindowManager) Stop() {
 	close(wm.stop)
 	wm.wg.Wait()
+}
+
+// WindowID returns the current window ID (monotonically increasing on each rotation).
+func (wm *WindowManager) WindowID() int64 {
+	return atomic.LoadInt64(&wm.windowID)
 }

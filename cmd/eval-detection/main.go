@@ -52,13 +52,15 @@ func main() {
 			return detector.NewZScoreDetector(*zsHistory, *zsThreshold)
 		case "ewma":
 			return detector.NewEWMADetector(*ewmaAlpha, *ewmaDeviation, *ewmaWarmup)
+		case "ensemble":
+			return detector.NewEnsembleDetector(42, 0.6, detector.DefaultEnsembleWeights())
 		default: // "threshold"
 			return nil // eval.Run uses ThresholdDetector when Detector is nil
 		}
 	}
 
 	if *detectorName == "compare" {
-		names := []string{"threshold", "zscore", "ewma"}
+		names := []string{"threshold", "zscore", "ewma", "ensemble"}
 		fmt.Printf("%-12s  %8s  %4s  %4s  %4s  %4s  %10s\n",
 			"detector", "recall", "TP", "FP", "FN", "TN", "ttd")
 		fmt.Println("--------------------------------------------------------------")

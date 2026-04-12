@@ -71,7 +71,7 @@ func cmsHash(ip string, row int) int {
 	h := fnv.New32a()
 	h.Write([]byte{byte(row), byte(row >> 8)})
 	h.Write([]byte(ip))
-	return int(h.Sum32()) % cmsCols
+	return int(h.Sum32() % cmsCols)
 }
 
 // cmsIncrement adds 1 to the CMS for the given IP and returns the min count.

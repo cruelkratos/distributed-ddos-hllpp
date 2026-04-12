@@ -48,17 +48,48 @@ func Run(scenario Scenario) (Result, error) {
 	if det == nil {
 		det = detector.NewThresholdDetector(scenario.Threshold)
 	}
-	eventCh := make(chan window.AttackEvent, 32)
-	wm := window.NewWindowManager(scenario.WindowDuration, scenario.CheckInterval, det, eventCh)
+	// WindowManager no longer calls the detector directly (detection moved to agent loop).
+	// Pass nil eventCh; we run our own detection goroutine below.
+	wm := window.NewWindowManager(scenario.WindowDuration, scenario.CheckInterval, det, nil)
 
 	var events []window.AttackEvent
 	var mu sync.Mutex
-	// Consumer goroutine for attack events
+
+	// Detection goroutine: polls WindowManager features and calls the detector,
+	// mirroring the agent's periodic detection loop.
+	stopDetect := make(chan struct{})
+	var detectWg sync.WaitGroup
+	detectWg.Add(1)
 	go func() {
-		for ev := range eventCh {
-			mu.Lock()
-			events = append(events, ev)
-			mu.Unlock()
+		defer detectWg.Done()
+		ticker := time.NewTicker(scenario.CheckInterval)
+		defer ticker.Stop()
+		alertedWindows := make(map[int64]bool)
+		for {
+			select {
+			case <-stopDetect:
+				return
+			case <-ticker.C:
+				features := wm.LastFeatures()
+				features.CurrentWindowCount = wm.CurrentCount()
+				features.PreviousWindowCount = wm.PreviousCount()
+				features.WindowDurationSec = scenario.WindowDuration.Seconds()
+
+				wid := wm.WindowID()
+
+				if det.IsAttack(features) && !alertedWindows[wid] {
+					alertedWindows[wid] = true
+					ev := window.AttackEvent{
+						At:       time.Now(),
+						Count:    features.CurrentWindowCount,
+						WindowID: wid,
+						Reason:   "eval_detected",
+					}
+					mu.Lock()
+					events = append(events, ev)
+					mu.Unlock()
+				}
+			}
 		}
 	}()
 
@@ -82,8 +113,9 @@ func Run(scenario Scenario) (Result, error) {
 
 	// Allow a small buffer for the last check to run after traffic ends
 	time.Sleep(scenario.CheckInterval + 100*time.Millisecond)
+	close(stopDetect)
+	detectWg.Wait()
 	wm.Stop()
-	close(eventCh)
 	time.Sleep(100 * time.Millisecond)
 
 	mu.Lock()

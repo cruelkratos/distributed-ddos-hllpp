@@ -61,6 +61,13 @@ func ConfigPercision() int {
 	p_val = precision
 	return precision
 }
+
+// SetPrecision overrides the precision for testing/benchmarking purposes.
+// This must be called before any HLL sets are created.
+func SetPrecision(p int) {
+	p_val = p
+}
+
 func Rho(w uint64, bitLength int) int {
 	if bitLength <= 0 {
 		return 1

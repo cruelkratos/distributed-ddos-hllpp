@@ -10,9 +10,13 @@ import (
 	pb "HLL-BTP/server"
 	"HLL-BTP/types/hll"
 	"context"
+	"encoding/base64"
+	"encoding/json"
 	"flag"
+	"io"
 	"log"
 	"net"
+	"net/http"
 	"os"
 	"os/signal"
 	"sync"
@@ -92,12 +96,18 @@ func (s *aggregatorServer) MergeSketch(_ context.Context, req *pb.MergeRequest) 
 	if err != nil {
 		return nil, status.Errorf(codes.InvalidArgument, "decode sketch: %v", err)
 	}
+	incomingCount := incoming.GetElements()
 	s.mu.Lock()
+	beforeCount := s.globalSet.GetElements()
 	err = s.globalSet.MergeSets(incoming)
+	afterCount := s.globalSet.GetElements()
 	s.mu.Unlock()
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "merge: %v", err)
 	}
+	log.Printf("[MERGE] node=%s incoming=%d before=%d after=%d hasSparse=%v hasDense=%v",
+		req.NodeId, incomingCount, beforeCount, afterCount,
+		req.Sketch.GetSparseData() != nil, req.Sketch.GetDenseData() != nil)
 
 	// Record per-node telemetry.
 	if req.NodeId != "" {
@@ -167,6 +177,86 @@ func (s *aggregatorServer) Health(_ context.Context, _ *pb.HealthRequest) (*pb.H
 // Insert is not used on the aggregator.
 func (s *aggregatorServer) Insert(_ context.Context, _ *pb.InsertRequest) (*pb.InsertResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "aggregator does not accept individual inserts; use MergeSketch")
+}
+
+// --- HTTP REST API for lightweight agents (ESP32-C3) ---
+
+type httpMergeRequest struct {
+	NodeID       string `json:"node_id"`
+	P            int    `json:"p"`
+	Registers    string `json:"registers"`
+	AnomalyState int32  `json:"anomaly_state"`
+}
+
+func (s *aggregatorServer) handleHTTPMerge(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+	body, err := io.ReadAll(io.LimitReader(r.Body, 1<<18))
+	if err != nil {
+		http.Error(w, "read body: "+err.Error(), http.StatusBadRequest)
+		return
+	}
+	var req httpMergeRequest
+	if err := json.Unmarshal(body, &req); err != nil {
+		http.Error(w, "bad JSON: "+err.Error(), http.StatusBadRequest)
+		return
+	}
+	denseData, err := base64.StdEncoding.DecodeString(req.Registers)
+	if err != nil {
+		http.Error(w, "bad base64: "+err.Error(), http.StatusBadRequest)
+		return
+	}
+	sketch := &pb.Sketch{
+		P:      int32(req.P),
+		PPrime: 25,
+		Data:   &pb.Sketch_DenseData{DenseData: denseData},
+	}
+	incoming, err := hll.NewHllppSetFromSketch(sketch)
+	if err != nil {
+		http.Error(w, "decode sketch: "+err.Error(), http.StatusBadRequest)
+		return
+	}
+	incomingCount := incoming.GetElements()
+	s.mu.Lock()
+	beforeCount := s.globalSet.GetElements()
+	err = s.globalSet.MergeSets(incoming)
+	afterCount := s.globalSet.GetElements()
+	s.mu.Unlock()
+	if err != nil {
+		http.Error(w, "merge: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+	log.Printf("[MERGE] node=%s incoming=%d before=%d after=%d (HTTP)",
+		req.NodeID, incomingCount, beforeCount, afterCount)
+	if req.NodeID != "" {
+		s.nodesMu.Lock()
+		s.nodes[req.NodeID] = &nodeMetrics{
+			anomalyState: req.AnomalyState,
+			lastSeen:     time.Now(),
+		}
+		s.nodesMu.Unlock()
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.Write([]byte(`{"ok":true}`))
+}
+
+func (s *aggregatorServer) handleHTTPDefense(w http.ResponseWriter, r *http.Request) {
+	log.Printf("[DEFENSE-POLL] from %s", r.RemoteAddr)
+	s.nodesMu.RLock()
+	resp := struct {
+		Activated   bool    `json:"activated"`
+		GlobalScore float64 `json:"global_score"`
+		Reason      string  `json:"reason"`
+	}{
+		Activated:   s.defenseActivated,
+		GlobalScore: s.defenseScore,
+		Reason:      s.defenseReason,
+	}
+	s.nodesMu.RUnlock()
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(resp)
 }
 
 // correlationLoop runs cross-node correlation and updates global defense state.
@@ -374,10 +464,15 @@ func main() {
 	go srv.detectionLoop(det, *windowDur, stop)
 	go srv.correlationLoop(stop)
 
-	// Start Prometheus metrics.
+	// Start HTTP server (Prometheus metrics + REST API for ESP32 agents).
+	httpMux := http.NewServeMux()
+	httpMux.Handle("/metrics", metrics.Handler())
+	httpMux.HandleFunc("/api/merge", srv.handleHTTPMerge)
+	httpMux.HandleFunc("/api/defense", srv.handleHTTPDefense)
 	go func() {
-		if err := metrics.ListenAndServe(*metricsAddr); err != nil {
-			log.Printf("metrics server: %v", err)
+		log.Printf("HTTP server (metrics + REST API) on %s", *metricsAddr)
+		if err := http.ListenAndServe(*metricsAddr, httpMux); err != nil {
+			log.Printf("HTTP server: %v", err)
 		}
 	}()
 

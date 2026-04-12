@@ -206,4 +206,105 @@ Key implementation details:
 
 ---
 
+## IoT Device Deployment (Raspberry Pi 3 + Arduino Uno)
+
+The system is designed for resource-constrained IoT environments. We demonstrate
+deployment on real hardware with a **tiered architecture**:
+
+```
+┌─────────────────────┐     USB Serial     ┌─────────────────────┐     gRPC      ┌──────────────┐
+│   Arduino Uno       │ ──────────────────▶ │  Raspberry Pi 3     │ ────────────▶ │  Aggregator  │
+│   ATmega328P        │   FWD:<ip> lines    │  ARM Cortex-A53     │  MergeSketch  │  (Laptop /   │
+│   2 KB SRAM         │                     │  1 GB RAM           │               │   Cloud)     │
+│                     │                     │                     │               │              │
+│   Mode A: Micro-HLL │                     │  Full Go Agent      │               │  Global HLL  │
+│   p=4, 12 bytes     │                     │  p=14, 12,288 bytes │               │  + Detection │
+│   ~26% std error    │                     │  ~0.81% std error   │               │              │
+│                     │                     │                     │               │              │
+│   Mode B: Sensor    │                     │  serial-bridge      │               │              │
+│   Forward raw IPs   │                     │  reads FWD: lines   │               │              │
+│   to Pi via serial  │                     │  → InjectIPs gRPC   │               │              │
+└─────────────────────┘                     └─────────────────────┘               └──────────────┘
+```
+
+### Memory Comparison
+
+| Device | RAM | Precision | Registers | Sketch Size | Std Error | Cost |
+|--------|-----|-----------|-----------|-------------|-----------|------|
+| Arduino Uno | 2 KB | p=4 | 16 | **12 bytes** | ~26% | ~\$5 |
+| Raspberry Pi 3 | 1 GB | p=14 | 16,384 | **12,288 bytes** | ~0.81% | ~\$35 |
+| Server | 16 GB+ | p=14 | 16,384 | **12,288 bytes** | ~0.81% | — |
+
+> Even 26% error at p=4 easily detects a 10× DDoS traffic spike — the cardinality
+> jump from 1,000 to 10,000 unique IPs is unmistakable regardless of precision.
+
+### Arduino Dual-Mode Operation
+
+The Arduino runs **both** modes simultaneously (DUAL mode):
+
+- **Mode A — Micro-HLL (p=4):** Proves the HLL algorithm fits in 12 bytes on a
+  device with only 2 KB SRAM. Uses FNV-1a 32-bit hash and the same 6-bit packed
+  register layout as the Go implementation.
+
+- **Mode B — Lightweight Sensor:** Forwards raw IPs to the Raspberry Pi via USB
+  serial (`FWD:<ip>` lines). The Pi's `serial-bridge` tool reads these and injects
+  them into the full-precision Go agent via gRPC `InjectIPs`.
+
+### Quick Start: IoT Demo
+
+```bash
+# No hardware needed — simulated demo
+./demo/run_iot_demo.sh --simulated
+
+# Arduino-only test (needs Arduino + USB cable)
+./demo/run_iot_demo.sh --arduino-only
+
+# Full tiered demo (Arduino + Pi + Aggregator)
+./demo/run_iot_demo.sh --full
+
+# Multi-precision benchmark for paper
+./demo/run_iot_demo.sh --benchmark
+```
+
+### Raspberry Pi Setup
+
+```bash
+# Cross-compile for Pi from laptop (simulation mode, no pcap)
+make build-arm
+scp bin/agent-arm pi@<PI_IP>:~/agent
+
+# OR build natively on the Pi (with real packet capture)
+sudo apt install libpcap-dev
+go build -o bin/agent ./cmd/agent
+sudo ./bin/agent -iface eth0 -aggregator <LAPTOP_IP>:50051
+```
+
+### Arduino Setup
+
+1. Flash `arduino/micro_hll/micro_hll.ino` via Arduino IDE
+2. Connect Arduino to Pi (or laptop) via USB cable
+3. Run the serial bridge on the Pi:
+   ```bash
+   go run ./cmd/serial-bridge --serial /dev/ttyACM0 --agent localhost:50052
+   ```
+
+### Precision Benchmark
+
+```bash
+go run ./cmd/benchmark-precision/
+# Outputs: precision_benchmark.csv with p=4,6,8,10,12,14 × various cardinalities
+```
+
+### New Files
+
+| Path | Description |
+|------|-------------|
+| `arduino/micro_hll/micro_hll.ino` | Arduino dual-mode HLL sketch (p=4 + sensor) |
+| `cmd/serial-bridge/main.go` | Go bridge: Arduino serial → agent gRPC |
+| `cmd/benchmark-precision/main.go` | Multi-precision memory/accuracy benchmark |
+| `tools/arduino_bridge/bridge.py` | Python bridge + comparison tool |
+| `demo/run_iot_demo.sh` | IoT demo orchestration script |
+
+---
+
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)

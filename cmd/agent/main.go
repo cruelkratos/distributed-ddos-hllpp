@@ -235,14 +235,16 @@ func sketchShipLoop(wm *window.WindowManager, client pb.HllServiceClient, interv
 	ticker := time.NewTicker(interval)
 	defer ticker.Stop()
 	for range ticker.C {
-		sketch, err := wm.ExportCurrentSketch()
+		sketch, err := wm.ExportPreviousSketch()
 		if err != nil {
 			log.Printf("sketch export failed: %v", err)
 			continue
 		}
 		if sketch == nil {
+			log.Printf("[SHIP] sketch is nil, skipping")
 			continue
 		}
+		log.Printf("[SHIP] exporting sketch: p=%d hasData=%v", sketch.P, sketch.Data != nil)
 
 		req := &pb.MergeRequest{
 			Sketch:       sketch,
@@ -266,11 +268,14 @@ func sketchShipLoop(wm *window.WindowManager, client pb.HllServiceClient, interv
 		cancel()
 		if err != nil {
 			log.Printf("sketch ship failed: %v", err)
+		} else {
+			log.Printf("[SHIP] sketch shipped OK to aggregator")
 		}
 	}
 }
 
 // defensePollingLoop periodically checks the aggregator for global defense commands.
+// Only escalates the agent from NORMAL → UNDER_ATTACK; does not prevent natural recovery.
 func defensePollingLoop(client pb.HllServiceClient, nodeID string, sm *detector.AnomalyStateMachine, mc *mitigation.MitigationController) {
 	ticker := time.NewTicker(5 * time.Second)
 	defer ticker.Stop()
@@ -281,12 +286,10 @@ func defensePollingLoop(client pb.HllServiceClient, nodeID string, sm *detector.
 		if err != nil {
 			continue // silently skip on transient errors
 		}
-		if cmd.Activated {
-			if sm.State() != detector.StateUnderAttack {
-				log.Printf("[DEFENSE-CMD] global defense activated: reason=%s score=%.3f — forcing UNDER_ATTACK", cmd.Reason, cmd.GlobalScore)
-				sm.ForceState(detector.StateUnderAttack)
-				mc.UpdateState(detector.StateUnderAttack)
-			}
+		if cmd.Activated && sm.State() == detector.StateNormal {
+			log.Printf("[DEFENSE-CMD] global defense activated: reason=%s score=%.3f — forcing UNDER_ATTACK", cmd.Reason, cmd.GlobalScore)
+			sm.ForceState(detector.StateUnderAttack)
+			mc.UpdateState(detector.StateUnderAttack)
 		}
 	}
 }

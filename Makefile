@@ -9,6 +9,20 @@ build:
 	go build -o bin/agent       ./cmd/agent/
 	go build -o bin/aggregator  ./cmd/aggregator/
 	CGO_ENABLED=0 go build -o bin/iot-sim ./cmd/iot-sim/
+	go build -o bin/serial-bridge ./cmd/serial-bridge/
+
+# Cross-compile for Raspberry Pi 3 (ARMv7). Simulation mode only (no pcap/CGO).
+build-arm:
+	GOOS=linux GOARCH=arm GOARM=7 CGO_ENABLED=0 go build -o bin/agent-arm       ./cmd/agent/
+	GOOS=linux GOARCH=arm GOARM=7 CGO_ENABLED=0 go build -o bin/aggregator-arm  ./cmd/aggregator/
+	GOOS=linux GOARCH=arm GOARM=7 CGO_ENABLED=0 go build -o bin/iot-sim-arm     ./cmd/iot-sim/
+	GOOS=linux GOARCH=arm GOARM=7 CGO_ENABLED=0 go build -o bin/serial-bridge-arm ./cmd/serial-bridge/
+
+# Build for Pi natively ON the Pi (with libpcap support for real packet capture).
+build-pi-native:
+	go build -o bin/agent       ./cmd/agent/
+	go build -o bin/aggregator  ./cmd/aggregator/
+	go build -o bin/serial-bridge ./cmd/serial-bridge/
 
 proto:
 	protoc --go_out=. --go_opt=paths=source_relative \

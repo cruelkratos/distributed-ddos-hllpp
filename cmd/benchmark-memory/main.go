@@ -12,6 +12,7 @@ import (
 	"net"
 	"os"
 	"runtime"
+	"runtime/debug"
 	"time"
 )
 
@@ -56,10 +57,12 @@ func main() {
 		estimate := wm.CurrentCount()
 		hllMem := wm.ApproxMemoryBytes()
 		wm.Stop()
+		seen = nil
 
-		// Exact counting: measure heap delta for map with n distinct IPs
+		// Exact counting: disable GC, measure heap delta for map with n distinct IPs.
 		runtime.GC()
 		runtime.GC()
+		gcPct := debug.SetGCPercent(-1) // disable GC
 		var before runtime.MemStats
 		runtime.ReadMemStats(&before)
 		exactMap := make(map[string]struct{}, n)
@@ -71,12 +74,13 @@ func main() {
 			}
 			exactMap[ip.String()] = struct{}{}
 		}
-		runtime.GC()
-		runtime.GC()
 		var after runtime.MemStats
 		runtime.ReadMemStats(&after)
 		exactMem := after.HeapAlloc - before.HeapAlloc
 		_ = exactMap
+		exactMap = nil
+		debug.SetGCPercent(gcPct) // re-enable GC
+		runtime.GC()
 
 		_ = w.Write([]string{
 			fmt.Sprintf("%d", n),
