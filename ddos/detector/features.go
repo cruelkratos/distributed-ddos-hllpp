@@ -20,12 +20,12 @@ type AttackClassification struct {
 
 // AttackFeatures holds derived signals for classification.
 type AttackFeatures struct {
-	CardinalitySpike  float64 // current / previous unique IPs
-	RateSpike         float64 // current packets / baseline packets
-	BytesPerPacket    float64 // avg bytes per packet this window
-	BaselineBPP       float64 // baseline bytes per packet
-	TemporalVariance  float64 // variance of last N window counts
-	EnsembleScore     float64 // current ensemble score
+	CardinalitySpike float64 // current / previous unique IPs
+	RateSpike        float64 // current packets / baseline packets
+	BytesPerPacket   float64 // avg bytes per packet this window
+	BaselineBPP      float64 // baseline bytes per packet
+	TemporalVariance float64 // variance of last N window counts
+	EnsembleScore    float64 // current ensemble score
 }
 
 // TemporalBuffer is a ring buffer tracking recent window counts for temporal analysis.

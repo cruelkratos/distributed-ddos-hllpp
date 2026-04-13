@@ -4,10 +4,11 @@ package detector
 // No ML models or heavy dependencies — purely rule-based on existing signals.
 //
 // Heuristic rules:
-//   SYN_FLOOD:  high cardinality spike + high rate + low bytes/packet (<100)
-//   UDP_FLOOD:  high cardinality spike + high rate + medium bytes/packet (100-500)
-//   HTTP_FLOOD: moderate cardinality + high rate + high bytes/packet (>500)
-//   SCAN_PROBE: moderate cardinality + low rate + very low bytes/packet
+//
+//	SYN_FLOOD:  high cardinality spike + high rate + low bytes/packet (<100)
+//	UDP_FLOOD:  high cardinality spike + high rate + medium bytes/packet (100-500)
+//	HTTP_FLOOD: moderate cardinality + high rate + high bytes/packet (>500)
+//	SCAN_PROBE: moderate cardinality + low rate + very low bytes/packet
 //
 // Confidence is the proportion of matching heuristic signals.
 func ClassifyAttack(af AttackFeatures) AttackClassification {

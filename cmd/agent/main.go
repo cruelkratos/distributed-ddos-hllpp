@@ -464,12 +464,12 @@ func (s *simServer) Health(_ context.Context, _ *pb.HealthRequest) (*pb.HealthRe
 // httpSketchShipLoop periodically exports the current window sketch and ships it via HTTP POST (ESP32-compatible).
 func httpSketchShipLoop(wm *window.WindowManager, httpAddr string, interval time.Duration, nodeID string, sm *detector.AnomalyStateMachine, ensemble *detector.EnsembleDetector, classification *detector.AttackClassification) {
 	type mergeReq struct {
-		NodeID      string  `json:"node_id"`
-		P           int     `json:"p"`
-		Registers   string  `json:"registers"`
-		AnomalyState int32  `json:"anomaly_state"`
-		AttackType  string  `json:"attack_type,omitempty"`
-		AttackConf  float64 `json:"attack_confidence,omitempty"`
+		NodeID       string  `json:"node_id"`
+		P            int     `json:"p"`
+		Registers    string  `json:"registers"`
+		AnomalyState int32   `json:"anomaly_state"`
+		AttackType   string  `json:"attack_type,omitempty"`
+		AttackConf   float64 `json:"attack_confidence,omitempty"`
 	}
 
 	client := &http.Client{Timeout: 5 * time.Second}

@@ -46,7 +46,7 @@ func main() {
 
 	for _, p := range precisions {
 		m := 1 << p
-		sketchBytes := (m * 6 + 7) / 8
+		sketchBytes := (m*6 + 7) / 8
 		stdErr := 1.04 / math.Sqrt(float64(m)) * 100
 
 		// Determine what device it fits on
@@ -112,7 +112,7 @@ func main() {
 	fmt.Println("-----------|------------|--------------|-----------------|---------------------")
 	for _, p := range precisions {
 		m := 1 << p
-		bytes := (m * 6 + 7) / 8
+		bytes := (m*6 + 7) / 8
 		stdErr := 1.04 / math.Sqrt(float64(m)) * 100
 		device := "Server / Cloud"
 		if bytes*2 <= 2048-512 {

@@ -56,8 +56,8 @@ func main() {
 
 	// Create window managers for each simulated node.
 	type nodeState struct {
-		wm      *window.WindowManager
-		rng     *rand.Rand
+		wm  *window.WindowManager
+		rng *rand.Rand
 	}
 	nodeStates := make([]nodeState, *nodes)
 	for i := 0; i < *nodes; i++ {

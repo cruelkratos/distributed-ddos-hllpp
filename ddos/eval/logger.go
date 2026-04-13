@@ -30,14 +30,14 @@ type TimelineEntry struct {
 	WindowID       int     `json:"window_id"`
 	TimestampUnix  int64   `json:"timestamp_unix"`
 	TrueLabel      string  `json:"true_label"`       // "normal" or "attack"
-	PredictedLabel string  `json:"predicted_label"`   // "normal" or "attack"
-	Score          float64 `json:"score"`             // ensemble/detector score
-	AttackTypePred string  `json:"attack_type_pred"`  // classified attack type
-	AttackTypeTrue string  `json:"attack_type_true"`  // ground-truth attack type
+	PredictedLabel string  `json:"predicted_label"`  // "normal" or "attack"
+	Score          float64 `json:"score"`            // ensemble/detector score
+	AttackTypePred string  `json:"attack_type_pred"` // classified attack type
+	AttackTypeTrue string  `json:"attack_type_true"` // ground-truth attack type
 	UniqueIPs      uint64  `json:"unique_ips"`
 	PacketCount    uint64  `json:"packet_count"`
 	ByteVolume     uint64  `json:"byte_volume"`
-	LatencyMs      float64 `json:"latency_ms"`        // detection latency
+	LatencyMs      float64 `json:"latency_ms"` // detection latency
 }
 
 // ResourceEntry captures point-in-time resource usage.

@@ -20,14 +20,14 @@ type RateLimiter struct {
 	mu sync.Mutex
 
 	// Global token bucket.
-	tokens      float64
-	maxTokens   float64
-	refillRate  float64 // tokens per second
-	lastRefill  time.Time
+	tokens     float64
+	maxTokens  float64
+	refillRate float64 // tokens per second
+	lastRefill time.Time
 
 	// Per-IP Count-Min Sketch.
-	cms         [cmsRows][cmsCols]uint16
-	perIPLimit  uint16 // max count per IP per decay window
+	cms        [cmsRows][cmsCols]uint16
+	perIPLimit uint16 // max count per IP per decay window
 
 	// Counters.
 	dropped atomic.Uint64

@@ -56,14 +56,14 @@ func init() {
 
 // nodeMetrics holds per-node telemetry received from agents.
 type nodeMetrics struct {
-	ensembleScore   float64
-	lodaScore       float64
-	hstScore        float64
-	anomalyState    int32
-	packetCount     uint64
-	attackType      string
+	ensembleScore    float64
+	lodaScore        float64
+	hstScore         float64
+	anomalyState     int32
+	packetCount      uint64
+	attackType       string
 	attackConfidence float64
-	lastSeen        time.Time
+	lastSeen         time.Time
 }
 
 type aggregatorServer struct {
@@ -190,15 +190,15 @@ func (s *aggregatorServer) Insert(_ context.Context, _ *pb.InsertRequest) (*pb.I
 // --- HTTP REST API for lightweight agents (ESP32-C3) ---
 
 type httpMergeRequest struct {
-	NodeID         string  `json:"node_id"`
-	P              int     `json:"p"`
-	Registers      string  `json:"registers"`
-	AnomalyState   int32   `json:"anomaly_state"`
-	AttackType     string  `json:"attack_type,omitempty"`
-	AttackConf     float64 `json:"attack_confidence,omitempty"`
-	FreeHeap       uint32  `json:"free_heap,omitempty"`
-	ShipLatencyMs  float64 `json:"ship_latency_ms,omitempty"`
-	LoopTimeUs     uint32  `json:"loop_time_us,omitempty"`
+	NodeID        string  `json:"node_id"`
+	P             int     `json:"p"`
+	Registers     string  `json:"registers"`
+	AnomalyState  int32   `json:"anomaly_state"`
+	AttackType    string  `json:"attack_type,omitempty"`
+	AttackConf    float64 `json:"attack_confidence,omitempty"`
+	FreeHeap      uint32  `json:"free_heap,omitempty"`
+	ShipLatencyMs float64 `json:"ship_latency_ms,omitempty"`
+	LoopTimeUs    uint32  `json:"loop_time_us,omitempty"`
 }
 
 func (s *aggregatorServer) handleHTTPMerge(w http.ResponseWriter, r *http.Request) {
@@ -246,10 +246,10 @@ func (s *aggregatorServer) handleHTTPMerge(w http.ResponseWriter, r *http.Reques
 	if req.NodeID != "" {
 		s.nodesMu.Lock()
 		s.nodes[req.NodeID] = &nodeMetrics{
-			anomalyState:    req.AnomalyState,
-			attackType:      req.AttackType,
+			anomalyState:     req.AnomalyState,
+			attackType:       req.AttackType,
 			attackConfidence: req.AttackConf,
-			lastSeen:        time.Now(),
+			lastSeen:         time.Now(),
 		}
 		s.nodesMu.Unlock()
 

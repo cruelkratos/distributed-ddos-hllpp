@@ -9,11 +9,12 @@
 package pb
 
 import (
-	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
-	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
+
+	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
+	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
 
 const (
@@ -515,8 +516,8 @@ type MergeRequest struct {
 	// Attack classification fields (Phase 3 extension).
 	AttackType       string  `protobuf:"bytes,8,opt,name=attack_type,json=attackType,proto3" json:"attack_type,omitempty"`
 	AttackConfidence float64 `protobuf:"fixed64,9,opt,name=attack_confidence,json=attackConfidence,proto3" json:"attack_confidence,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
 }
 
 func (x *MergeRequest) Reset() {
