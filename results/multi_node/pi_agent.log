@@ -1,0 +1,275 @@
+2026/04/14 04:13:21 sim-udp: listening on :50052
+2026/04/14 04:13:21 agent started: node_id=pi-agent iface="" window=10s detector=ensemble threshold=5000 metrics=:9090 aggregator="" sim-mode=true
+2026/04/14 04:13:21 HTTP sketch shipping enabled: aggregator=http://10.201.115.150:9091 interval=10s
+2026/04/14 04:13:31 [HTTP-SHIP] sketch shipped OK (HTTP 200)
+2026/04/14 04:13:41 [HTTP-SHIP] sketch shipped OK (HTTP 200)
+2026/04/14 04:13:56 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+2026/04/14 04:14:04 [HTTP-SHIP] sketch shipped OK (HTTP 200)
+2026/04/14 04:14:12 [HTTP-SHIP] sketch shipped OK (HTTP 200)
+2026/04/14 04:14:25 [HTTP-SHIP] sketch shipped OK (HTTP 200)
+2026/04/14 04:14:32 [HTTP-SHIP] sketch shipped OK (HTTP 200)
+2026/04/14 04:14:46 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+2026/04/14 04:14:56 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+2026/04/14 04:15:06 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+2026/04/14 04:15:11 [HTTP-SHIP] sketch shipped OK (HTTP 200)
+2026/04/14 04:15:22 [HTTP-SHIP] sketch shipped OK (HTTP 200)
+2026/04/14 04:15:35 [HTTP-SHIP] sketch shipped OK (HTTP 200)
+2026/04/14 04:15:46 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+2026/04/14 04:15:53 [HTTP-SHIP] sketch shipped OK (HTTP 200)
+2026/04/14 04:16:06 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+2026/04/14 04:16:16 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+2026/04/14 04:16:26 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+2026/04/14 04:16:36 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+2026/04/14 04:16:46 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+2026/04/14 04:16:54 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:17:04 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:17:14 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:17:26 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+2026/04/14 04:17:34 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:17:43 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:17:54 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:18:03 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:18:14 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:18:24 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:18:34 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:18:44 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:18:54 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:19:04 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:19:14 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:19:24 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:19:34 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:19:44 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:19:54 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:20:04 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:20:14 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:20:24 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:20:34 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:20:44 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:20:54 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:21:04 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:21:14 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:21:24 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:21:34 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:21:44 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:21:54 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:22:04 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:22:14 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:22:24 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:22:34 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:22:44 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:22:54 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:23:04 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:23:14 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:23:24 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:23:34 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:23:44 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:23:54 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:24:04 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:24:14 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:24:24 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:24:34 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:24:44 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:24:54 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:25:04 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:25:14 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:25:24 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:25:34 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:25:44 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:25:54 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:26:04 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:26:14 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:26:24 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:26:34 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:26:44 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:26:54 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:27:04 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:27:14 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:27:24 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:27:34 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:27:44 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:27:54 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:28:04 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:28:14 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:28:24 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:28:34 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:28:44 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:28:54 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:29:04 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:29:14 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:29:24 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:29:34 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:29:44 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:29:54 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:30:04 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:30:14 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:30:24 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:30:34 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:30:44 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:30:54 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:31:04 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:31:14 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:31:24 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:31:34 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:31:44 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:31:54 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:32:04 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:32:14 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:32:24 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:32:34 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:32:44 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:32:54 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:33:04 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:33:14 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:33:24 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:33:34 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:33:44 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:33:54 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:34:04 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:34:14 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:34:24 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:34:34 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:34:44 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:34:54 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:35:04 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:35:14 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:35:24 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:35:34 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:35:44 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:35:54 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:36:04 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:36:14 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:36:24 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:36:34 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:36:44 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:36:54 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:37:04 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:37:14 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:37:24 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:37:34 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:37:44 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:37:54 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:38:04 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:38:14 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:38:24 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:38:34 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:38:44 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:38:54 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:39:04 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:39:14 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:39:24 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:39:34 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:39:44 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:39:54 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:40:04 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:40:14 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:40:24 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:40:34 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:40:44 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:40:54 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:41:04 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:41:14 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:41:24 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:41:34 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:41:44 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:41:54 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:42:04 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:42:14 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:42:24 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:42:34 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:42:44 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:42:54 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:43:04 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:43:14 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:43:24 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:43:34 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:43:44 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:43:54 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:44:04 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:44:14 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:44:24 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:44:34 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:44:44 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:44:54 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:45:04 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:45:14 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:45:24 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:45:34 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:45:44 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:45:54 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:46:04 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:46:14 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:46:24 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:46:34 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:46:44 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:46:55 [HTTP-SHIP] sketch shipped OK (HTTP 200)
+2026/04/14 04:47:06 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+2026/04/14 04:47:13 [HTTP-SHIP] sketch shipped OK (HTTP 200)
+2026/04/14 04:47:22 [HTTP-SHIP] sketch shipped OK (HTTP 200)
+2026/04/14 04:47:31 [HTTP-SHIP] sketch shipped OK (HTTP 200)
+2026/04/14 04:47:41 [HTTP-SHIP] sketch shipped OK (HTTP 200)
+2026/04/14 04:47:51 [HTTP-SHIP] sketch shipped OK (HTTP 200)
+2026/04/14 04:48:01 [HTTP-SHIP] sketch shipped OK (HTTP 200)
+2026/04/14 04:48:11 [HTTP-SHIP] sketch shipped OK (HTTP 200)
+2026/04/14 04:48:23 [HTTP-SHIP] sketch shipped OK (HTTP 200)
+2026/04/14 04:48:34 [HTTP-SHIP] sketch shipped OK (HTTP 200)
+2026/04/14 04:48:46 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+2026/04/14 04:48:56 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+2026/04/14 04:49:06 [HTTP-SHIP] sketch shipped OK (HTTP 200)
+2026/04/14 04:49:16 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+2026/04/14 04:49:26 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+2026/04/14 04:49:36 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+2026/04/14 04:49:46 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+2026/04/14 04:49:56 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+2026/04/14 04:50:06 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+2026/04/14 04:50:16 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+2026/04/14 04:50:26 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+2026/04/14 04:50:36 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+2026/04/14 04:50:46 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+2026/04/14 04:50:54 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:51:04 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:51:14 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:51:24 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:51:34 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:51:44 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:51:54 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:52:02 [HTTP-SHIP] sketch shipped OK (HTTP 200)
+2026/04/14 04:52:12 [HTTP-SHIP] sketch shipped OK (HTTP 200)
+2026/04/14 04:52:22 [HTTP-SHIP] sketch shipped OK (HTTP 200)
+2026/04/14 04:52:32 [HTTP-SHIP] sketch shipped OK (HTTP 200)
+2026/04/14 04:52:42 [HTTP-SHIP] sketch shipped OK (HTTP 200)
+2026/04/14 04:52:54 [HTTP-SHIP] sketch shipped OK (HTTP 200)
+2026/04/14 04:53:06 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+2026/04/14 04:53:16 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+2026/04/14 04:53:26 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+2026/04/14 04:53:35 [HTTP-SHIP] sketch shipped OK (HTTP 200)
+2026/04/14 04:53:46 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+2026/04/14 04:53:56 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+2026/04/14 04:54:06 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+2026/04/14 04:54:16 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+2026/04/14 04:54:26 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+2026/04/14 04:54:36 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+2026/04/14 04:54:45 [HTTP-SHIP] sketch shipped OK (HTTP 200)
+2026/04/14 04:54:54 [HTTP-SHIP] sketch shipped OK (HTTP 200)
+2026/04/14 04:55:06 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+2026/04/14 04:55:12 [HTTP-SHIP] sketch shipped OK (HTTP 200)
+2026/04/14 04:55:26 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+2026/04/14 04:55:36 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+2026/04/14 04:55:46 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+2026/04/14 04:55:56 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+2026/04/14 04:56:06 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+2026/04/14 04:56:14 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:56:23 [HTTP-SHIP] POST failed: Post "http://10.201.115.150:9091/api/merge": dial tcp 10.201.115.150:9091: connect: no route to host
+2026/04/14 04:56:32 [HTTP-SHIP] sketch shipped OK (HTTP 200)
+2026/04/14 04:56:41 [HTTP-SHIP] sketch shipped OK (HTTP 200)
+2026/04/14 04:56:51 [HTTP-SHIP] sketch shipped OK (HTTP 200)
+2026/04/14 04:57:01 [HTTP-SHIP] sketch shipped OK (HTTP 200)
+2026/04/14 04:57:11 [HTTP-SHIP] sketch shipped OK (HTTP 200)
+2026/04/14 04:57:21 [HTTP-SHIP] sketch shipped OK (HTTP 200)
+2026/04/14 04:57:31 [HTTP-SHIP] sketch shipped OK (HTTP 200)
+2026/04/14 04:57:41 [HTTP-SHIP] sketch shipped OK (HTTP 200)
+2026/04/14 04:57:52 [HTTP-SHIP] sketch shipped OK (HTTP 200)
+2026/04/14 04:58:01 [HTTP-SHIP] sketch shipped OK (HTTP 200)
+2026/04/14 04:58:11 [HTTP-SHIP] sketch shipped OK (HTTP 200)
+2026/04/14 04:58:21 [HTTP-SHIP] sketch shipped OK (HTTP 200)
+2026/04/14 04:58:31 [HTTP-SHIP] sketch shipped OK (HTTP 200)
+2026/04/14 04:58:41 [HTTP-SHIP] sketch shipped OK (HTTP 200)
