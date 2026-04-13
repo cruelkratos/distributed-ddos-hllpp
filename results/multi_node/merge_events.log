@@ -1,0 +1,194 @@
+2026/04/14 04:03:44 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:03:54 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:04:04 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:04:06 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:04:16 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:04:17 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:04:26 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:04:32 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:04:34 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:04:37 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:04:45 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:04:47 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:04:54 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:04:57 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:05:04 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:05:07 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:05:15 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:05:17 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:05:25 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:05:27 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:05:37 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:05:40 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:05:47 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:05:48 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:05:57 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:05:57 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:06:06 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:06:07 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:06:16 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:06:17 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:06:26 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:06:27 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:06:37 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:06:42 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:06:47 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:06:52 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:06:57 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:07:02 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:07:07 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:07:14 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:07:17 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:07:21 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:07:27 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:07:31 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:07:37 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:07:41 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:07:47 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:07:50 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:07:57 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:08:01 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:08:07 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:08:14 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:08:17 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:08:21 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:08:27 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:08:31 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:08:37 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:08:41 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:08:47 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:08:51 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:08:57 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:09:01 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:09:07 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:09:11 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:09:17 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:09:21 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:09:27 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:09:30 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:09:37 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:09:41 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:09:47 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:09:51 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:09:57 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:10:01 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:10:07 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:10:11 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:10:17 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:10:21 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:10:27 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:10:33 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:10:37 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:10:43 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:10:47 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:10:57 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:10:58 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:11:07 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:11:17 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:11:17 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:11:18 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:11:27 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:11:27 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:11:37 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:11:37 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:11:47 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:11:47 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:11:57 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:11:57 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:12:07 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:12:07 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:12:17 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:12:17 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:12:27 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:12:31 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:12:37 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:12:37 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:12:47 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:12:47 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:12:51 [MERGE] node=test incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:12:57 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:12:57 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:13:07 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:13:07 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:13:17 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:13:17 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:13:27 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:13:28 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:13:31 [MERGE] node=pi-agent incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:13:37 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:13:37 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:13:41 [MERGE] node=pi-agent incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:13:47 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:13:57 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:14:04 [MERGE] node=pi-agent incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:14:07 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:14:07 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:14:08 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:14:11 [MERGE] node=pi-agent incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:14:15 [MERGE] node=pi-agent incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:14:17 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:14:23 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:14:25 [MERGE] node=pi-agent incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:14:27 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:14:28 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:14:32 [MERGE] node=pi-agent incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:14:37 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:14:47 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:14:57 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:15:07 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:15:08 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:15:11 [MERGE] node=pi-agent incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:15:16 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:15:17 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:15:22 [MERGE] node=pi-agent incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:15:27 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:15:32 [MERGE] node=pi-agent incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:15:35 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:15:36 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:15:37 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:15:47 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:15:53 [MERGE] node=pi-agent incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:15:57 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:16:07 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:16:17 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:16:27 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:16:37 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:16:47 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:16:57 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:17:07 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:17:17 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:17:27 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:17:37 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:17:47 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:18:03 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:18:13 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:18:23 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:18:33 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:18:43 [MERGE] node=laptop-agent incoming=300 before=0 after=302 hasSparse=true hasDense=false
+2026/04/14 04:18:53 [MERGE] node=laptop-agent incoming=300 before=0 after=302 hasSparse=true hasDense=false
+2026/04/14 04:19:03 [MERGE] node=laptop-agent incoming=300 before=0 after=301 hasSparse=true hasDense=false
+2026/04/14 04:19:13 [MERGE] node=laptop-agent incoming=30 before=0 after=30 hasSparse=true hasDense=false
+2026/04/14 04:19:23 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:19:33 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:19:43 [MERGE] node=laptop-agent incoming=11150 before=0 after=11150 hasSparse=false hasDense=true
+2026/04/14 04:19:53 [MERGE] node=laptop-agent incoming=19967 before=0 after=19967 hasSparse=false hasDense=true
+2026/04/14 04:20:03 [MERGE] node=laptop-agent incoming=10096 before=0 after=10096 hasSparse=false hasDense=true
+2026/04/14 04:20:13 [MERGE] node=laptop-agent incoming=10096 before=0 after=10096 hasSparse=false hasDense=true
+2026/04/14 04:20:23 [MERGE] node=laptop-agent incoming=9993 before=0 after=9993 hasSparse=false hasDense=true
+2026/04/14 04:20:33 [MERGE] node=laptop-agent incoming=9993 before=0 after=9993 hasSparse=false hasDense=true
+2026/04/14 04:20:43 [MERGE] node=laptop-agent incoming=10087 before=0 after=10087 hasSparse=false hasDense=true
+2026/04/14 04:20:53 [MERGE] node=laptop-agent incoming=10009 before=0 after=10009 hasSparse=false hasDense=true
+2026/04/14 04:21:03 [MERGE] node=laptop-agent incoming=10100 before=0 after=10100 hasSparse=false hasDense=true
+2026/04/14 04:21:13 [MERGE] node=laptop-agent incoming=10048 before=0 after=10048 hasSparse=false hasDense=true
+2026/04/14 04:21:23 [MERGE] node=laptop-agent incoming=10048 before=0 after=10048 hasSparse=false hasDense=true
+2026/04/14 04:21:33 [MERGE] node=laptop-agent incoming=9960 before=0 after=9960 hasSparse=false hasDense=true
+2026/04/14 04:21:43 [MERGE] node=laptop-agent incoming=5120 before=0 after=5120 hasSparse=false hasDense=true
+2026/04/14 04:21:53 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:22:03 [MERGE] node=laptop-agent incoming=120 before=0 after=120 hasSparse=false hasDense=true
+2026/04/14 04:22:13 [MERGE] node=laptop-agent incoming=481 before=0 after=481 hasSparse=false hasDense=true
+2026/04/14 04:22:23 [MERGE] node=laptop-agent incoming=599 before=0 after=599 hasSparse=false hasDense=true
+2026/04/14 04:22:33 [MERGE] node=laptop-agent incoming=600 before=0 after=600 hasSparse=false hasDense=true
+2026/04/14 04:22:43 [MERGE] node=laptop-agent incoming=602 before=0 after=602 hasSparse=false hasDense=true
+2026/04/14 04:22:53 [MERGE] node=laptop-agent incoming=450 before=0 after=450 hasSparse=false hasDense=true
+2026/04/14 04:23:03 [MERGE] node=laptop-agent incoming=89 before=0 after=89 hasSparse=false hasDense=true
+2026/04/14 04:23:13 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true

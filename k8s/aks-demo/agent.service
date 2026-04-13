@@ -1,0 +1,15 @@
+[Unit]
+Description=DDoS Detection Agent
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/home/pi/ddos
+ExecStart=/home/pi/ddos/bin/agent -iface eth0 -aggregator AGGREGATOR_IP:50051
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target

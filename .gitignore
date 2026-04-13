@@ -4,4 +4,10 @@ eval-detection.exe
 aggregator.exe
 main.exe
 HLL-BTP.exe
+vendor/
+bin/agent
+bin/aggregator
+benchmark-precision
+eval-detection
+serial-bridge
 iot-sim.exe

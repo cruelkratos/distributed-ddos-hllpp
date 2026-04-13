@@ -1,0 +1,12 @@
+{
+  "experiment_id": "exp_20260414_024336",
+  "start_time": "2026-04-14T02:43:36.879487026+05:30",
+  "end_time": "2026-04-14T02:43:36.879500632+05:30",
+  "dataset": "synthetic",
+  "detector": "zscore",
+  "nodes": 0,
+  "window_duration": "1s",
+  "normal_rate": 300,
+  "attack_rate": 15000,
+  "scenario": "windows=20 attack=[8 9 10 11 12 13]"
+}

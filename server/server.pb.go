@@ -512,6 +512,9 @@ type MergeRequest struct {
 	EnsembleScore float64 `protobuf:"fixed64,5,opt,name=ensemble_score,json=ensembleScore,proto3" json:"ensemble_score,omitempty"`
 	AnomalyState  int32   `protobuf:"varint,6,opt,name=anomaly_state,json=anomalyState,proto3" json:"anomaly_state,omitempty"` // 0=NORMAL, 1=UNDER_ATTACK, 2=RECOVERY
 	PacketCount   uint64  `protobuf:"varint,7,opt,name=packet_count,json=packetCount,proto3" json:"packet_count,omitempty"`
+	// Attack classification fields (Phase 3 extension).
+	AttackType       string  `protobuf:"bytes,8,opt,name=attack_type,json=attackType,proto3" json:"attack_type,omitempty"`
+	AttackConfidence float64 `protobuf:"fixed64,9,opt,name=attack_confidence,json=attackConfidence,proto3" json:"attack_confidence,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -591,6 +594,20 @@ func (x *MergeRequest) GetAnomalyState() int32 {
 func (x *MergeRequest) GetPacketCount() uint64 {
 	if x != nil {
 		return x.PacketCount
+	}
+	return 0
+}
+
+func (x *MergeRequest) GetAttackType() string {
+	if x != nil {
+		return x.AttackType
+	}
+	return ""
+}
+
+func (x *MergeRequest) GetAttackConfidence() float64 {
+	if x != nil {
+		return x.AttackConfidence
 	}
 	return 0
 }

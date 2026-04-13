@@ -1,6 +1,7 @@
 .PHONY: all build proto test clean \
        docker-build docker-demo docker-down \
-       kind-setup kind-demo kind-clean
+       kind-setup kind-demo kind-clean \
+       eval benchmark ablation scalability dataset-replay
 
 # ── Build ─────────────────────────────────────────────
 all: build
@@ -10,6 +11,9 @@ build:
 	go build -o bin/aggregator  ./cmd/aggregator/
 	CGO_ENABLED=0 go build -o bin/iot-sim ./cmd/iot-sim/
 	go build -o bin/serial-bridge ./cmd/serial-bridge/
+	go build -o bin/eval-detection ./cmd/eval-detection/
+	go build -o bin/benchmark-system ./cmd/benchmark-system/
+	go build -o bin/dataset-replay ./cmd/dataset-replay/
 
 # Cross-compile for Raspberry Pi 3 (ARMv7). Simulation mode only (no pcap/CGO).
 build-arm:
@@ -39,6 +43,23 @@ test-cover:
 
 clean:
 	rm -rf bin/ coverage.out
+
+# ── Evaluation & Benchmarking ────────────────────────
+eval:
+	go run ./cmd/eval-detection/ --detector compare --windows 20 --attack-from 8 --attack-count 6
+
+ablation:
+	bash scripts/run_ablation.sh results/ablation
+
+benchmark:
+	go run ./cmd/benchmark-system/ --nodes 1 --windows 20 --out results/benchmark.csv
+
+scalability:
+	bash scripts/run_scalability.sh results/scalability
+
+dataset-replay:
+	@echo "Usage: make dataset-replay DATASET=<path.csv> AGENT=<host:port>"
+	@echo "  go run ./cmd/dataset-replay/ --csv $(DATASET) --agent $(AGENT)"
 
 # ── Docker Compose demo ──────────────────────────────
 docker-build:

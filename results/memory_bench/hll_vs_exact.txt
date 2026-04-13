@@ -1,0 +1,5 @@
+distinct_ips=1000 hll_memory_bytes=24576 exact_memory_bytes=75984 hll_estimate=1000
+distinct_ips=10000 hll_memory_bytes=24576 exact_memory_bytes=602240 hll_estimate=10011
+distinct_ips=100000 hll_memory_bytes=24576 exact_memory_bytes=5100432 hll_estimate=100005
+distinct_ips=1000000 hll_memory_bytes=24576 exact_memory_bytes=71927248 hll_estimate=987072
+2026/04/14 03:13:34 Wrote results/memory_bench/hll_vs_exact.csv

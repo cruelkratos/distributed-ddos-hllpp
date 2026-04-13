@@ -113,8 +113,21 @@ message MergeRequest {
     double ensemble_score = 5;
     int32  anomaly_state = 6;  // 0=NORMAL, 1=UNDER_ATTACK, 2=RECOVERY
     uint64 packet_count = 7;
+    // Attack classification (Phase 3).
+    string attack_type = 8;       // e.g. "SYN_FLOOD", "UDP_FLOOD", "NONE"
+    double attack_confidence = 9; // 0.0-1.0
+    // State transitions since last ship.
+    repeated StateTransition state_transitions = 10;
 }
 message MergeResponse {}
+
+// StateTransition records a single state change event.
+message StateTransition {
+    int64  timestamp_unix = 1; // Unix epoch seconds
+    int32  from_state = 2;     // 0=NORMAL, 1=UNDER_ATTACK, 2=RECOVERY
+    int32  to_state = 3;
+    string trigger = 4;        // e.g. "score=0.85"
+}
 
 // Health
 message HealthRequest {}

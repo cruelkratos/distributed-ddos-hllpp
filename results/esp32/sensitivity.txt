@@ -1,0 +1,170 @@
+=== ESP32 Sensitivity Test ===
+--- Attack rate: 500 IPs/s ---
+UDP target: 10.201.115.205:50052
+
+[NORMAL] 50 IPs/s for 10s
+[NORMAL] sent 450 IPs
+
+[ATTACK] 500 IPs/s for 20s
+[ATTACK] sent 9950 IPs
+
+[RECOVERY] 50 IPs/s for 10s
+[RECOVERY] sent 450 IPs
+
+
+Done.
+After:
+{"activated":false,"global_score":0,"reason":""}
+
+Recovered:
+{"activated":false,"global_score":0,"reason":""}
+
+--- Attack rate: 1000 IPs/s ---
+UDP target: 10.201.115.205:50052
+
+[NORMAL] 50 IPs/s for 10s
+[NORMAL] sent 450 IPs
+
+[ATTACK] 1000 IPs/s for 20s
+[ATTACK] sent 19950 IPs
+
+[RECOVERY] 50 IPs/s for 10s
+[RECOVERY] sent 450 IPs
+
+
+Done.
+After:
+{"activated":false,"global_score":0,"reason":""}
+
+Recovered:
+{"activated":false,"global_score":0,"reason":""}
+
+--- Attack rate: 2000 IPs/s ---
+UDP target: 10.201.115.205:50052
+
+[NORMAL] 50 IPs/s for 10s
+[NORMAL] sent 450 IPs
+
+[ATTACK] 2000 IPs/s for 20s
+[ATTACK] sent 39950 IPs
+
+[RECOVERY] 50 IPs/s for 10s
+[RECOVERY] sent 450 IPs
+
+
+Done.
+After:
+{"activated":false,"global_score":0,"reason":""}
+
+Recovered:
+{"activated":false,"global_score":0,"reason":""}
+
+--- Attack rate: 5000 IPs/s ---
+UDP target: 10.201.115.205:50052
+
+[NORMAL] 50 IPs/s for 10s
+[NORMAL] sent 450 IPs
+
+[ATTACK] 5000 IPs/s for 20s
+[ATTACK] sent 99950 IPs
+
+[RECOVERY] 50 IPs/s for 10s
+[RECOVERY] sent 450 IPs
+
+
+Done.
+After:
+{"activated":true,"global_score":0,"reason":"majority_nodes_under_attack"}
+
+Recovered:
+{"activated":false,"global_score":0,"reason":""}
+
+--- Attack rate: 10000 IPs/s ---
+UDP target: 10.201.115.205:50052
+
+[NORMAL] 50 IPs/s for 10s
+[NORMAL] sent 450 IPs
+
+[ATTACK] 10000 IPs/s for 20s
+[ATTACK] sent 199950 IPs
+
+[RECOVERY] 50 IPs/s for 10s
+[RECOVERY] sent 450 IPs
+
+
+Done.
+After:
+{"activated":true,"global_score":0,"reason":"majority_nodes_under_attack"}
+
+Recovered:
+{"activated":false,"global_score":0,"reason":""}
+
+=== Fine-grained threshold test ===
+--- Attack rate: 3000 IPs/s ---
+UDP target: 10.201.115.205:50052
+
+[NORMAL] 50 IPs/s for 10s
+[NORMAL] sent 450 IPs
+
+[ATTACK] 3000 IPs/s for 20s
+[ATTACK] sent 59950 IPs
+
+[RECOVERY] 50 IPs/s for 10s
+[RECOVERY] sent 450 IPs
+
+
+Done.
+Defense state:
+{"activated":true,"global_score":0,"reason":"majority_nodes_under_attack"}
+
+--- Attack rate: 3500 IPs/s ---
+UDP target: 10.201.115.205:50052
+
+[NORMAL] 50 IPs/s for 10s
+[NORMAL] sent 450 IPs
+
+[ATTACK] 3500 IPs/s for 20s
+[ATTACK] sent 69950 IPs
+
+[RECOVERY] 50 IPs/s for 10s
+[RECOVERY] sent 450 IPs
+
+
+Done.
+Defense state:
+{"activated":false,"global_score":0,"reason":""}
+
+--- Attack rate: 4000 IPs/s ---
+UDP target: 10.201.115.205:50052
+
+[NORMAL] 50 IPs/s for 10s
+[NORMAL] sent 450 IPs
+
+[ATTACK] 4000 IPs/s for 20s
+[ATTACK] sent 79950 IPs
+
+[RECOVERY] 50 IPs/s for 10s
+[RECOVERY] sent 450 IPs
+
+
+Done.
+Defense state:
+{"activated":true,"global_score":0,"reason":"majority_nodes_under_attack"}
+
+--- Attack rate: 4500 IPs/s ---
+UDP target: 10.201.115.205:50052
+
+[NORMAL] 50 IPs/s for 10s
+[NORMAL] sent 450 IPs
+
+[ATTACK] 4500 IPs/s for 20s
+[ATTACK] sent 89950 IPs
+
+[RECOVERY] 50 IPs/s for 10s
+[RECOVERY] sent 450 IPs
+
+
+Done.
+Defense state:
+{"activated":true,"global_score":0,"reason":"majority_nodes_under_attack"}
+

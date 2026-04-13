@@ -9,10 +9,16 @@ import (
 	"HLL-BTP/ddos/mitigation"
 	"HLL-BTP/ddos/window"
 	pb "HLL-BTP/server"
+	"bytes"
 	"context"
+	"encoding/base64"
+	"encoding/json"
 	"flag"
+	"fmt"
+	"io"
 	"log"
 	"net"
+	"net/http"
 	"os"
 	"os/signal"
 	"sync/atomic"
@@ -41,6 +47,8 @@ func main() {
 	ensembleThreshold := flag.Float64("ensemble-threshold", 0.6, "Ensemble anomaly score threshold for attack detection.")
 	globalRPS := flag.Float64("global-rps", 1000, "Global rate limit (requests/second) during mitigation.")
 	perIPLimit := flag.Uint64("per-ip-limit", 50, "Per-IP rate limit during mitigation.")
+	aggregatorHTTP := flag.String("aggregator-http", "", "HTTP address of aggregator (e.g. http://10.0.0.1:9091). Uses HTTP REST instead of gRPC for sketch shipping.")
+	simUDP := flag.Bool("sim-udp", false, "Accept raw UDP IP packets (like ESP32) instead of gRPC InjectIP in sim-mode.")
 	flag.Parse()
 
 	// Allow env override for aggregator address (K8s-friendly).
@@ -75,6 +83,13 @@ func main() {
 	sm := detector.NewAnomalyStateMachine(*ensembleThreshold, 3, 5)
 	mc := mitigation.NewMitigationController(sm, *globalRPS, uint16(*perIPLimit))
 
+	// Attack classification state.
+	temporalBuf := &detector.TemporalBuffer{}
+	stateTracker := &detector.StateTransitionTracker{}
+	var baselinePackets, baselineBPP float64
+	var baselineSamples int
+	var lastClassification detector.AttackClassification
+
 	attackCh := make(chan window.AttackEvent, 16)
 	wm := window.NewWindowManager(*windowDur, *checkInterval, det, attackCh)
 
@@ -88,6 +103,10 @@ func main() {
 
 	// Initial metrics update.
 	metrics.UpdateWindowMetrics(wm.CurrentCount(), false, wm.ApproxMemoryBytes())
+
+	// Start resource collector for benchmarking metrics.
+	resourceCollector := metrics.NewResourceCollector(5 * time.Second)
+	resourceCollector.Start()
 
 	// Goroutine: periodic metrics update and state machine driving.
 	go func() {
@@ -112,14 +131,47 @@ func main() {
 				features.EWMAResidual = components.EWMAResidual
 				features.ZScoreValue = components.ZScoreValue
 
+				prevState := sm.State()
 				newState := sm.Transition(score)
 				mc.UpdateState(newState)
+
+				// Track state transitions.
+				if newState != prevState {
+					stateTracker.Record(time.Now().Unix(), prevState, newState,
+						fmt.Sprintf("score=%.3f", score))
+				}
 			} else if attack {
+				prevState := sm.State()
 				sm.ForceState(detector.StateUnderAttack)
 				mc.UpdateState(detector.StateUnderAttack)
+				if prevState != detector.StateUnderAttack {
+					stateTracker.Record(time.Now().Unix(), prevState, detector.StateUnderAttack, "threshold")
+				}
 			} else {
+				prevState := sm.State()
 				newState := sm.Transition(0)
 				mc.UpdateState(newState)
+				if newState != prevState {
+					stateTracker.Record(time.Now().Unix(), prevState, newState, "score=0")
+				}
+			}
+
+			// Update temporal buffer and run attack classification.
+			temporalBuf.Push(float64(cur))
+			if sm.State() == detector.StateNormal && baselineSamples < 50 {
+				baselinePackets = (baselinePackets*float64(baselineSamples) + float64(features.PacketCount)) / float64(baselineSamples+1)
+				if features.PacketCount > 0 {
+					bpp := float64(features.ByteVolume) / float64(features.PacketCount)
+					baselineBPP = (baselineBPP*float64(baselineSamples) + bpp) / float64(baselineSamples+1)
+				}
+				baselineSamples++
+			}
+			if sm.State() != detector.StateNormal {
+				af := detector.ExtractAttackFeatures(features, temporalBuf, baselinePackets, baselineBPP)
+				af.EnsembleScore = ensembleScore
+				lastClassification = detector.ClassifyAttack(af)
+			} else {
+				lastClassification = detector.AttackClassification{Type: detector.AttackTypeNone}
 			}
 
 			mem := wm.ApproxMemoryBytes()
@@ -136,7 +188,60 @@ func main() {
 	ipsChan := make(chan string, *ipsBuf)
 	var bytesChan chan uint64
 
-	if *simMode {
+	if *simMode && *simUDP {
+		// UDP simulation mode: accept raw newline-delimited IPs via UDP (ESP32-compatible).
+		bytesChan = make(chan uint64, *ipsBuf)
+		go func() {
+			addr, err := net.ResolveUDPAddr("udp", *simGRPCAddr)
+			if err != nil {
+				log.Fatalf("sim-udp: resolve %s: %v", *simGRPCAddr, err)
+			}
+			conn, err := net.ListenUDP("udp", addr)
+			if err != nil {
+				log.Fatalf("sim-udp: listen %s: %v", *simGRPCAddr, err)
+			}
+			log.Printf("sim-udp: listening on %s", *simGRPCAddr)
+			buf := make([]byte, 65536)
+			for {
+				n, _, err := conn.ReadFromUDP(buf)
+				if err != nil {
+					continue
+				}
+				// Parse newline-delimited IPs (same format as ESP32 UDP listener).
+				start := 0
+				for i := 0; i < n; i++ {
+					if buf[i] == '\n' {
+						ip := string(buf[start:i])
+						if ip != "" {
+							select {
+							case ipsChan <- ip:
+							default:
+							}
+							select {
+							case bytesChan <- uint64(i - start):
+							default:
+							}
+						}
+						start = i + 1
+					}
+				}
+				// Handle last IP without trailing newline.
+				if start < n {
+					ip := string(buf[start:n])
+					if ip != "" {
+						select {
+						case ipsChan <- ip:
+						default:
+						}
+						select {
+						case bytesChan <- uint64(n - start):
+						default:
+						}
+					}
+				}
+			}
+		}()
+	} else if *simMode {
 		// Simulation mode: accept IPs via gRPC InjectIP service.
 		bytesChan = make(chan uint64, *ipsBuf)
 		simSrv := &simServer{ipsChan: ipsChan, bytesChan: bytesChan}
@@ -201,7 +306,12 @@ func main() {
 
 	// gRPC sketch shipping to aggregator (if configured).
 	var grpcConn *grpc.ClientConn
-	if *aggregatorAddr != "" {
+	if *aggregatorHTTP != "" {
+		// HTTP mode: ship sketches and poll defense via REST (ESP32-compatible).
+		go httpSketchShipLoop(wm, *aggregatorHTTP, *shipInterval, *nodeID, sm, ensemble, &lastClassification)
+		go httpDefensePollingLoop(*aggregatorHTTP, *nodeID, sm, mc)
+		log.Printf("HTTP sketch shipping enabled: aggregator=%s interval=%s", *aggregatorHTTP, *shipInterval)
+	} else if *aggregatorAddr != "" {
 		var err error
 		grpcConn, err = grpc.NewClient(*aggregatorAddr, grpc.WithTransportCredentials(insecure.NewCredentials()))
 		if err != nil {
@@ -210,12 +320,12 @@ func main() {
 		client := pb.NewHllServiceClient(grpcConn)
 
 		// Sketch shipping with telemetry.
-		go sketchShipLoop(wm, client, *shipInterval, *nodeID, sm, ensemble)
+		go sketchShipLoop(wm, client, *shipInterval, *nodeID, sm, ensemble, &lastClassification, stateTracker)
 
 		// Defense polling.
 		go defensePollingLoop(client, *nodeID, sm, mc)
 
-		log.Printf("sketch shipping enabled: aggregator=%s interval=%s", *aggregatorAddr, *shipInterval)
+		log.Printf("gRPC sketch shipping enabled: aggregator=%s interval=%s", *aggregatorAddr, *shipInterval)
 	}
 
 	sig := make(chan os.Signal, 1)
@@ -225,13 +335,14 @@ func main() {
 	wm.Stop()
 	close(attackCh)
 	mc.Stop()
+	resourceCollector.Stop()
 	if grpcConn != nil {
 		grpcConn.Close()
 	}
 }
 
 // sketchShipLoop periodically exports the current window sketch and sends it to the aggregator with telemetry.
-func sketchShipLoop(wm *window.WindowManager, client pb.HllServiceClient, interval time.Duration, nodeID string, sm *detector.AnomalyStateMachine, ensemble *detector.EnsembleDetector) {
+func sketchShipLoop(wm *window.WindowManager, client pb.HllServiceClient, interval time.Duration, nodeID string, sm *detector.AnomalyStateMachine, ensemble *detector.EnsembleDetector, classification *detector.AttackClassification, tracker *detector.StateTransitionTracker) {
 	ticker := time.NewTicker(interval)
 	defer ticker.Stop()
 	for range ticker.C {
@@ -262,6 +373,12 @@ func sketchShipLoop(wm *window.WindowManager, client pb.HllServiceClient, interv
 
 		features := wm.LastFeatures()
 		req.PacketCount = features.PacketCount
+
+		// Add attack classification telemetry.
+		if classification != nil {
+			req.AttackType = string(classification.Type)
+			req.AttackConfidence = classification.Confidence
+		}
 
 		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 		_, err = client.MergeSketch(ctx, req)
@@ -342,4 +459,95 @@ func (s *simServer) InjectIPs(_ context.Context, req *pb.InjectIPsBatchRequest) 
 // Forward Health checks in sim mode.
 func (s *simServer) Health(_ context.Context, _ *pb.HealthRequest) (*pb.HealthResponse, error) {
 	return &pb.HealthResponse{Status: pb.HealthResponse_SERVING}, nil
+}
+
+// httpSketchShipLoop periodically exports the current window sketch and ships it via HTTP POST (ESP32-compatible).
+func httpSketchShipLoop(wm *window.WindowManager, httpAddr string, interval time.Duration, nodeID string, sm *detector.AnomalyStateMachine, ensemble *detector.EnsembleDetector, classification *detector.AttackClassification) {
+	type mergeReq struct {
+		NodeID      string  `json:"node_id"`
+		P           int     `json:"p"`
+		Registers   string  `json:"registers"`
+		AnomalyState int32  `json:"anomaly_state"`
+		AttackType  string  `json:"attack_type,omitempty"`
+		AttackConf  float64 `json:"attack_confidence,omitempty"`
+	}
+
+	client := &http.Client{Timeout: 5 * time.Second}
+	ticker := time.NewTicker(interval)
+	defer ticker.Stop()
+	for range ticker.C {
+		sketch, err := wm.ExportPreviousSketch()
+		if err != nil {
+			log.Printf("[HTTP-SHIP] sketch export failed: %v", err)
+			continue
+		}
+		if sketch == nil {
+			continue
+		}
+
+		var regsB64 string
+		if dense := sketch.GetDenseData(); dense != nil {
+			regsB64 = base64.StdEncoding.EncodeToString(dense)
+		} else {
+			// No dense data yet — send zero-filled packed registers (6 bits per register).
+			m := 1 << uint(sketch.GetP())
+			packedSize := (m*6 + 7) / 8
+			regsB64 = base64.StdEncoding.EncodeToString(make([]byte, packedSize))
+		}
+		req := mergeReq{
+			NodeID:       nodeID,
+			P:            int(sketch.P),
+			Registers:    regsB64,
+			AnomalyState: int32(sm.State()),
+		}
+		if classification != nil {
+			req.AttackType = string(classification.Type)
+			req.AttackConf = classification.Confidence
+		}
+
+		body, err := json.Marshal(req)
+		if err != nil {
+			log.Printf("[HTTP-SHIP] marshal failed: %v", err)
+			continue
+		}
+
+		resp, err := client.Post(httpAddr+"/api/merge", "application/json", bytes.NewReader(body))
+		if err != nil {
+			log.Printf("[HTTP-SHIP] POST failed: %v", err)
+			continue
+		}
+		io.Copy(io.Discard, resp.Body)
+		resp.Body.Close()
+		log.Printf("[HTTP-SHIP] sketch shipped OK (HTTP %d)", resp.StatusCode)
+	}
+}
+
+// httpDefensePollingLoop periodically checks the aggregator for defense commands via HTTP GET.
+func httpDefensePollingLoop(httpAddr string, nodeID string, sm *detector.AnomalyStateMachine, mc *mitigation.MitigationController) {
+	type defenseResp struct {
+		Activated   bool    `json:"activated"`
+		GlobalScore float64 `json:"global_score"`
+		Reason      string  `json:"reason"`
+	}
+
+	client := &http.Client{Timeout: 3 * time.Second}
+	ticker := time.NewTicker(5 * time.Second)
+	defer ticker.Stop()
+	for range ticker.C {
+		resp, err := client.Get(fmt.Sprintf("%s/api/defense?node_id=%s", httpAddr, nodeID))
+		if err != nil {
+			continue
+		}
+		var dr defenseResp
+		err = json.NewDecoder(resp.Body).Decode(&dr)
+		resp.Body.Close()
+		if err != nil {
+			continue
+		}
+		if dr.Activated && sm.State() == detector.StateNormal {
+			log.Printf("[HTTP-DEFENSE] global defense activated: reason=%s score=%.3f — forcing UNDER_ATTACK", dr.Reason, dr.GlobalScore)
+			sm.ForceState(detector.StateUnderAttack)
+			mc.UpdateState(detector.StateUnderAttack)
+		}
+	}
 }

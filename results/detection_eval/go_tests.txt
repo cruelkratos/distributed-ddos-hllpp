@@ -1,0 +1,104 @@
+?   	HLL-BTP/ddos/capture	[no test files]
+=== RUN   TestExtractFeatures_Basic
+--- PASS: TestExtractFeatures_Basic (0.00s)
+=== RUN   TestExtractFeatures_ZeroPrevious
+--- PASS: TestExtractFeatures_ZeroPrevious (0.00s)
+=== RUN   TestExtractFeatures_ZeroPackets
+--- PASS: TestExtractFeatures_ZeroPackets (0.00s)
+=== RUN   TestLodaDetector_ScoreZeroBeforeWarmup
+--- PASS: TestLodaDetector_ScoreZeroBeforeWarmup (0.00s)
+=== RUN   TestLodaDetector_TrainedAfterWarmup
+--- PASS: TestLodaDetector_TrainedAfterWarmup (0.00s)
+=== RUN   TestLodaDetector_NormalLowScore
+--- PASS: TestLodaDetector_NormalLowScore (0.00s)
+=== RUN   TestLodaDetector_Name
+--- PASS: TestLodaDetector_Name (0.00s)
+=== RUN   TestHSTDetector_ScoreZeroBeforeTrained
+--- PASS: TestHSTDetector_ScoreZeroBeforeTrained (0.00s)
+=== RUN   TestHSTDetector_TrainedAfterWindowSwap
+--- PASS: TestHSTDetector_TrainedAfterWindowSwap (0.00s)
+=== RUN   TestHSTDetector_AnomalyHigherScore
+    detector_extended_test.go:175: normal score: 20.600000, anomalous score: 63.000000
+--- PASS: TestHSTDetector_AnomalyHigherScore (0.00s)
+=== RUN   TestHSTDetector_Name
+--- PASS: TestHSTDetector_Name (0.00s)
+=== RUN   TestEnsembleDetector_ScoreInRange
+--- PASS: TestEnsembleDetector_ScoreInRange (0.00s)
+=== RUN   TestEnsembleDetector_AttackDetected
+--- PASS: TestEnsembleDetector_AttackDetected (0.00s)
+=== RUN   TestEnsembleDetector_GetComponents
+--- PASS: TestEnsembleDetector_GetComponents (0.00s)
+=== RUN   TestEnsembleDetector_Name
+--- PASS: TestEnsembleDetector_Name (0.00s)
+=== RUN   TestSigmoid
+--- PASS: TestSigmoid (0.00s)
+=== RUN   TestStateMachine_StartsNormal
+--- PASS: TestStateMachine_StartsNormal (0.00s)
+=== RUN   TestStateMachine_TransitionToAttack
+--- PASS: TestStateMachine_TransitionToAttack (0.00s)
+=== RUN   TestStateMachine_AttackToRecovery
+--- PASS: TestStateMachine_AttackToRecovery (0.00s)
+=== RUN   TestStateMachine_RecoveryToNormal
+--- PASS: TestStateMachine_RecoveryToNormal (0.00s)
+=== RUN   TestStateMachine_RecoveryRelapse
+--- PASS: TestStateMachine_RecoveryRelapse (0.00s)
+=== RUN   TestStateMachine_ConsecutiveResetOnClean
+--- PASS: TestStateMachine_ConsecutiveResetOnClean (0.00s)
+=== RUN   TestStateMachine_ForceState
+--- PASS: TestStateMachine_ForceState (0.00s)
+=== RUN   TestStateMachine_String
+--- PASS: TestStateMachine_String (0.00s)
+=== RUN   TestEWMADetector_WarmupPeriod
+--- PASS: TestEWMADetector_WarmupPeriod (0.00s)
+=== RUN   TestEWMADetector_NormalTrafficNoAlert
+--- PASS: TestEWMADetector_NormalTrafficNoAlert (0.00s)
+=== RUN   TestEWMADetector_SpikeTriggersAlert
+--- PASS: TestEWMADetector_SpikeTriggersAlert (0.00s)
+=== RUN   TestEWMADetector_BaselineAdapts
+--- PASS: TestEWMADetector_BaselineAdapts (0.00s)
+=== RUN   TestEWMADetector_ZeroBaseline
+--- PASS: TestEWMADetector_ZeroBaseline (0.00s)
+=== RUN   TestEWMADetector_Name
+--- PASS: TestEWMADetector_Name (0.00s)
+=== RUN   TestZScoreDetector_NormalTraffic
+--- PASS: TestZScoreDetector_NormalTraffic (0.00s)
+=== RUN   TestZScoreDetector_SpikeAfterBaseline
+--- PASS: TestZScoreDetector_SpikeAfterBaseline (0.00s)
+=== RUN   TestZScoreDetector_NotEnoughHistory
+--- PASS: TestZScoreDetector_NotEnoughHistory (0.00s)
+=== RUN   TestZScoreDetector_GradualIncrease
+--- PASS: TestZScoreDetector_GradualIncrease (0.00s)
+=== RUN   TestZScoreDetector_Name
+--- PASS: TestZScoreDetector_Name (0.00s)
+=== RUN   TestMLAnomalyDetector_DelegatesToZScore
+--- PASS: TestMLAnomalyDetector_DelegatesToZScore (0.00s)
+PASS
+ok  	HLL-BTP/ddos/detector	0.006s
+?   	HLL-BTP/ddos/eval	[no test files]
+?   	HLL-BTP/ddos/firewall	[no test files]
+?   	HLL-BTP/ddos/metrics	[no test files]
+=== RUN   TestRateLimiter_AllowsWithinLimit
+--- PASS: TestRateLimiter_AllowsWithinLimit (0.00s)
+=== RUN   TestRateLimiter_GlobalRateLimit
+--- PASS: TestRateLimiter_GlobalRateLimit (0.00s)
+=== RUN   TestRateLimiter_PerIPLimit
+--- PASS: TestRateLimiter_PerIPLimit (0.00s)
+=== RUN   TestRateLimiter_DroppedCount
+--- PASS: TestRateLimiter_DroppedCount (0.00s)
+=== RUN   TestRateLimiter_DecayCMS
+--- PASS: TestRateLimiter_DecayCMS (0.00s)
+=== RUN   TestRateLimiter_Reset
+--- PASS: TestRateLimiter_Reset (0.00s)
+=== RUN   TestMitigationController_InactiveAllowsAll
+--- PASS: TestMitigationController_InactiveAllowsAll (0.00s)
+=== RUN   TestMitigationController_ActivatesOnAttack
+--- PASS: TestMitigationController_ActivatesOnAttack (0.00s)
+=== RUN   TestMitigationController_DeactivatesOnNormal
+--- PASS: TestMitigationController_DeactivatesOnNormal (0.00s)
+=== RUN   TestMitigationController_ActiveDuringRecovery
+--- PASS: TestMitigationController_ActiveDuringRecovery (0.00s)
+=== RUN   TestMitigationController_DroppedCount
+--- PASS: TestMitigationController_DroppedCount (0.00s)
+PASS
+ok  	HLL-BTP/ddos/mitigation	0.003s
+?   	HLL-BTP/ddos/window	[no test files]

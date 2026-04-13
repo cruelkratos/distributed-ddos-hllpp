@@ -1,0 +1,19 @@
+{
+  "detector": "hst",
+  "dataset": "synthetic",
+  "precision": 0.8,
+  "recall": 0.6666666666666666,
+  "f1_score": 0.7272727272727272,
+  "false_positive_rate": 0.07142857142857142,
+  "false_negative_rate": 0.3333333333333333,
+  "true_positives": 4,
+  "false_positives": 1,
+  "true_negatives": 13,
+  "false_negatives": 2,
+  "detection_latency_ms": 0,
+  "classification_accuracy": 0,
+  "avg_rss_bytes": 0,
+  "peak_rss_bytes": 0,
+  "avg_cpu_percent": 0,
+  "total_windows": 20
+}

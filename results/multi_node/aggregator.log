@@ -1,0 +1,1965 @@
+nohup: ignoring input
+2026/04/14 04:03:42 HTTP server (metrics + REST API) on :9091
+2026/04/14 04:03:42 aggregator gRPC listening on :50051, metrics on :9091, detector=zscore, window=10s
+2026/04/14 04:03:42 [DEFENSE-POLL] from 172.17.32.1:53394
+2026/04/14 04:03:44 [DEFENSE-POLL] from 127.0.0.1:40686
+2026/04/14 04:03:44 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:03:46 [DEFENSE-POLL] from 172.17.32.1:53397
+2026/04/14 04:03:48 [DEFENSE-POLL] from 127.0.0.1:55420
+2026/04/14 04:03:51 [DEFENSE-POLL] from 172.17.32.1:53400
+2026/04/14 04:03:52 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:03:54 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:03:56 [DEFENSE-POLL] from 172.17.32.1:53402
+2026/04/14 04:04:01 [DEFENSE-POLL] from 172.17.32.1:53403
+2026/04/14 04:04:02 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:04:04 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:04:06 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:04:07 [DEFENSE-POLL] from 172.17.32.1:53405
+2026/04/14 04:04:11 [DEFENSE-POLL] from 172.17.32.1:58968
+2026/04/14 04:04:12 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:04:16 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:04:17 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:04:17 [DEFENSE-POLL] from 172.17.32.1:58970
+2026/04/14 04:04:22 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:04:22 [DEFENSE-POLL] from 172.17.32.1:58973
+2026/04/14 04:04:26 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:04:32 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:04:32 [DEFENSE-POLL] from 172.17.32.1:58977
+2026/04/14 04:04:32 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:04:34 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:04:37 [DEFENSE-POLL] from 172.17.32.1:58979
+2026/04/14 04:04:37 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:04:42 [DEFENSE-POLL] from 172.17.32.1:58981
+2026/04/14 04:04:42 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:04:45 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:04:47 [DEFENSE-POLL] from 172.17.32.1:58984
+2026/04/14 04:04:47 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:04:52 [DEFENSE-POLL] from 172.17.32.1:58985
+2026/04/14 04:04:52 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:04:54 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:04:55 [DEFENSE-POLL] from 172.17.32.1:58987
+2026/04/14 04:04:57 [DEFENSE-POLL] from 172.17.32.1:58988
+2026/04/14 04:04:57 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:05:00 [DEFENSE-POLL] from 172.17.32.1:58987
+2026/04/14 04:05:02 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:05:02 [DEFENSE-POLL] from 172.17.32.1:58989
+2026/04/14 04:05:04 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:05:05 [DEFENSE-POLL] from 172.17.32.1:58987
+2026/04/14 04:05:07 [DEFENSE-POLL] from 172.17.32.1:58991
+2026/04/14 04:05:07 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:05:10 [DEFENSE-POLL] from 172.17.32.1:58987
+2026/04/14 04:05:12 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:05:12 [DEFENSE-POLL] from 172.17.32.1:58995
+2026/04/14 04:05:15 [DEFENSE-POLL] from 172.17.32.1:58987
+2026/04/14 04:05:15 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:05:17 [DEFENSE-POLL] from 172.17.32.1:58997
+2026/04/14 04:05:17 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:05:20 [DEFENSE-POLL] from 172.17.32.1:58987
+2026/04/14 04:05:22 [DEFENSE-POLL] from 172.17.32.1:59000
+2026/04/14 04:05:22 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:05:25 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:05:25 [DEFENSE-POLL] from 172.17.32.1:58987
+2026/04/14 04:05:27 [DEFENSE-POLL] from 172.17.32.1:59002
+2026/04/14 04:05:27 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:05:30 [DEFENSE-POLL] from 172.17.32.1:58987
+2026/04/14 04:05:32 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:05:35 [DEFENSE-POLL] from 172.17.32.1:58987
+2026/04/14 04:05:36 [DEFENSE-POLL] from 172.17.32.1:59003
+2026/04/14 04:05:37 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:05:40 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:05:40 [DEFENSE-POLL] from 172.17.32.1:58987
+2026/04/14 04:05:41 [DEFENSE-POLL] from 172.17.32.1:59005
+2026/04/14 04:05:42 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:05:45 [DEFENSE-POLL] from 172.17.32.1:58987
+2026/04/14 04:05:45 [DEFENSE-POLL] from 172.17.32.1:59006
+2026/04/14 04:05:47 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:05:48 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:05:50 [DEFENSE-POLL] from 172.17.32.1:58987
+2026/04/14 04:05:50 [DEFENSE-POLL] from 172.17.32.1:59010
+2026/04/14 04:05:52 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:05:55 [DEFENSE-POLL] from 172.17.32.1:58987
+2026/04/14 04:05:55 [DEFENSE-POLL] from 172.17.32.1:59011
+2026/04/14 04:05:57 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:05:57 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:06:00 [DEFENSE-POLL] from 172.17.32.1:58987
+2026/04/14 04:06:00 [DEFENSE-POLL] from 172.17.32.1:59013
+2026/04/14 04:06:02 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:06:05 [DEFENSE-POLL] from 172.17.32.1:58987
+2026/04/14 04:06:05 [DEFENSE-POLL] from 172.17.32.1:59014
+2026/04/14 04:06:06 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:06:07 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:06:10 [DEFENSE-POLL] from 172.17.32.1:58987
+2026/04/14 04:06:11 [DEFENSE-POLL] from 172.17.32.1:59016
+2026/04/14 04:06:12 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:06:15 [DEFENSE-POLL] from 172.17.32.1:58987
+2026/04/14 04:06:15 [DEFENSE-POLL] from 172.17.32.1:59017
+2026/04/14 04:06:16 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:06:17 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:06:20 [DEFENSE-POLL] from 172.17.32.1:58987
+2026/04/14 04:06:20 [DEFENSE-POLL] from 172.17.32.1:59019
+2026/04/14 04:06:22 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:06:25 [DEFENSE-POLL] from 172.17.32.1:58987
+2026/04/14 04:06:25 [DEFENSE-POLL] from 172.17.32.1:59020
+2026/04/14 04:06:26 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:06:27 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:06:30 [DEFENSE-POLL] from 172.17.32.1:58987
+2026/04/14 04:06:30 [DEFENSE-POLL] from 172.17.32.1:59024
+2026/04/14 04:06:32 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:06:35 [DEFENSE-POLL] from 172.17.32.1:58987
+2026/04/14 04:06:37 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:06:39 [DEFENSE-POLL] from 172.17.32.1:59025
+2026/04/14 04:06:40 [DEFENSE-POLL] from 172.17.32.1:58987
+2026/04/14 04:06:42 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:06:42 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:06:42 [DEFENSE-POLL] from 172.17.32.1:59027
+2026/04/14 04:06:45 [DEFENSE-POLL] from 172.17.32.1:58987
+2026/04/14 04:06:47 [DEFENSE-POLL] from 172.17.32.1:59028
+2026/04/14 04:06:47 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:06:50 [DEFENSE-POLL] from 172.17.32.1:58987
+2026/04/14 04:06:52 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:06:52 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:06:53 [DEFENSE-POLL] from 172.17.32.1:59030
+2026/04/14 04:06:57 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:06:58 [DEFENSE-POLL] from 172.17.32.1:59031
+2026/04/14 04:07:02 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:07:02 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:07:03 [DEFENSE-POLL] from 172.17.32.1:59033
+2026/04/14 04:07:07 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:07:08 [DEFENSE-POLL] from 172.17.32.1:59035
+2026/04/14 04:07:12 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:07:14 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:07:15 [DEFENSE-POLL] from 172.17.32.1:59040
+2026/04/14 04:07:17 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:07:20 [DEFENSE-POLL] from 172.17.32.1:59041
+2026/04/14 04:07:21 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:07:22 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:07:27 [DEFENSE-POLL] from 172.17.32.1:59043
+2026/04/14 04:07:27 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:07:29 [DEFENSE-POLL] from 172.17.32.1:59044
+2026/04/14 04:07:31 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:07:32 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:07:34 [DEFENSE-POLL] from 172.17.32.1:59046
+2026/04/14 04:07:37 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:07:39 [DEFENSE-POLL] from 172.17.32.1:59047
+2026/04/14 04:07:41 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:07:42 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:07:44 [DEFENSE-POLL] from 172.17.32.1:59049
+2026/04/14 04:07:47 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:07:49 [DEFENSE-POLL] from 172.17.32.1:59052
+2026/04/14 04:07:50 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:07:52 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:07:54 [DEFENSE-POLL] from 172.17.32.1:59054
+2026/04/14 04:07:57 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:07:59 [DEFENSE-POLL] from 172.17.32.1:59055
+2026/04/14 04:08:01 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:08:02 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:08:04 [DEFENSE-POLL] from 172.17.32.1:59057
+2026/04/14 04:08:07 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:08:09 [DEFENSE-POLL] from 172.17.32.1:59058
+2026/04/14 04:08:12 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:08:14 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:08:14 [DEFENSE-POLL] from 172.17.32.1:59061
+2026/04/14 04:08:17 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:08:19 [DEFENSE-POLL] from 172.17.32.1:59062
+2026/04/14 04:08:21 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:08:22 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:08:24 [DEFENSE-POLL] from 172.17.32.1:59064
+2026/04/14 04:08:27 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:08:29 [DEFENSE-POLL] from 172.17.32.1:59066
+2026/04/14 04:08:31 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:08:32 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:08:34 [DEFENSE-POLL] from 172.17.32.1:59068
+2026/04/14 04:08:37 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:08:39 [DEFENSE-POLL] from 172.17.32.1:59069
+2026/04/14 04:08:41 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:08:42 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:08:44 [DEFENSE-POLL] from 172.17.32.1:59072
+2026/04/14 04:08:47 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:08:49 [DEFENSE-POLL] from 172.17.32.1:59073
+2026/04/14 04:08:51 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:08:52 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:08:54 [DEFENSE-POLL] from 172.17.32.1:59075
+2026/04/14 04:08:57 [DEFENSE-POLL] from 172.17.32.1:59076
+2026/04/14 04:08:57 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:08:59 [DEFENSE-POLL] from 172.17.32.1:59077
+2026/04/14 04:09:01 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:09:02 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:09:03 [DEFENSE-POLL] from 172.17.32.1:59076
+2026/04/14 04:09:04 [DEFENSE-POLL] from 172.17.32.1:59080
+2026/04/14 04:09:07 [DEFENSE-POLL] from 172.17.32.1:59079
+2026/04/14 04:09:07 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:09:09 [DEFENSE-POLL] from 172.17.32.1:59081
+2026/04/14 04:09:11 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:09:12 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:09:12 [DEFENSE-POLL] from 172.17.32.1:59076
+2026/04/14 04:09:15 [DEFENSE-POLL] from 172.17.32.1:54931
+2026/04/14 04:09:17 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:09:17 [DEFENSE-POLL] from 172.17.32.1:59076
+2026/04/14 04:09:19 [DEFENSE-POLL] from 172.17.32.1:54932
+2026/04/14 04:09:21 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:09:22 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:09:22 [DEFENSE-POLL] from 172.17.32.1:59076
+2026/04/14 04:09:24 [DEFENSE-POLL] from 172.17.32.1:54934
+2026/04/14 04:09:27 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:09:27 [DEFENSE-POLL] from 172.17.32.1:59076
+2026/04/14 04:09:29 [DEFENSE-POLL] from 172.17.32.1:54935
+2026/04/14 04:09:30 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:09:32 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:09:32 [DEFENSE-POLL] from 172.17.32.1:59076
+2026/04/14 04:09:34 [DEFENSE-POLL] from 172.17.32.1:54937
+2026/04/14 04:09:37 [DEFENSE-POLL] from 172.17.32.1:59076
+2026/04/14 04:09:37 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:09:39 [DEFENSE-POLL] from 172.17.32.1:54938
+2026/04/14 04:09:41 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:09:42 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:09:42 [DEFENSE-POLL] from 172.17.32.1:59076
+2026/04/14 04:09:44 [DEFENSE-POLL] from 172.17.32.1:54940
+2026/04/14 04:09:47 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:09:47 [DEFENSE-POLL] from 172.17.32.1:59076
+2026/04/14 04:09:49 [DEFENSE-POLL] from 172.17.32.1:54941
+2026/04/14 04:09:51 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:09:52 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:09:52 [DEFENSE-POLL] from 172.17.32.1:59076
+2026/04/14 04:09:54 [DEFENSE-POLL] from 172.17.32.1:54944
+2026/04/14 04:09:57 [DEFENSE-POLL] from 172.17.32.1:59079
+2026/04/14 04:09:57 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:09:59 [DEFENSE-POLL] from 172.17.32.1:54945
+2026/04/14 04:10:01 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:10:02 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:10:02 [DEFENSE-POLL] from 172.17.32.1:59079
+2026/04/14 04:10:04 [DEFENSE-POLL] from 172.17.32.1:54947
+2026/04/14 04:10:07 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:10:07 [DEFENSE-POLL] from 172.17.32.1:59076
+2026/04/14 04:10:09 [DEFENSE-POLL] from 172.17.32.1:54948
+2026/04/14 04:10:11 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:10:12 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:10:12 [DEFENSE-POLL] from 172.17.32.1:59076
+2026/04/14 04:10:14 [DEFENSE-POLL] from 172.17.32.1:54952
+2026/04/14 04:10:17 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:10:17 [DEFENSE-POLL] from 172.17.32.1:59076
+2026/04/14 04:10:19 [DEFENSE-POLL] from 172.17.32.1:54953
+2026/04/14 04:10:21 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:10:22 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:10:22 [DEFENSE-POLL] from 172.17.32.1:59076
+2026/04/14 04:10:24 [DEFENSE-POLL] from 172.17.32.1:54955
+2026/04/14 04:10:27 [DEFENSE-POLL] from 172.17.32.1:59076
+2026/04/14 04:10:27 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:10:32 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:10:32 [DEFENSE-POLL] from 172.17.32.1:54957
+2026/04/14 04:10:32 [DEFENSE-POLL] from 172.17.32.1:59079
+2026/04/14 04:10:33 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:10:34 [DEFENSE-POLL] from 172.17.32.1:54960
+2026/04/14 04:10:37 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:10:39 [DEFENSE-POLL] from 172.17.32.1:54961
+2026/04/14 04:10:42 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:10:43 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:10:47 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:10:48 [DEFENSE-POLL] from 172.17.32.1:54963
+2026/04/14 04:10:50 [DEFENSE-POLL] from 172.17.32.1:54964
+2026/04/14 04:10:52 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:10:57 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:10:58 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:10:59 [DEFENSE-POLL] from 172.17.32.1:54966
+2026/04/14 04:11:02 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:11:07 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:11:12 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:11:17 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:11:17 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:11:18 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:11:19 [DEFENSE-POLL] from 172.17.32.1:54971
+2026/04/14 04:11:21 [DEFENSE-POLL] from 172.17.32.1:54972
+2026/04/14 04:11:22 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:11:27 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:11:27 [DEFENSE-POLL] from 172.17.32.1:54974
+2026/04/14 04:11:27 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:11:31 [DEFENSE-POLL] from 172.17.32.1:54975
+2026/04/14 04:11:32 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:11:37 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:11:37 [DEFENSE-POLL] from 172.17.32.1:54977
+2026/04/14 04:11:37 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:11:39 [DEFENSE-POLL] from 172.17.32.1:54978
+2026/04/14 04:11:41 [DEFENSE-POLL] from 172.17.32.1:54979
+2026/04/14 04:11:42 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:11:45 [DEFENSE-POLL] from 172.17.32.1:54978
+2026/04/14 04:11:47 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:11:47 [DEFENSE-POLL] from 172.17.32.1:54982
+2026/04/14 04:11:47 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:11:49 [DEFENSE-POLL] from 172.17.32.1:54980
+2026/04/14 04:11:51 [DEFENSE-POLL] from 172.17.32.1:54984
+2026/04/14 04:11:52 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:11:54 [DEFENSE-POLL] from 172.17.32.1:54980
+2026/04/14 04:11:57 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:11:57 [DEFENSE-POLL] from 172.17.32.1:54986
+2026/04/14 04:11:57 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:11:59 [DEFENSE-POLL] from 172.17.32.1:54978
+2026/04/14 04:12:02 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:12:04 [DEFENSE-POLL] from 172.17.32.1:54978
+2026/04/14 04:12:04 [DEFENSE-POLL] from 172.17.32.1:54987
+2026/04/14 04:12:07 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:12:07 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:12:07 [DEFENSE-POLL] from 172.17.32.1:54989
+2026/04/14 04:12:09 [DEFENSE-POLL] from 172.17.32.1:54980
+2026/04/14 04:12:11 [DEFENSE-POLL] from 172.17.32.1:54990
+2026/04/14 04:12:12 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:12:14 [DEFENSE-POLL] from 172.17.32.1:54980
+2026/04/14 04:12:17 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:12:17 [DEFENSE-POLL] from 172.17.32.1:54993
+2026/04/14 04:12:17 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:12:19 [DEFENSE-POLL] from 172.17.32.1:54978
+2026/04/14 04:12:21 [DEFENSE-POLL] from 172.17.32.1:54994
+2026/04/14 04:12:22 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:12:24 [DEFENSE-POLL] from 172.17.32.1:54978
+2026/04/14 04:12:27 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:12:29 [DEFENSE-POLL] from 172.17.32.1:54980
+2026/04/14 04:12:31 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:12:31 [DEFENSE-POLL] from 172.17.32.1:54996
+2026/04/14 04:12:31 [DEFENSE-POLL] from 172.17.32.1:54997
+2026/04/14 04:12:32 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:12:34 [DEFENSE-POLL] from 172.17.32.1:54980
+2026/04/14 04:12:37 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:12:37 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:12:37 [DEFENSE-POLL] from 172.17.32.1:55000
+2026/04/14 04:12:39 [DEFENSE-POLL] from 172.17.32.1:54978
+2026/04/14 04:12:42 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:12:43 [DEFENSE-POLL] from 172.17.32.1:55001
+2026/04/14 04:12:44 [DEFENSE-POLL] from 172.17.32.1:54978
+2026/04/14 04:12:47 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:12:47 [DEFENSE-POLL] from 172.17.32.1:55003
+2026/04/14 04:12:47 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:12:49 [DEFENSE-POLL] from 172.17.32.1:54980
+2026/04/14 04:12:51 [MERGE] node=test incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:12:52 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:12:52 [DEFENSE-POLL] from 172.17.32.1:55004
+2026/04/14 04:12:54 [DEFENSE-POLL] from 172.17.32.1:54980
+2026/04/14 04:12:57 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:12:57 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:12:58 [DEFENSE-POLL] from 172.17.32.1:55006
+2026/04/14 04:12:59 [DEFENSE-POLL] from 172.17.32.1:54978
+2026/04/14 04:13:02 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:13:02 [DEFENSE-POLL] from 172.17.32.1:55008
+2026/04/14 04:13:07 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:13:07 [DEFENSE-POLL] from 172.17.32.1:55010
+2026/04/14 04:13:07 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:13:12 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:13:12 [DEFENSE-POLL] from 172.17.32.1:55012
+2026/04/14 04:13:17 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:13:17 [DEFENSE-POLL] from 172.17.32.1:55017
+2026/04/14 04:13:17 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:13:22 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:13:25 [DEFENSE-POLL] from 172.17.32.1:55018
+2026/04/14 04:13:27 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:13:28 [DEFENSE-POLL] from 172.17.32.1:55020
+2026/04/14 04:13:28 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:13:28 [DEFENSE-POLL] from 172.17.32.1:55021
+2026/04/14 04:13:31 [DEFENSE-POLL] from 172.17.32.1:55020
+2026/04/14 04:13:31 [MERGE] node=pi-agent incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:13:32 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:13:33 [DEFENSE-POLL] from 172.17.32.1:55024
+2026/04/14 04:13:36 [DEFENSE-POLL] from 172.17.32.1:55023
+2026/04/14 04:13:37 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:13:37 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:13:38 [DEFENSE-POLL] from 172.17.32.1:55026
+2026/04/14 04:13:41 [DEFENSE-POLL] from 172.17.32.1:55023
+2026/04/14 04:13:41 [MERGE] node=pi-agent incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:13:42 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:13:43 [DEFENSE-POLL] from 172.17.32.1:55027
+2026/04/14 04:13:46 [DEFENSE-POLL] from 172.17.32.1:55020
+2026/04/14 04:13:47 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:13:51 [DEFENSE-POLL] from 172.17.32.1:55023
+2026/04/14 04:13:52 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:13:57 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:14:02 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:14:04 [DEFENSE-POLL] from 172.17.32.1:55031
+2026/04/14 04:14:04 [MERGE] node=pi-agent incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:14:06 [DEFENSE-POLL] from 172.17.32.1:55030
+2026/04/14 04:14:07 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:14:07 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:14:08 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:14:08 [DEFENSE-POLL] from 172.17.32.1:55036
+2026/04/14 04:14:11 [DEFENSE-POLL] from 172.17.32.1:55030
+2026/04/14 04:14:11 [MERGE] node=pi-agent incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:14:12 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:14:13 [DEFENSE-POLL] from 172.17.32.1:55089
+2026/04/14 04:14:15 [MERGE] node=pi-agent incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:14:16 [DEFENSE-POLL] from 172.17.32.1:55031
+2026/04/14 04:14:17 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:14:22 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:14:23 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:14:23 [DEFENSE-POLL] from 172.17.32.1:63144
+2026/04/14 04:14:24 [DEFENSE-POLL] from 172.17.32.1:63145
+2026/04/14 04:14:25 [MERGE] node=pi-agent incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:14:26 [DEFENSE-POLL] from 172.17.32.1:55030
+2026/04/14 04:14:27 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:14:28 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:14:29 [DEFENSE-POLL] from 172.17.32.1:63011
+2026/04/14 04:14:32 [DEFENSE-POLL] from 172.17.32.1:55030
+2026/04/14 04:14:32 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:14:32 [MERGE] node=pi-agent incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:14:34 [DEFENSE-POLL] from 172.17.32.1:55031
+2026/04/14 04:14:36 [DEFENSE-POLL] from 172.17.32.1:63013
+2026/04/14 04:14:36 [DEFENSE-POLL] from 172.17.32.1:63012
+2026/04/14 04:14:37 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:14:42 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:14:47 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:14:52 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:14:57 [DEFENSE-POLL] from 172.17.32.1:55030
+2026/04/14 04:14:57 [DEFENSE-POLL] from 172.17.32.1:51054
+2026/04/14 04:14:57 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:15:02 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:15:07 [DEFENSE-POLL] from 172.17.32.1:64653
+2026/04/14 04:15:07 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:15:08 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:15:08 [DEFENSE-POLL] from 172.17.32.1:50766
+2026/04/14 04:15:09 [DEFENSE-POLL] from 172.17.32.1:50767
+2026/04/14 04:15:11 [DEFENSE-POLL] from 172.17.32.1:50765
+2026/04/14 04:15:11 [MERGE] node=pi-agent incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:15:12 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:15:16 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:15:16 [DEFENSE-POLL] from 172.17.32.1:49682
+2026/04/14 04:15:16 [DEFENSE-POLL] from 172.17.32.1:64653
+2026/04/14 04:15:17 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:15:21 [DEFENSE-POLL] from 172.17.32.1:49686
+2026/04/14 04:15:21 [DEFENSE-POLL] from 172.17.32.1:64653
+2026/04/14 04:15:22 [MERGE] node=pi-agent incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:15:22 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:15:26 [DEFENSE-POLL] from 172.17.32.1:50765
+2026/04/14 04:15:27 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:15:31 [DEFENSE-POLL] from 172.17.32.1:50765
+2026/04/14 04:15:32 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:15:32 [MERGE] node=pi-agent incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:15:35 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:15:36 [DEFENSE-POLL] from 172.17.32.1:64653
+2026/04/14 04:15:36 [MERGE] node=esp32-xc3 incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:15:37 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:15:42 [DEFENSE-POLL] from 172.17.32.1:50765
+2026/04/14 04:15:42 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:15:47 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:15:52 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:15:52 [DEFENSE-POLL] from 172.17.32.1:49692
+2026/04/14 04:15:53 [MERGE] node=pi-agent incoming=0 before=0 after=0 (HTTP)
+2026/04/14 04:15:53 [DEFENSE-POLL] from 172.17.32.1:49693
+2026/04/14 04:15:53 [DEFENSE-POLL] from 172.17.32.1:49694
+2026/04/14 04:15:57 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:16:02 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:16:03 [DEFENSE-POLL] from 172.17.32.1:49693
+2026/04/14 04:16:07 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:16:12 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:16:17 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:16:22 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:16:27 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:16:32 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:16:37 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:16:42 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:16:47 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:16:52 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:16:57 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:17:02 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:17:07 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:17:12 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:17:17 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:17:22 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:17:27 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:17:32 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:17:37 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:17:42 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:17:47 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:17:52 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:18:02 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:18:03 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:18:12 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:18:13 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:18:22 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:18:23 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:18:24 [DEFENSE-POLL] from 127.0.0.1:37016
+2026/04/14 04:18:26 [DEFENSE-POLL] from 127.0.0.1:37028
+2026/04/14 04:18:28 [DEFENSE-POLL] from 127.0.0.1:37040
+2026/04/14 04:18:30 [DEFENSE-POLL] from 127.0.0.1:37046
+2026/04/14 04:18:32 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:18:32 [DEFENSE-POLL] from 127.0.0.1:37054
+2026/04/14 04:18:33 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:18:35 [DEFENSE-POLL] from 127.0.0.1:44604
+2026/04/14 04:18:37 [DEFENSE-POLL] from 127.0.0.1:44612
+2026/04/14 04:18:39 [DEFENSE-POLL] from 127.0.0.1:44616
+2026/04/14 04:18:41 [DEFENSE-POLL] from 127.0.0.1:44632
+2026/04/14 04:18:42 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:18:43 [DEFENSE-POLL] from 127.0.0.1:44640
+2026/04/14 04:18:43 [MERGE] node=laptop-agent incoming=300 before=0 after=302 hasSparse=true hasDense=false
+2026/04/14 04:18:45 [DEFENSE-POLL] from 127.0.0.1:55318
+2026/04/14 04:18:47 [DEFENSE-POLL] from 127.0.0.1:55334
+2026/04/14 04:18:49 [DEFENSE-POLL] from 127.0.0.1:55342
+2026/04/14 04:18:51 [DEFENSE-POLL] from 127.0.0.1:55354
+2026/04/14 04:18:52 [AGGREGATED-ATTACK] detector=zscore_anomaly count=302 window=10s
+2026/04/14 04:18:53 [MERGE] node=laptop-agent incoming=300 before=0 after=302 hasSparse=true hasDense=false
+2026/04/14 04:18:53 [DEFENSE-POLL] from 127.0.0.1:55356
+2026/04/14 04:18:55 [DEFENSE-POLL] from 127.0.0.1:49126
+2026/04/14 04:18:57 [DEFENSE-POLL] from 127.0.0.1:49134
+2026/04/14 04:18:59 [DEFENSE-POLL] from 127.0.0.1:49144
+2026/04/14 04:19:02 [DEFENSE-POLL] from 127.0.0.1:49160
+2026/04/14 04:19:02 [AGGREGATED-ATTACK] detector=zscore_anomaly count=302 window=10s
+2026/04/14 04:19:03 [MERGE] node=laptop-agent incoming=300 before=0 after=301 hasSparse=true hasDense=false
+2026/04/14 04:19:04 [DEFENSE-POLL] from 127.0.0.1:49176
+2026/04/14 04:19:06 [DEFENSE-POLL] from 127.0.0.1:50980
+2026/04/14 04:19:08 [DEFENSE-POLL] from 127.0.0.1:50986
+2026/04/14 04:19:10 [DEFENSE-POLL] from 127.0.0.1:50998
+2026/04/14 04:19:12 [AGGREGATOR] count=301 window=10s
+2026/04/14 04:19:12 [DEFENSE-POLL] from 127.0.0.1:51010
+2026/04/14 04:19:13 [MERGE] node=laptop-agent incoming=30 before=0 after=30 hasSparse=true hasDense=false
+2026/04/14 04:19:14 [DEFENSE-POLL] from 127.0.0.1:51022
+2026/04/14 04:19:16 [DEFENSE-POLL] from 127.0.0.1:56954
+2026/04/14 04:19:18 [DEFENSE-POLL] from 127.0.0.1:56968
+2026/04/14 04:19:20 [DEFENSE-POLL] from 127.0.0.1:56970
+2026/04/14 04:19:22 [AGGREGATOR] count=30 window=10s
+2026/04/14 04:19:22 [DEFENSE-POLL] from 127.0.0.1:56986
+2026/04/14 04:19:23 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:19:24 [DEFENSE-POLL] from 127.0.0.1:44272
+2026/04/14 04:19:26 [DEFENSE-POLL] from 127.0.0.1:44286
+2026/04/14 04:19:29 [DEFENSE-POLL] from 127.0.0.1:44290
+2026/04/14 04:19:31 [DEFENSE-POLL] from 127.0.0.1:44300
+2026/04/14 04:19:32 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:19:33 [DEFENSE-POLL] from 127.0.0.1:44304
+2026/04/14 04:19:33 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=true hasDense=false
+2026/04/14 04:19:35 [DEFENSE-POLL] from 127.0.0.1:38132
+2026/04/14 04:19:37 [DEFENSE-POLL] from 127.0.0.1:38148
+2026/04/14 04:19:39 [DEFENSE-POLL] from 127.0.0.1:38158
+2026/04/14 04:19:42 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:19:43 [MERGE] node=laptop-agent incoming=11150 before=0 after=11150 hasSparse=false hasDense=true
+2026/04/14 04:19:52 [AGGREGATED-ATTACK] detector=zscore_anomaly count=11150 window=10s
+2026/04/14 04:19:53 [MERGE] node=laptop-agent incoming=19967 before=0 after=19967 hasSparse=false hasDense=true
+2026/04/14 04:20:02 [GLOBAL-DEFENSE] NSG controller is nil — skipping lockdown
+2026/04/14 04:20:02 [GLOBAL-DEFENSE] activated: 1/1 nodes under attack, maxScore=0.907
+2026/04/14 04:20:02 [AGGREGATED-ATTACK] detector=zscore_anomaly count=19967 window=10s
+2026/04/14 04:20:02 [DEFENSE-POLL] from 127.0.0.1:33934
+2026/04/14 04:20:03 [MERGE] node=laptop-agent incoming=10096 before=0 after=10096 hasSparse=false hasDense=true
+2026/04/14 04:20:04 [DEFENSE-POLL] from 127.0.0.1:38742
+2026/04/14 04:20:06 [DEFENSE-POLL] from 127.0.0.1:38750
+2026/04/14 04:20:08 [DEFENSE-POLL] from 127.0.0.1:38754
+2026/04/14 04:20:10 [DEFENSE-POLL] from 127.0.0.1:38760
+2026/04/14 04:20:12 [AGGREGATOR] count=10096 window=10s
+2026/04/14 04:20:12 [GLOBAL-DEFENSE] activated: 1/1 nodes under attack, maxScore=0.889
+2026/04/14 04:20:12 [DEFENSE-POLL] from 127.0.0.1:38774
+2026/04/14 04:20:13 [DEFENSE-POLL] from 127.0.0.1:38784
+2026/04/14 04:20:13 [MERGE] node=laptop-agent incoming=10096 before=0 after=10096 hasSparse=false hasDense=true
+2026/04/14 04:20:15 [DEFENSE-POLL] from 127.0.0.1:51186
+2026/04/14 04:20:15 [DEFENSE-POLL] from 127.0.0.1:51202
+2026/04/14 04:20:17 [DEFENSE-POLL] from 127.0.0.1:51216
+2026/04/14 04:20:17 [DEFENSE-POLL] from 127.0.0.1:51226
+2026/04/14 04:20:19 [DEFENSE-POLL] from 127.0.0.1:51240
+2026/04/14 04:20:19 [DEFENSE-POLL] from 127.0.0.1:51256
+2026/04/14 04:20:21 [DEFENSE-POLL] from 127.0.0.1:51272
+2026/04/14 04:20:21 [DEFENSE-POLL] from 127.0.0.1:51276
+2026/04/14 04:20:22 [AGGREGATOR] count=10096 window=10s
+2026/04/14 04:20:22 [GLOBAL-DEFENSE] activated: 1/1 nodes under attack, maxScore=0.754
+2026/04/14 04:20:23 [DEFENSE-POLL] from 127.0.0.1:51284
+2026/04/14 04:20:23 [MERGE] node=laptop-agent incoming=9993 before=0 after=9993 hasSparse=false hasDense=true
+2026/04/14 04:20:23 [DEFENSE-POLL] from 127.0.0.1:51286
+2026/04/14 04:20:25 [DEFENSE-POLL] from 127.0.0.1:34024
+2026/04/14 04:20:25 [DEFENSE-POLL] from 127.0.0.1:34026
+2026/04/14 04:20:27 [DEFENSE-POLL] from 127.0.0.1:34034
+2026/04/14 04:20:27 [DEFENSE-POLL] from 127.0.0.1:34038
+2026/04/14 04:20:29 [DEFENSE-POLL] from 127.0.0.1:34040
+2026/04/14 04:20:30 [DEFENSE-POLL] from 127.0.0.1:34050
+2026/04/14 04:20:31 [DEFENSE-POLL] from 127.0.0.1:34056
+2026/04/14 04:20:32 [DEFENSE-POLL] from 127.0.0.1:34062
+2026/04/14 04:20:32 [GLOBAL-DEFENSE] activated: 1/1 nodes under attack, maxScore=0.900
+2026/04/14 04:20:32 [AGGREGATOR] count=9993 window=10s
+2026/04/14 04:20:33 [MERGE] node=laptop-agent incoming=9993 before=0 after=9993 hasSparse=false hasDense=true
+2026/04/14 04:20:33 [DEFENSE-POLL] from 127.0.0.1:34064
+2026/04/14 04:20:34 [DEFENSE-POLL] from 127.0.0.1:34068
+2026/04/14 04:20:35 [DEFENSE-POLL] from 127.0.0.1:45466
+2026/04/14 04:20:36 [DEFENSE-POLL] from 127.0.0.1:45476
+2026/04/14 04:20:37 [DEFENSE-POLL] from 127.0.0.1:45488
+2026/04/14 04:20:38 [DEFENSE-POLL] from 127.0.0.1:45502
+2026/04/14 04:20:39 [DEFENSE-POLL] from 127.0.0.1:45514
+2026/04/14 04:20:40 [DEFENSE-POLL] from 127.0.0.1:45516
+2026/04/14 04:20:42 [DEFENSE-POLL] from 127.0.0.1:45532
+2026/04/14 04:20:42 [GLOBAL-DEFENSE] activated: 1/1 nodes under attack, maxScore=0.882
+2026/04/14 04:20:42 [AGGREGATOR] count=9993 window=10s
+2026/04/14 04:20:42 [DEFENSE-POLL] from 127.0.0.1:45548
+2026/04/14 04:20:43 [MERGE] node=laptop-agent incoming=10087 before=0 after=10087 hasSparse=false hasDense=true
+2026/04/14 04:20:44 [DEFENSE-POLL] from 127.0.0.1:45552
+2026/04/14 04:20:44 [DEFENSE-POLL] from 127.0.0.1:55406
+2026/04/14 04:20:46 [DEFENSE-POLL] from 127.0.0.1:55410
+2026/04/14 04:20:46 [DEFENSE-POLL] from 127.0.0.1:55426
+2026/04/14 04:20:48 [DEFENSE-POLL] from 127.0.0.1:55434
+2026/04/14 04:20:48 [DEFENSE-POLL] from 127.0.0.1:55440
+2026/04/14 04:20:50 [DEFENSE-POLL] from 127.0.0.1:55456
+2026/04/14 04:20:50 [DEFENSE-POLL] from 127.0.0.1:55468
+2026/04/14 04:20:52 [GLOBAL-DEFENSE] activated: 1/1 nodes under attack, maxScore=0.863
+2026/04/14 04:20:52 [AGGREGATOR] count=10087 window=10s
+2026/04/14 04:20:52 [DEFENSE-POLL] from 127.0.0.1:55480
+2026/04/14 04:20:52 [DEFENSE-POLL] from 127.0.0.1:55490
+2026/04/14 04:20:53 [MERGE] node=laptop-agent incoming=10009 before=0 after=10009 hasSparse=false hasDense=true
+2026/04/14 04:20:54 [DEFENSE-POLL] from 127.0.0.1:51852
+2026/04/14 04:20:54 [DEFENSE-POLL] from 127.0.0.1:51854
+2026/04/14 04:20:56 [DEFENSE-POLL] from 127.0.0.1:51858
+2026/04/14 04:20:57 [DEFENSE-POLL] from 127.0.0.1:51862
+2026/04/14 04:20:58 [DEFENSE-POLL] from 127.0.0.1:51864
+2026/04/14 04:20:59 [DEFENSE-POLL] from 127.0.0.1:51870
+2026/04/14 04:21:00 [DEFENSE-POLL] from 127.0.0.1:51874
+2026/04/14 04:21:01 [DEFENSE-POLL] from 127.0.0.1:51882
+2026/04/14 04:21:02 [GLOBAL-DEFENSE] activated: 1/1 nodes under attack, maxScore=0.788
+2026/04/14 04:21:02 [AGGREGATOR] count=10009 window=10s
+2026/04/14 04:21:02 [DEFENSE-POLL] from 127.0.0.1:51898
+2026/04/14 04:21:02 [DEFENSE-POLL] from 127.0.0.1:51914
+2026/04/14 04:21:03 [DEFENSE-POLL] from 127.0.0.1:51930
+2026/04/14 04:21:03 [MERGE] node=laptop-agent incoming=10100 before=0 after=10100 hasSparse=false hasDense=true
+2026/04/14 04:21:04 [DEFENSE-POLL] from 127.0.0.1:37048
+2026/04/14 04:21:04 [DEFENSE-POLL] from 127.0.0.1:37054
+2026/04/14 04:21:05 [DEFENSE-POLL] from 127.0.0.1:37066
+2026/04/14 04:21:06 [DEFENSE-POLL] from 127.0.0.1:37080
+2026/04/14 04:21:06 [DEFENSE-POLL] from 127.0.0.1:37082
+2026/04/14 04:21:07 [DEFENSE-POLL] from 127.0.0.1:37092
+2026/04/14 04:21:08 [DEFENSE-POLL] from 127.0.0.1:37096
+2026/04/14 04:21:09 [DEFENSE-POLL] from 127.0.0.1:37110
+2026/04/14 04:21:09 [DEFENSE-POLL] from 127.0.0.1:37112
+2026/04/14 04:21:11 [DEFENSE-POLL] from 127.0.0.1:37124
+2026/04/14 04:21:11 [DEFENSE-POLL] from 127.0.0.1:37138
+2026/04/14 04:21:11 [DEFENSE-POLL] from 127.0.0.1:37142
+2026/04/14 04:21:12 [AGGREGATOR] count=10100 window=10s
+2026/04/14 04:21:12 [GLOBAL-DEFENSE] activated: 1/1 nodes under attack, maxScore=0.746
+2026/04/14 04:21:13 [DEFENSE-POLL] from 127.0.0.1:37156
+2026/04/14 04:21:13 [DEFENSE-POLL] from 127.0.0.1:37160
+2026/04/14 04:21:13 [MERGE] node=laptop-agent incoming=10048 before=0 after=10048 hasSparse=false hasDense=true
+2026/04/14 04:21:13 [DEFENSE-POLL] from 127.0.0.1:37162
+2026/04/14 04:21:15 [DEFENSE-POLL] from 127.0.0.1:49572
+2026/04/14 04:21:15 [DEFENSE-POLL] from 127.0.0.1:49582
+2026/04/14 04:21:15 [DEFENSE-POLL] from 127.0.0.1:49588
+2026/04/14 04:21:17 [DEFENSE-POLL] from 127.0.0.1:49596
+2026/04/14 04:21:17 [DEFENSE-POLL] from 127.0.0.1:49606
+2026/04/14 04:21:17 [DEFENSE-POLL] from 127.0.0.1:49610
+2026/04/14 04:21:19 [DEFENSE-POLL] from 127.0.0.1:49626
+2026/04/14 04:21:19 [DEFENSE-POLL] from 127.0.0.1:49636
+2026/04/14 04:21:19 [DEFENSE-POLL] from 127.0.0.1:49646
+2026/04/14 04:21:21 [DEFENSE-POLL] from 127.0.0.1:49660
+2026/04/14 04:21:21 [DEFENSE-POLL] from 127.0.0.1:49666
+2026/04/14 04:21:21 [DEFENSE-POLL] from 127.0.0.1:49676
+2026/04/14 04:21:22 [GLOBAL-DEFENSE] activated: 1/1 nodes under attack, maxScore=0.877
+2026/04/14 04:21:22 [AGGREGATOR] count=10048 window=10s
+2026/04/14 04:21:23 [MERGE] node=laptop-agent incoming=10048 before=0 after=10048 hasSparse=false hasDense=true
+2026/04/14 04:21:23 [DEFENSE-POLL] from 127.0.0.1:49684
+2026/04/14 04:21:23 [DEFENSE-POLL] from 127.0.0.1:49688
+2026/04/14 04:21:23 [DEFENSE-POLL] from 127.0.0.1:49694
+2026/04/14 04:21:25 [DEFENSE-POLL] from 127.0.0.1:47624
+2026/04/14 04:21:25 [DEFENSE-POLL] from 127.0.0.1:47630
+2026/04/14 04:21:26 [DEFENSE-POLL] from 127.0.0.1:47634
+2026/04/14 04:21:27 [DEFENSE-POLL] from 127.0.0.1:47640
+2026/04/14 04:21:27 [DEFENSE-POLL] from 127.0.0.1:47644
+2026/04/14 04:21:28 [DEFENSE-POLL] from 127.0.0.1:47660
+2026/04/14 04:21:29 [DEFENSE-POLL] from 127.0.0.1:47672
+2026/04/14 04:21:29 [DEFENSE-POLL] from 127.0.0.1:47680
+2026/04/14 04:21:30 [DEFENSE-POLL] from 127.0.0.1:47684
+2026/04/14 04:21:31 [DEFENSE-POLL] from 127.0.0.1:47700
+2026/04/14 04:21:31 [DEFENSE-POLL] from 127.0.0.1:47714
+2026/04/14 04:21:32 [DEFENSE-POLL] from 127.0.0.1:47716
+2026/04/14 04:21:32 [AGGREGATOR] count=10048 window=10s
+2026/04/14 04:21:32 [GLOBAL-DEFENSE] activated: 1/1 nodes under attack, maxScore=0.871
+2026/04/14 04:21:33 [MERGE] node=laptop-agent incoming=9960 before=0 after=9960 hasSparse=false hasDense=true
+2026/04/14 04:21:33 [DEFENSE-POLL] from 127.0.0.1:47726
+2026/04/14 04:21:33 [DEFENSE-POLL] from 127.0.0.1:47740
+2026/04/14 04:21:34 [DEFENSE-POLL] from 127.0.0.1:47750
+2026/04/14 04:21:35 [DEFENSE-POLL] from 127.0.0.1:33306
+2026/04/14 04:21:36 [DEFENSE-POLL] from 127.0.0.1:33310
+2026/04/14 04:21:36 [DEFENSE-POLL] from 127.0.0.1:33312
+2026/04/14 04:21:37 [DEFENSE-POLL] from 127.0.0.1:33316
+2026/04/14 04:21:38 [DEFENSE-POLL] from 127.0.0.1:33332
+2026/04/14 04:21:38 [DEFENSE-POLL] from 127.0.0.1:33342
+2026/04/14 04:21:40 [DEFENSE-POLL] from 127.0.0.1:33352
+2026/04/14 04:21:40 [DEFENSE-POLL] from 127.0.0.1:33368
+2026/04/14 04:21:40 [DEFENSE-POLL] from 127.0.0.1:33372
+2026/04/14 04:21:42 [DEFENSE-POLL] from 127.0.0.1:33382
+2026/04/14 04:21:42 [DEFENSE-POLL] from 127.0.0.1:33384
+2026/04/14 04:21:42 [GLOBAL-DEFENSE] activated: 1/1 nodes under attack, maxScore=0.856
+2026/04/14 04:21:42 [AGGREGATOR] count=9960 window=10s
+2026/04/14 04:21:42 [DEFENSE-POLL] from 127.0.0.1:33392
+2026/04/14 04:21:43 [MERGE] node=laptop-agent incoming=5120 before=0 after=5120 hasSparse=false hasDense=true
+2026/04/14 04:21:44 [DEFENSE-POLL] from 127.0.0.1:33406
+2026/04/14 04:21:44 [DEFENSE-POLL] from 127.0.0.1:33416
+2026/04/14 04:21:44 [DEFENSE-POLL] from 127.0.0.1:45616
+2026/04/14 04:21:46 [DEFENSE-POLL] from 127.0.0.1:45630
+2026/04/14 04:21:46 [DEFENSE-POLL] from 127.0.0.1:45634
+2026/04/14 04:21:46 [DEFENSE-POLL] from 127.0.0.1:45640
+2026/04/14 04:21:48 [DEFENSE-POLL] from 127.0.0.1:45652
+2026/04/14 04:21:48 [DEFENSE-POLL] from 127.0.0.1:45668
+2026/04/14 04:21:50 [DEFENSE-POLL] from 127.0.0.1:45680
+2026/04/14 04:21:50 [DEFENSE-POLL] from 127.0.0.1:45682
+2026/04/14 04:21:52 [GLOBAL-DEFENSE] activated: 1/1 nodes under attack, maxScore=0.791
+2026/04/14 04:21:52 [AGGREGATOR] count=5120 window=10s
+2026/04/14 04:21:52 [DEFENSE-POLL] from 127.0.0.1:45692
+2026/04/14 04:21:53 [DEFENSE-POLL] from 127.0.0.1:45708
+2026/04/14 04:21:53 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:21:54 [DEFENSE-POLL] from 127.0.0.1:42186
+2026/04/14 04:21:55 [DEFENSE-POLL] from 127.0.0.1:42194
+2026/04/14 04:21:56 [DEFENSE-POLL] from 127.0.0.1:42210
+2026/04/14 04:21:57 [DEFENSE-POLL] from 127.0.0.1:42224
+2026/04/14 04:21:58 [DEFENSE-POLL] from 127.0.0.1:42236
+2026/04/14 04:21:59 [DEFENSE-POLL] from 127.0.0.1:42240
+2026/04/14 04:21:59 [DEFENSE-POLL] from 127.0.0.1:42246
+2026/04/14 04:22:00 [DEFENSE-POLL] from 127.0.0.1:42262
+2026/04/14 04:22:01 [DEFENSE-POLL] from 127.0.0.1:42264
+2026/04/14 04:22:01 [DEFENSE-POLL] from 127.0.0.1:42278
+2026/04/14 04:22:02 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:22:03 [DEFENSE-POLL] from 127.0.0.1:42294
+2026/04/14 04:22:03 [DEFENSE-POLL] from 127.0.0.1:42304
+2026/04/14 04:22:03 [DEFENSE-POLL] from 127.0.0.1:42312
+2026/04/14 04:22:03 [MERGE] node=laptop-agent incoming=120 before=0 after=120 hasSparse=false hasDense=true
+2026/04/14 04:22:05 [DEFENSE-POLL] from 127.0.0.1:60712
+2026/04/14 04:22:05 [DEFENSE-POLL] from 127.0.0.1:60718
+2026/04/14 04:22:05 [DEFENSE-POLL] from 127.0.0.1:60720
+2026/04/14 04:22:07 [DEFENSE-POLL] from 127.0.0.1:60734
+2026/04/14 04:22:07 [DEFENSE-POLL] from 127.0.0.1:60742
+2026/04/14 04:22:09 [DEFENSE-POLL] from 127.0.0.1:60744
+2026/04/14 04:22:09 [DEFENSE-POLL] from 127.0.0.1:60760
+2026/04/14 04:22:11 [DEFENSE-POLL] from 127.0.0.1:60772
+2026/04/14 04:22:11 [DEFENSE-POLL] from 127.0.0.1:60786
+2026/04/14 04:22:12 [AGGREGATOR] count=120 window=10s
+2026/04/14 04:22:13 [DEFENSE-POLL] from 127.0.0.1:60800
+2026/04/14 04:22:13 [MERGE] node=laptop-agent incoming=481 before=0 after=481 hasSparse=false hasDense=true
+2026/04/14 04:22:13 [DEFENSE-POLL] from 127.0.0.1:60806
+2026/04/14 04:22:14 [DEFENSE-POLL] from 127.0.0.1:34220
+2026/04/14 04:22:15 [DEFENSE-POLL] from 127.0.0.1:34222
+2026/04/14 04:22:15 [DEFENSE-POLL] from 127.0.0.1:34230
+2026/04/14 04:22:16 [DEFENSE-POLL] from 127.0.0.1:34240
+2026/04/14 04:22:17 [DEFENSE-POLL] from 127.0.0.1:34254
+2026/04/14 04:22:17 [DEFENSE-POLL] from 127.0.0.1:34260
+2026/04/14 04:22:19 [DEFENSE-POLL] from 127.0.0.1:34266
+2026/04/14 04:22:19 [DEFENSE-POLL] from 127.0.0.1:34278
+2026/04/14 04:22:20 [DEFENSE-POLL] from 127.0.0.1:34282
+2026/04/14 04:22:21 [DEFENSE-POLL] from 127.0.0.1:34288
+2026/04/14 04:22:21 [DEFENSE-POLL] from 127.0.0.1:34302
+2026/04/14 04:22:22 [DEFENSE-POLL] from 127.0.0.1:34304
+2026/04/14 04:22:22 [AGGREGATOR] count=481 window=10s
+2026/04/14 04:22:23 [DEFENSE-POLL] from 127.0.0.1:34318
+2026/04/14 04:22:23 [MERGE] node=laptop-agent incoming=599 before=0 after=599 hasSparse=false hasDense=true
+2026/04/14 04:22:23 [DEFENSE-POLL] from 127.0.0.1:34326
+2026/04/14 04:22:24 [DEFENSE-POLL] from 127.0.0.1:34340
+2026/04/14 04:22:25 [DEFENSE-POLL] from 127.0.0.1:54084
+2026/04/14 04:22:25 [DEFENSE-POLL] from 127.0.0.1:54092
+2026/04/14 04:22:26 [DEFENSE-POLL] from 127.0.0.1:54096
+2026/04/14 04:22:27 [DEFENSE-POLL] from 127.0.0.1:54112
+2026/04/14 04:22:27 [DEFENSE-POLL] from 127.0.0.1:54122
+2026/04/14 04:22:28 [DEFENSE-POLL] from 127.0.0.1:54128
+2026/04/14 04:22:29 [DEFENSE-POLL] from 127.0.0.1:54130
+2026/04/14 04:22:29 [DEFENSE-POLL] from 127.0.0.1:54134
+2026/04/14 04:22:30 [DEFENSE-POLL] from 127.0.0.1:54142
+2026/04/14 04:22:31 [DEFENSE-POLL] from 127.0.0.1:54158
+2026/04/14 04:22:32 [DEFENSE-POLL] from 127.0.0.1:54164
+2026/04/14 04:22:32 [AGGREGATOR] count=599 window=10s
+2026/04/14 04:22:32 [DEFENSE-POLL] from 127.0.0.1:54166
+2026/04/14 04:22:33 [MERGE] node=laptop-agent incoming=600 before=0 after=600 hasSparse=false hasDense=true
+2026/04/14 04:22:33 [DEFENSE-POLL] from 127.0.0.1:54168
+2026/04/14 04:22:34 [DEFENSE-POLL] from 127.0.0.1:54174
+2026/04/14 04:22:34 [DEFENSE-POLL] from 127.0.0.1:46766
+2026/04/14 04:22:35 [DEFENSE-POLL] from 127.0.0.1:46768
+2026/04/14 04:22:36 [DEFENSE-POLL] from 127.0.0.1:46772
+2026/04/14 04:22:36 [DEFENSE-POLL] from 127.0.0.1:46780
+2026/04/14 04:22:37 [DEFENSE-POLL] from 127.0.0.1:46792
+2026/04/14 04:22:38 [DEFENSE-POLL] from 127.0.0.1:46798
+2026/04/14 04:22:38 [DEFENSE-POLL] from 127.0.0.1:46800
+2026/04/14 04:22:39 [DEFENSE-POLL] from 127.0.0.1:46804
+2026/04/14 04:22:40 [DEFENSE-POLL] from 127.0.0.1:46806
+2026/04/14 04:22:40 [DEFENSE-POLL] from 127.0.0.1:46812
+2026/04/14 04:22:41 [DEFENSE-POLL] from 127.0.0.1:46826
+2026/04/14 04:22:42 [AGGREGATOR] count=600 window=10s
+2026/04/14 04:22:42 [DEFENSE-POLL] from 127.0.0.1:46842
+2026/04/14 04:22:42 [DEFENSE-POLL] from 127.0.0.1:46854
+2026/04/14 04:22:43 [MERGE] node=laptop-agent incoming=602 before=0 after=602 hasSparse=false hasDense=true
+2026/04/14 04:22:43 [DEFENSE-POLL] from 127.0.0.1:46856
+2026/04/14 04:22:44 [DEFENSE-POLL] from 127.0.0.1:53738
+2026/04/14 04:22:44 [DEFENSE-POLL] from 127.0.0.1:53752
+2026/04/14 04:22:45 [DEFENSE-POLL] from 127.0.0.1:53762
+2026/04/14 04:22:46 [DEFENSE-POLL] from 127.0.0.1:53776
+2026/04/14 04:22:46 [DEFENSE-POLL] from 127.0.0.1:53778
+2026/04/14 04:22:48 [DEFENSE-POLL] from 127.0.0.1:53784
+2026/04/14 04:22:48 [DEFENSE-POLL] from 127.0.0.1:53786
+2026/04/14 04:22:49 [DEFENSE-POLL] from 127.0.0.1:53796
+2026/04/14 04:22:50 [DEFENSE-POLL] from 127.0.0.1:53810
+2026/04/14 04:22:50 [DEFENSE-POLL] from 127.0.0.1:53814
+2026/04/14 04:22:51 [DEFENSE-POLL] from 127.0.0.1:53826
+2026/04/14 04:22:52 [DEFENSE-POLL] from 127.0.0.1:53830
+2026/04/14 04:22:52 [AGGREGATOR] count=602 window=10s
+2026/04/14 04:22:52 [DEFENSE-POLL] from 127.0.0.1:53846
+2026/04/14 04:22:53 [DEFENSE-POLL] from 127.0.0.1:53862
+2026/04/14 04:22:53 [MERGE] node=laptop-agent incoming=450 before=0 after=450 hasSparse=false hasDense=true
+2026/04/14 04:22:54 [DEFENSE-POLL] from 127.0.0.1:53876
+2026/04/14 04:22:54 [DEFENSE-POLL] from 127.0.0.1:38136
+2026/04/14 04:22:55 [DEFENSE-POLL] from 127.0.0.1:38140
+2026/04/14 04:22:56 [DEFENSE-POLL] from 127.0.0.1:38150
+2026/04/14 04:22:57 [DEFENSE-POLL] from 127.0.0.1:38160
+2026/04/14 04:22:59 [DEFENSE-POLL] from 127.0.0.1:38166
+2026/04/14 04:22:59 [DEFENSE-POLL] from 127.0.0.1:38170
+2026/04/14 04:23:01 [DEFENSE-POLL] from 127.0.0.1:38172
+2026/04/14 04:23:01 [DEFENSE-POLL] from 127.0.0.1:38174
+2026/04/14 04:23:02 [AGGREGATOR] count=450 window=10s
+2026/04/14 04:23:03 [DEFENSE-POLL] from 127.0.0.1:38184
+2026/04/14 04:23:03 [MERGE] node=laptop-agent incoming=89 before=0 after=89 hasSparse=false hasDense=true
+2026/04/14 04:23:03 [DEFENSE-POLL] from 127.0.0.1:38188
+2026/04/14 04:23:05 [DEFENSE-POLL] from 127.0.0.1:39914
+2026/04/14 04:23:05 [DEFENSE-POLL] from 127.0.0.1:39930
+2026/04/14 04:23:07 [DEFENSE-POLL] from 127.0.0.1:39938
+2026/04/14 04:23:07 [DEFENSE-POLL] from 127.0.0.1:39950
+2026/04/14 04:23:09 [DEFENSE-POLL] from 127.0.0.1:39962
+2026/04/14 04:23:09 [DEFENSE-POLL] from 127.0.0.1:39972
+2026/04/14 04:23:11 [DEFENSE-POLL] from 127.0.0.1:39988
+2026/04/14 04:23:11 [DEFENSE-POLL] from 127.0.0.1:39994
+2026/04/14 04:23:12 [AGGREGATOR] count=89 window=10s
+2026/04/14 04:23:13 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:23:13 [DEFENSE-POLL] from 127.0.0.1:40006
+2026/04/14 04:23:13 [DEFENSE-POLL] from 127.0.0.1:40016
+2026/04/14 04:23:15 [DEFENSE-POLL] from 127.0.0.1:55844
+2026/04/14 04:23:16 [DEFENSE-POLL] from 127.0.0.1:55858
+2026/04/14 04:23:17 [DEFENSE-POLL] from 127.0.0.1:55874
+2026/04/14 04:23:18 [DEFENSE-POLL] from 127.0.0.1:55882
+2026/04/14 04:23:19 [DEFENSE-POLL] from 127.0.0.1:55884
+2026/04/14 04:23:20 [DEFENSE-POLL] from 127.0.0.1:55898
+2026/04/14 04:23:21 [DEFENSE-POLL] from 127.0.0.1:55912
+2026/04/14 04:23:22 [DEFENSE-POLL] from 127.0.0.1:55924
+2026/04/14 04:23:22 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:23:23 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:23:23 [DEFENSE-POLL] from 127.0.0.1:55932
+2026/04/14 04:23:24 [DEFENSE-POLL] from 127.0.0.1:55946
+2026/04/14 04:23:26 [DEFENSE-POLL] from 127.0.0.1:34504
+2026/04/14 04:23:26 [DEFENSE-POLL] from 127.0.0.1:34520
+2026/04/14 04:23:28 [DEFENSE-POLL] from 127.0.0.1:34534
+2026/04/14 04:23:28 [DEFENSE-POLL] from 127.0.0.1:34548
+2026/04/14 04:23:30 [DEFENSE-POLL] from 127.0.0.1:34550
+2026/04/14 04:23:30 [DEFENSE-POLL] from 127.0.0.1:34556
+2026/04/14 04:23:32 [DEFENSE-POLL] from 127.0.0.1:34558
+2026/04/14 04:23:32 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:23:32 [DEFENSE-POLL] from 127.0.0.1:34574
+2026/04/14 04:23:33 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:23:34 [DEFENSE-POLL] from 127.0.0.1:34590
+2026/04/14 04:23:34 [DEFENSE-POLL] from 127.0.0.1:53928
+2026/04/14 04:23:36 [DEFENSE-POLL] from 127.0.0.1:53936
+2026/04/14 04:23:36 [DEFENSE-POLL] from 127.0.0.1:53940
+2026/04/14 04:23:38 [DEFENSE-POLL] from 127.0.0.1:53952
+2026/04/14 04:23:38 [DEFENSE-POLL] from 127.0.0.1:53954
+2026/04/14 04:23:40 [DEFENSE-POLL] from 127.0.0.1:53964
+2026/04/14 04:23:40 [DEFENSE-POLL] from 127.0.0.1:53978
+2026/04/14 04:23:42 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:23:42 [DEFENSE-POLL] from 127.0.0.1:53994
+2026/04/14 04:23:42 [DEFENSE-POLL] from 127.0.0.1:54004
+2026/04/14 04:23:43 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:23:44 [DEFENSE-POLL] from 127.0.0.1:59816
+2026/04/14 04:23:45 [DEFENSE-POLL] from 127.0.0.1:59828
+2026/04/14 04:23:46 [DEFENSE-POLL] from 127.0.0.1:59844
+2026/04/14 04:23:47 [DEFENSE-POLL] from 127.0.0.1:59850
+2026/04/14 04:23:48 [DEFENSE-POLL] from 127.0.0.1:59866
+2026/04/14 04:23:49 [DEFENSE-POLL] from 127.0.0.1:59870
+2026/04/14 04:23:50 [DEFENSE-POLL] from 127.0.0.1:59876
+2026/04/14 04:23:51 [DEFENSE-POLL] from 127.0.0.1:59890
+2026/04/14 04:23:52 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:23:53 [DEFENSE-POLL] from 127.0.0.1:59900
+2026/04/14 04:23:53 [DEFENSE-POLL] from 127.0.0.1:59908
+2026/04/14 04:23:53 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:23:55 [DEFENSE-POLL] from 127.0.0.1:33536
+2026/04/14 04:23:55 [DEFENSE-POLL] from 127.0.0.1:33552
+2026/04/14 04:23:57 [DEFENSE-POLL] from 127.0.0.1:33562
+2026/04/14 04:23:57 [DEFENSE-POLL] from 127.0.0.1:33564
+2026/04/14 04:23:59 [DEFENSE-POLL] from 127.0.0.1:33580
+2026/04/14 04:23:59 [DEFENSE-POLL] from 127.0.0.1:33586
+2026/04/14 04:24:01 [DEFENSE-POLL] from 127.0.0.1:33588
+2026/04/14 04:24:01 [DEFENSE-POLL] from 127.0.0.1:33602
+2026/04/14 04:24:02 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:24:03 [DEFENSE-POLL] from 127.0.0.1:33618
+2026/04/14 04:24:03 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:24:03 [DEFENSE-POLL] from 127.0.0.1:33628
+2026/04/14 04:24:05 [DEFENSE-POLL] from 127.0.0.1:59728
+2026/04/14 04:24:05 [DEFENSE-POLL] from 127.0.0.1:59744
+2026/04/14 04:24:07 [DEFENSE-POLL] from 127.0.0.1:59758
+2026/04/14 04:24:07 [DEFENSE-POLL] from 127.0.0.1:59762
+2026/04/14 04:24:09 [DEFENSE-POLL] from 127.0.0.1:59776
+2026/04/14 04:24:09 [DEFENSE-POLL] from 127.0.0.1:59790
+2026/04/14 04:24:11 [DEFENSE-POLL] from 127.0.0.1:59804
+2026/04/14 04:24:12 [DEFENSE-POLL] from 127.0.0.1:59806
+2026/04/14 04:24:12 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:24:13 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:24:13 [DEFENSE-POLL] from 127.0.0.1:59822
+2026/04/14 04:24:14 [DEFENSE-POLL] from 127.0.0.1:59828
+2026/04/14 04:24:15 [DEFENSE-POLL] from 127.0.0.1:55162
+2026/04/14 04:24:16 [DEFENSE-POLL] from 127.0.0.1:55168
+2026/04/14 04:24:17 [DEFENSE-POLL] from 127.0.0.1:55182
+2026/04/14 04:24:18 [DEFENSE-POLL] from 127.0.0.1:55196
+2026/04/14 04:24:19 [DEFENSE-POLL] from 127.0.0.1:55204
+2026/04/14 04:24:20 [DEFENSE-POLL] from 127.0.0.1:55214
+2026/04/14 04:24:22 [DEFENSE-POLL] from 127.0.0.1:55220
+2026/04/14 04:24:22 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:24:22 [DEFENSE-POLL] from 127.0.0.1:55236
+2026/04/14 04:24:23 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:24:24 [DEFENSE-POLL] from 127.0.0.1:55244
+2026/04/14 04:24:24 [DEFENSE-POLL] from 127.0.0.1:55250
+2026/04/14 04:24:26 [DEFENSE-POLL] from 127.0.0.1:60072
+2026/04/14 04:24:26 [DEFENSE-POLL] from 127.0.0.1:60084
+2026/04/14 04:24:28 [DEFENSE-POLL] from 127.0.0.1:60094
+2026/04/14 04:24:28 [DEFENSE-POLL] from 127.0.0.1:60096
+2026/04/14 04:24:30 [DEFENSE-POLL] from 127.0.0.1:60098
+2026/04/14 04:24:30 [DEFENSE-POLL] from 127.0.0.1:60104
+2026/04/14 04:24:32 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:24:32 [DEFENSE-POLL] from 127.0.0.1:60106
+2026/04/14 04:24:32 [DEFENSE-POLL] from 127.0.0.1:60116
+2026/04/14 04:24:33 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:24:34 [DEFENSE-POLL] from 127.0.0.1:47440
+2026/04/14 04:24:34 [DEFENSE-POLL] from 127.0.0.1:47450
+2026/04/14 04:24:36 [DEFENSE-POLL] from 127.0.0.1:47466
+2026/04/14 04:24:36 [DEFENSE-POLL] from 127.0.0.1:47478
+2026/04/14 04:24:38 [DEFENSE-POLL] from 127.0.0.1:47484
+2026/04/14 04:24:38 [DEFENSE-POLL] from 127.0.0.1:47496
+2026/04/14 04:24:40 [DEFENSE-POLL] from 127.0.0.1:47504
+2026/04/14 04:24:41 [DEFENSE-POLL] from 127.0.0.1:47506
+2026/04/14 04:24:42 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:24:42 [DEFENSE-POLL] from 127.0.0.1:47516
+2026/04/14 04:24:43 [DEFENSE-POLL] from 127.0.0.1:47518
+2026/04/14 04:24:43 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:24:44 [DEFENSE-POLL] from 127.0.0.1:54020
+2026/04/14 04:24:45 [DEFENSE-POLL] from 127.0.0.1:54034
+2026/04/14 04:24:46 [DEFENSE-POLL] from 127.0.0.1:54042
+2026/04/14 04:24:47 [DEFENSE-POLL] from 127.0.0.1:54044
+2026/04/14 04:24:49 [DEFENSE-POLL] from 127.0.0.1:54054
+2026/04/14 04:24:49 [DEFENSE-POLL] from 127.0.0.1:54056
+2026/04/14 04:24:51 [DEFENSE-POLL] from 127.0.0.1:54072
+2026/04/14 04:24:51 [DEFENSE-POLL] from 127.0.0.1:54088
+2026/04/14 04:24:52 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:24:53 [DEFENSE-POLL] from 127.0.0.1:54094
+2026/04/14 04:24:53 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:24:53 [DEFENSE-POLL] from 127.0.0.1:54108
+2026/04/14 04:24:55 [DEFENSE-POLL] from 127.0.0.1:32832
+2026/04/14 04:24:55 [DEFENSE-POLL] from 127.0.0.1:32846
+2026/04/14 04:24:57 [DEFENSE-POLL] from 127.0.0.1:32854
+2026/04/14 04:24:57 [DEFENSE-POLL] from 127.0.0.1:32862
+2026/04/14 04:24:59 [DEFENSE-POLL] from 127.0.0.1:32866
+2026/04/14 04:24:59 [DEFENSE-POLL] from 127.0.0.1:32870
+2026/04/14 04:25:01 [DEFENSE-POLL] from 127.0.0.1:32878
+2026/04/14 04:25:01 [DEFENSE-POLL] from 127.0.0.1:32894
+2026/04/14 04:25:02 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:25:03 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:25:03 [DEFENSE-POLL] from 127.0.0.1:32900
+2026/04/14 04:25:03 [DEFENSE-POLL] from 127.0.0.1:32906
+2026/04/14 04:25:05 [DEFENSE-POLL] from 127.0.0.1:45988
+2026/04/14 04:25:05 [DEFENSE-POLL] from 127.0.0.1:45998
+2026/04/14 04:25:07 [DEFENSE-POLL] from 127.0.0.1:46012
+2026/04/14 04:25:08 [DEFENSE-POLL] from 127.0.0.1:46028
+2026/04/14 04:25:09 [DEFENSE-POLL] from 127.0.0.1:46036
+2026/04/14 04:25:10 [DEFENSE-POLL] from 127.0.0.1:46040
+2026/04/14 04:25:11 [DEFENSE-POLL] from 127.0.0.1:46052
+2026/04/14 04:25:12 [DEFENSE-POLL] from 127.0.0.1:46064
+2026/04/14 04:25:12 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:25:13 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:25:13 [DEFENSE-POLL] from 127.0.0.1:46072
+2026/04/14 04:25:14 [DEFENSE-POLL] from 127.0.0.1:46084
+2026/04/14 04:25:16 [DEFENSE-POLL] from 127.0.0.1:35480
+2026/04/14 04:25:16 [DEFENSE-POLL] from 127.0.0.1:35482
+2026/04/14 04:25:18 [DEFENSE-POLL] from 127.0.0.1:35496
+2026/04/14 04:25:18 [DEFENSE-POLL] from 127.0.0.1:35498
+2026/04/14 04:25:20 [DEFENSE-POLL] from 127.0.0.1:35504
+2026/04/14 04:25:20 [DEFENSE-POLL] from 127.0.0.1:35518
+2026/04/14 04:25:22 [DEFENSE-POLL] from 127.0.0.1:35520
+2026/04/14 04:25:22 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:25:22 [DEFENSE-POLL] from 127.0.0.1:35524
+2026/04/14 04:25:23 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:25:24 [DEFENSE-POLL] from 127.0.0.1:35536
+2026/04/14 04:25:24 [DEFENSE-POLL] from 127.0.0.1:50548
+2026/04/14 04:25:26 [DEFENSE-POLL] from 127.0.0.1:50556
+2026/04/14 04:25:26 [DEFENSE-POLL] from 127.0.0.1:50562
+2026/04/14 04:25:28 [DEFENSE-POLL] from 127.0.0.1:50570
+2026/04/14 04:25:28 [DEFENSE-POLL] from 127.0.0.1:50576
+2026/04/14 04:25:30 [DEFENSE-POLL] from 127.0.0.1:50592
+2026/04/14 04:25:30 [DEFENSE-POLL] from 127.0.0.1:50596
+2026/04/14 04:25:32 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:25:32 [DEFENSE-POLL] from 127.0.0.1:50600
+2026/04/14 04:25:32 [DEFENSE-POLL] from 127.0.0.1:50610
+2026/04/14 04:25:33 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:25:34 [DEFENSE-POLL] from 127.0.0.1:34490
+2026/04/14 04:25:35 [DEFENSE-POLL] from 127.0.0.1:34492
+2026/04/14 04:25:36 [DEFENSE-POLL] from 127.0.0.1:34496
+2026/04/14 04:25:37 [DEFENSE-POLL] from 127.0.0.1:34500
+2026/04/14 04:25:38 [DEFENSE-POLL] from 127.0.0.1:34504
+2026/04/14 04:25:39 [DEFENSE-POLL] from 127.0.0.1:34518
+2026/04/14 04:25:40 [DEFENSE-POLL] from 127.0.0.1:34524
+2026/04/14 04:25:41 [DEFENSE-POLL] from 127.0.0.1:34530
+2026/04/14 04:25:42 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:25:43 [DEFENSE-POLL] from 127.0.0.1:34532
+2026/04/14 04:25:43 [DEFENSE-POLL] from 127.0.0.1:34544
+2026/04/14 04:25:43 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:25:45 [DEFENSE-POLL] from 127.0.0.1:45384
+2026/04/14 04:25:45 [DEFENSE-POLL] from 127.0.0.1:45394
+2026/04/14 04:25:47 [DEFENSE-POLL] from 127.0.0.1:45400
+2026/04/14 04:25:47 [DEFENSE-POLL] from 127.0.0.1:45404
+2026/04/14 04:25:49 [DEFENSE-POLL] from 127.0.0.1:45416
+2026/04/14 04:25:49 [DEFENSE-POLL] from 127.0.0.1:45420
+2026/04/14 04:25:51 [DEFENSE-POLL] from 127.0.0.1:45424
+2026/04/14 04:25:51 [DEFENSE-POLL] from 127.0.0.1:45428
+2026/04/14 04:25:52 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:25:53 [DEFENSE-POLL] from 127.0.0.1:45432
+2026/04/14 04:25:53 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:25:53 [DEFENSE-POLL] from 127.0.0.1:45440
+2026/04/14 04:25:55 [DEFENSE-POLL] from 127.0.0.1:35184
+2026/04/14 04:25:55 [DEFENSE-POLL] from 127.0.0.1:35200
+2026/04/14 04:25:57 [DEFENSE-POLL] from 127.0.0.1:35204
+2026/04/14 04:25:57 [DEFENSE-POLL] from 127.0.0.1:35216
+2026/04/14 04:25:59 [DEFENSE-POLL] from 127.0.0.1:35220
+2026/04/14 04:25:59 [DEFENSE-POLL] from 127.0.0.1:35224
+2026/04/14 04:26:01 [DEFENSE-POLL] from 127.0.0.1:35232
+2026/04/14 04:26:01 [DEFENSE-POLL] from 127.0.0.1:35238
+2026/04/14 04:26:02 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:26:03 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:26:03 [DEFENSE-POLL] from 127.0.0.1:35248
+2026/04/14 04:26:04 [DEFENSE-POLL] from 127.0.0.1:35256
+2026/04/14 04:26:05 [DEFENSE-POLL] from 127.0.0.1:57028
+2026/04/14 04:26:06 [DEFENSE-POLL] from 127.0.0.1:57044
+2026/04/14 04:26:07 [DEFENSE-POLL] from 127.0.0.1:57046
+2026/04/14 04:26:08 [DEFENSE-POLL] from 127.0.0.1:57062
+2026/04/14 04:26:10 [DEFENSE-POLL] from 127.0.0.1:57072
+2026/04/14 04:26:10 [DEFENSE-POLL] from 127.0.0.1:57078
+2026/04/14 04:26:12 [DEFENSE-POLL] from 127.0.0.1:57086
+2026/04/14 04:26:12 [DEFENSE-POLL] from 127.0.0.1:57090
+2026/04/14 04:26:12 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:26:13 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:26:14 [DEFENSE-POLL] from 127.0.0.1:57106
+2026/04/14 04:26:14 [DEFENSE-POLL] from 127.0.0.1:57112
+2026/04/14 04:26:16 [DEFENSE-POLL] from 127.0.0.1:36230
+2026/04/14 04:26:16 [DEFENSE-POLL] from 127.0.0.1:36244
+2026/04/14 04:26:18 [DEFENSE-POLL] from 127.0.0.1:36254
+2026/04/14 04:26:18 [DEFENSE-POLL] from 127.0.0.1:36268
+2026/04/14 04:26:20 [DEFENSE-POLL] from 127.0.0.1:36282
+2026/04/14 04:26:20 [DEFENSE-POLL] from 127.0.0.1:36296
+2026/04/14 04:26:22 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:26:22 [DEFENSE-POLL] from 127.0.0.1:36302
+2026/04/14 04:26:22 [DEFENSE-POLL] from 127.0.0.1:36310
+2026/04/14 04:26:23 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:26:24 [DEFENSE-POLL] from 127.0.0.1:57802
+2026/04/14 04:26:24 [DEFENSE-POLL] from 127.0.0.1:57818
+2026/04/14 04:26:26 [DEFENSE-POLL] from 127.0.0.1:57832
+2026/04/14 04:26:26 [DEFENSE-POLL] from 127.0.0.1:57842
+2026/04/14 04:26:28 [DEFENSE-POLL] from 127.0.0.1:57850
+2026/04/14 04:26:28 [DEFENSE-POLL] from 127.0.0.1:57852
+2026/04/14 04:26:30 [DEFENSE-POLL] from 127.0.0.1:57862
+2026/04/14 04:26:31 [DEFENSE-POLL] from 127.0.0.1:57874
+2026/04/14 04:26:32 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:26:32 [DEFENSE-POLL] from 127.0.0.1:57876
+2026/04/14 04:26:33 [DEFENSE-POLL] from 127.0.0.1:57888
+2026/04/14 04:26:33 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:26:34 [DEFENSE-POLL] from 127.0.0.1:36278
+2026/04/14 04:26:35 [DEFENSE-POLL] from 127.0.0.1:36288
+2026/04/14 04:26:36 [DEFENSE-POLL] from 127.0.0.1:36298
+2026/04/14 04:26:37 [DEFENSE-POLL] from 127.0.0.1:36302
+2026/04/14 04:26:39 [DEFENSE-POLL] from 127.0.0.1:36316
+2026/04/14 04:26:39 [DEFENSE-POLL] from 127.0.0.1:36318
+2026/04/14 04:26:41 [DEFENSE-POLL] from 127.0.0.1:36326
+2026/04/14 04:26:41 [DEFENSE-POLL] from 127.0.0.1:36342
+2026/04/14 04:26:42 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:26:43 [DEFENSE-POLL] from 127.0.0.1:36352
+2026/04/14 04:26:43 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:26:43 [DEFENSE-POLL] from 127.0.0.1:36362
+2026/04/14 04:26:45 [DEFENSE-POLL] from 127.0.0.1:47934
+2026/04/14 04:26:45 [DEFENSE-POLL] from 127.0.0.1:47946
+2026/04/14 04:26:47 [DEFENSE-POLL] from 127.0.0.1:47962
+2026/04/14 04:26:47 [DEFENSE-POLL] from 127.0.0.1:47974
+2026/04/14 04:26:49 [DEFENSE-POLL] from 127.0.0.1:47978
+2026/04/14 04:26:49 [DEFENSE-POLL] from 127.0.0.1:47992
+2026/04/14 04:26:51 [DEFENSE-POLL] from 127.0.0.1:48000
+2026/04/14 04:26:51 [DEFENSE-POLL] from 127.0.0.1:48014
+2026/04/14 04:26:52 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:26:53 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:26:53 [DEFENSE-POLL] from 127.0.0.1:48028
+2026/04/14 04:26:53 [DEFENSE-POLL] from 127.0.0.1:48030
+2026/04/14 04:26:55 [DEFENSE-POLL] from 127.0.0.1:50454
+2026/04/14 04:26:55 [DEFENSE-POLL] from 127.0.0.1:50458
+2026/04/14 04:26:57 [DEFENSE-POLL] from 127.0.0.1:50466
+2026/04/14 04:26:58 [DEFENSE-POLL] from 127.0.0.1:50474
+2026/04/14 04:26:59 [DEFENSE-POLL] from 127.0.0.1:50480
+2026/04/14 04:27:00 [DEFENSE-POLL] from 127.0.0.1:50490
+2026/04/14 04:27:01 [DEFENSE-POLL] from 127.0.0.1:50502
+2026/04/14 04:27:02 [DEFENSE-POLL] from 127.0.0.1:50506
+2026/04/14 04:27:02 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:27:03 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:27:03 [DEFENSE-POLL] from 127.0.0.1:50522
+2026/04/14 04:27:04 [DEFENSE-POLL] from 127.0.0.1:50528
+2026/04/14 04:27:06 [DEFENSE-POLL] from 127.0.0.1:37298
+2026/04/14 04:27:06 [DEFENSE-POLL] from 127.0.0.1:37304
+2026/04/14 04:27:08 [DEFENSE-POLL] from 127.0.0.1:37306
+2026/04/14 04:27:08 [DEFENSE-POLL] from 127.0.0.1:37322
+2026/04/14 04:27:10 [DEFENSE-POLL] from 127.0.0.1:37328
+2026/04/14 04:27:10 [DEFENSE-POLL] from 127.0.0.1:37330
+2026/04/14 04:27:12 [DEFENSE-POLL] from 127.0.0.1:37332
+2026/04/14 04:27:12 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:27:12 [DEFENSE-POLL] from 127.0.0.1:37346
+2026/04/14 04:27:13 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:27:14 [DEFENSE-POLL] from 127.0.0.1:37356
+2026/04/14 04:27:14 [DEFENSE-POLL] from 127.0.0.1:51426
+2026/04/14 04:27:16 [DEFENSE-POLL] from 127.0.0.1:51432
+2026/04/14 04:27:16 [DEFENSE-POLL] from 127.0.0.1:51448
+2026/04/14 04:27:18 [DEFENSE-POLL] from 127.0.0.1:51454
+2026/04/14 04:27:18 [DEFENSE-POLL] from 127.0.0.1:51466
+2026/04/14 04:27:20 [DEFENSE-POLL] from 127.0.0.1:51472
+2026/04/14 04:27:20 [DEFENSE-POLL] from 127.0.0.1:51482
+2026/04/14 04:27:22 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:27:22 [DEFENSE-POLL] from 127.0.0.1:51494
+2026/04/14 04:27:22 [DEFENSE-POLL] from 127.0.0.1:51506
+2026/04/14 04:27:23 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:27:24 [DEFENSE-POLL] from 127.0.0.1:44058
+2026/04/14 04:27:24 [DEFENSE-POLL] from 127.0.0.1:44072
+2026/04/14 04:27:26 [DEFENSE-POLL] from 127.0.0.1:44082
+2026/04/14 04:27:27 [DEFENSE-POLL] from 127.0.0.1:44092
+2026/04/14 04:27:28 [DEFENSE-POLL] from 127.0.0.1:44096
+2026/04/14 04:27:29 [DEFENSE-POLL] from 127.0.0.1:44106
+2026/04/14 04:27:30 [DEFENSE-POLL] from 127.0.0.1:44112
+2026/04/14 04:27:31 [DEFENSE-POLL] from 127.0.0.1:44114
+2026/04/14 04:27:32 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:27:32 [DEFENSE-POLL] from 127.0.0.1:44126
+2026/04/14 04:27:33 [DEFENSE-POLL] from 127.0.0.1:44136
+2026/04/14 04:27:33 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:27:35 [DEFENSE-POLL] from 127.0.0.1:48502
+2026/04/14 04:27:35 [DEFENSE-POLL] from 127.0.0.1:48514
+2026/04/14 04:27:37 [DEFENSE-POLL] from 127.0.0.1:48518
+2026/04/14 04:27:37 [DEFENSE-POLL] from 127.0.0.1:48534
+2026/04/14 04:27:39 [DEFENSE-POLL] from 127.0.0.1:48548
+2026/04/14 04:27:39 [DEFENSE-POLL] from 127.0.0.1:48550
+2026/04/14 04:27:41 [DEFENSE-POLL] from 127.0.0.1:48566
+2026/04/14 04:27:41 [DEFENSE-POLL] from 127.0.0.1:48576
+2026/04/14 04:27:42 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:27:43 [DEFENSE-POLL] from 127.0.0.1:48584
+2026/04/14 04:27:43 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:27:43 [DEFENSE-POLL] from 127.0.0.1:48592
+2026/04/14 04:27:45 [DEFENSE-POLL] from 127.0.0.1:49170
+2026/04/14 04:27:45 [DEFENSE-POLL] from 127.0.0.1:49186
+2026/04/14 04:27:47 [DEFENSE-POLL] from 127.0.0.1:49200
+2026/04/14 04:27:47 [DEFENSE-POLL] from 127.0.0.1:49214
+2026/04/14 04:27:49 [DEFENSE-POLL] from 127.0.0.1:49218
+2026/04/14 04:27:49 [DEFENSE-POLL] from 127.0.0.1:49228
+2026/04/14 04:27:51 [DEFENSE-POLL] from 127.0.0.1:49234
+2026/04/14 04:27:51 [DEFENSE-POLL] from 127.0.0.1:49238
+2026/04/14 04:27:52 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:27:53 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:27:53 [DEFENSE-POLL] from 127.0.0.1:49246
+2026/04/14 04:27:54 [DEFENSE-POLL] from 127.0.0.1:49260
+2026/04/14 04:27:55 [DEFENSE-POLL] from 127.0.0.1:41404
+2026/04/14 04:27:56 [DEFENSE-POLL] from 127.0.0.1:41414
+2026/04/14 04:27:57 [DEFENSE-POLL] from 127.0.0.1:41420
+2026/04/14 04:27:58 [DEFENSE-POLL] from 127.0.0.1:41422
+2026/04/14 04:27:59 [DEFENSE-POLL] from 127.0.0.1:41432
+2026/04/14 04:28:00 [DEFENSE-POLL] from 127.0.0.1:41438
+2026/04/14 04:28:02 [DEFENSE-POLL] from 127.0.0.1:41442
+2026/04/14 04:28:02 [DEFENSE-POLL] from 127.0.0.1:41456
+2026/04/14 04:28:02 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:28:03 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:28:04 [DEFENSE-POLL] from 127.0.0.1:41464
+2026/04/14 04:28:04 [DEFENSE-POLL] from 127.0.0.1:41472
+2026/04/14 04:28:06 [DEFENSE-POLL] from 127.0.0.1:32906
+2026/04/14 04:28:06 [DEFENSE-POLL] from 127.0.0.1:32918
+2026/04/14 04:28:08 [DEFENSE-POLL] from 127.0.0.1:32928
+2026/04/14 04:28:08 [DEFENSE-POLL] from 127.0.0.1:32934
+2026/04/14 04:28:10 [DEFENSE-POLL] from 127.0.0.1:32946
+2026/04/14 04:28:10 [DEFENSE-POLL] from 127.0.0.1:32950
+2026/04/14 04:28:12 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:28:12 [DEFENSE-POLL] from 127.0.0.1:32962
+2026/04/14 04:28:12 [DEFENSE-POLL] from 127.0.0.1:32970
+2026/04/14 04:28:13 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:28:14 [DEFENSE-POLL] from 127.0.0.1:32978
+2026/04/14 04:28:14 [DEFENSE-POLL] from 127.0.0.1:56428
+2026/04/14 04:28:16 [DEFENSE-POLL] from 127.0.0.1:56442
+2026/04/14 04:28:16 [DEFENSE-POLL] from 127.0.0.1:56448
+2026/04/14 04:28:18 [DEFENSE-POLL] from 127.0.0.1:56460
+2026/04/14 04:28:18 [DEFENSE-POLL] from 127.0.0.1:56474
+2026/04/14 04:28:20 [DEFENSE-POLL] from 127.0.0.1:56490
+2026/04/14 04:28:20 [DEFENSE-POLL] from 127.0.0.1:56494
+2026/04/14 04:28:22 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:28:22 [DEFENSE-POLL] from 127.0.0.1:56498
+2026/04/14 04:28:23 [DEFENSE-POLL] from 127.0.0.1:56508
+2026/04/14 04:28:23 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:28:24 [DEFENSE-POLL] from 127.0.0.1:42134
+2026/04/14 04:28:25 [DEFENSE-POLL] from 127.0.0.1:42138
+2026/04/14 04:28:26 [DEFENSE-POLL] from 127.0.0.1:42144
+2026/04/14 04:28:27 [DEFENSE-POLL] from 127.0.0.1:42152
+2026/04/14 04:28:28 [DEFENSE-POLL] from 127.0.0.1:42154
+2026/04/14 04:28:29 [DEFENSE-POLL] from 127.0.0.1:42162
+2026/04/14 04:28:31 [DEFENSE-POLL] from 127.0.0.1:42174
+2026/04/14 04:28:31 [DEFENSE-POLL] from 127.0.0.1:42186
+2026/04/14 04:28:32 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:28:33 [DEFENSE-POLL] from 127.0.0.1:42192
+2026/04/14 04:28:33 [DEFENSE-POLL] from 127.0.0.1:42198
+2026/04/14 04:28:33 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:28:35 [DEFENSE-POLL] from 127.0.0.1:39198
+2026/04/14 04:28:35 [DEFENSE-POLL] from 127.0.0.1:39214
+2026/04/14 04:28:37 [DEFENSE-POLL] from 127.0.0.1:39216
+2026/04/14 04:28:37 [DEFENSE-POLL] from 127.0.0.1:39232
+2026/04/14 04:28:39 [DEFENSE-POLL] from 127.0.0.1:39244
+2026/04/14 04:28:39 [DEFENSE-POLL] from 127.0.0.1:39252
+2026/04/14 04:28:41 [DEFENSE-POLL] from 127.0.0.1:39262
+2026/04/14 04:28:41 [DEFENSE-POLL] from 127.0.0.1:39268
+2026/04/14 04:28:42 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:28:43 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:28:43 [DEFENSE-POLL] from 127.0.0.1:39276
+2026/04/14 04:28:43 [DEFENSE-POLL] from 127.0.0.1:39288
+2026/04/14 04:28:45 [DEFENSE-POLL] from 127.0.0.1:48380
+2026/04/14 04:28:45 [DEFENSE-POLL] from 127.0.0.1:48396
+2026/04/14 04:28:47 [DEFENSE-POLL] from 127.0.0.1:48410
+2026/04/14 04:28:47 [DEFENSE-POLL] from 127.0.0.1:48414
+2026/04/14 04:28:49 [DEFENSE-POLL] from 127.0.0.1:48428
+2026/04/14 04:28:50 [DEFENSE-POLL] from 127.0.0.1:48436
+2026/04/14 04:28:51 [DEFENSE-POLL] from 127.0.0.1:48452
+2026/04/14 04:28:52 [DEFENSE-POLL] from 127.0.0.1:48462
+2026/04/14 04:28:52 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:28:53 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:28:53 [DEFENSE-POLL] from 127.0.0.1:48472
+2026/04/14 04:28:54 [DEFENSE-POLL] from 127.0.0.1:48478
+2026/04/14 04:28:55 [DEFENSE-POLL] from 127.0.0.1:44960
+2026/04/14 04:28:56 [DEFENSE-POLL] from 127.0.0.1:44966
+2026/04/14 04:28:58 [DEFENSE-POLL] from 127.0.0.1:44968
+2026/04/14 04:28:58 [DEFENSE-POLL] from 127.0.0.1:44982
+2026/04/14 04:29:00 [DEFENSE-POLL] from 127.0.0.1:44984
+2026/04/14 04:29:00 [DEFENSE-POLL] from 127.0.0.1:45000
+2026/04/14 04:29:02 [DEFENSE-POLL] from 127.0.0.1:45012
+2026/04/14 04:29:02 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:29:02 [DEFENSE-POLL] from 127.0.0.1:45014
+2026/04/14 04:29:03 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:29:04 [DEFENSE-POLL] from 127.0.0.1:45016
+2026/04/14 04:29:04 [DEFENSE-POLL] from 127.0.0.1:33432
+2026/04/14 04:29:06 [DEFENSE-POLL] from 127.0.0.1:33442
+2026/04/14 04:29:06 [DEFENSE-POLL] from 127.0.0.1:33454
+2026/04/14 04:29:08 [DEFENSE-POLL] from 127.0.0.1:33466
+2026/04/14 04:29:08 [DEFENSE-POLL] from 127.0.0.1:33468
+2026/04/14 04:29:10 [DEFENSE-POLL] from 127.0.0.1:33478
+2026/04/14 04:29:10 [DEFENSE-POLL] from 127.0.0.1:33490
+2026/04/14 04:29:12 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:29:12 [DEFENSE-POLL] from 127.0.0.1:33498
+2026/04/14 04:29:12 [DEFENSE-POLL] from 127.0.0.1:33512
+2026/04/14 04:29:13 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:29:14 [DEFENSE-POLL] from 127.0.0.1:35076
+2026/04/14 04:29:14 [DEFENSE-POLL] from 127.0.0.1:35090
+2026/04/14 04:29:16 [DEFENSE-POLL] from 127.0.0.1:35104
+2026/04/14 04:29:17 [DEFENSE-POLL] from 127.0.0.1:35116
+2026/04/14 04:29:18 [DEFENSE-POLL] from 127.0.0.1:35122
+2026/04/14 04:29:19 [DEFENSE-POLL] from 127.0.0.1:35124
+2026/04/14 04:29:20 [DEFENSE-POLL] from 127.0.0.1:35140
+2026/04/14 04:29:21 [DEFENSE-POLL] from 127.0.0.1:35146
+2026/04/14 04:29:22 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:29:22 [DEFENSE-POLL] from 127.0.0.1:35156
+2026/04/14 04:29:23 [DEFENSE-POLL] from 127.0.0.1:35172
+2026/04/14 04:29:23 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:29:25 [DEFENSE-POLL] from 127.0.0.1:56634
+2026/04/14 04:29:25 [DEFENSE-POLL] from 127.0.0.1:56650
+2026/04/14 04:29:27 [DEFENSE-POLL] from 127.0.0.1:56652
+2026/04/14 04:29:27 [DEFENSE-POLL] from 127.0.0.1:56668
+2026/04/14 04:29:29 [DEFENSE-POLL] from 127.0.0.1:56678
+2026/04/14 04:29:29 [DEFENSE-POLL] from 127.0.0.1:56680
+2026/04/14 04:29:31 [DEFENSE-POLL] from 127.0.0.1:56684
+2026/04/14 04:29:31 [DEFENSE-POLL] from 127.0.0.1:56694
+2026/04/14 04:29:32 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:29:33 [DEFENSE-POLL] from 127.0.0.1:56696
+2026/04/14 04:29:33 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:29:33 [DEFENSE-POLL] from 127.0.0.1:56702
+2026/04/14 04:29:35 [DEFENSE-POLL] from 127.0.0.1:49258
+2026/04/14 04:29:35 [DEFENSE-POLL] from 127.0.0.1:49270
+2026/04/14 04:29:37 [DEFENSE-POLL] from 127.0.0.1:49278
+2026/04/14 04:29:37 [DEFENSE-POLL] from 127.0.0.1:49282
+2026/04/14 04:29:39 [DEFENSE-POLL] from 127.0.0.1:49288
+2026/04/14 04:29:39 [DEFENSE-POLL] from 127.0.0.1:49290
+2026/04/14 04:29:41 [DEFENSE-POLL] from 127.0.0.1:49294
+2026/04/14 04:29:41 [DEFENSE-POLL] from 127.0.0.1:49306
+2026/04/14 04:29:42 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:29:43 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:29:43 [DEFENSE-POLL] from 127.0.0.1:49322
+2026/04/14 04:29:43 [DEFENSE-POLL] from 127.0.0.1:49328
+2026/04/14 04:29:45 [DEFENSE-POLL] from 127.0.0.1:58844
+2026/04/14 04:29:46 [DEFENSE-POLL] from 127.0.0.1:58852
+2026/04/14 04:29:47 [DEFENSE-POLL] from 127.0.0.1:58868
+2026/04/14 04:29:48 [DEFENSE-POLL] from 127.0.0.1:58872
+2026/04/14 04:29:49 [DEFENSE-POLL] from 127.0.0.1:58888
+2026/04/14 04:29:50 [DEFENSE-POLL] from 127.0.0.1:58892
+2026/04/14 04:29:51 [DEFENSE-POLL] from 127.0.0.1:58900
+2026/04/14 04:29:52 [DEFENSE-POLL] from 127.0.0.1:58904
+2026/04/14 04:29:52 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:29:53 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:29:54 [DEFENSE-POLL] from 127.0.0.1:58908
+2026/04/14 04:29:54 [DEFENSE-POLL] from 127.0.0.1:58910
+2026/04/14 04:29:56 [DEFENSE-POLL] from 127.0.0.1:46020
+2026/04/14 04:29:56 [DEFENSE-POLL] from 127.0.0.1:46034
+2026/04/14 04:29:58 [DEFENSE-POLL] from 127.0.0.1:46044
+2026/04/14 04:29:58 [DEFENSE-POLL] from 127.0.0.1:46046
+2026/04/14 04:30:00 [DEFENSE-POLL] from 127.0.0.1:46050
+2026/04/14 04:30:00 [DEFENSE-POLL] from 127.0.0.1:46064
+2026/04/14 04:30:02 [DEFENSE-POLL] from 127.0.0.1:46066
+2026/04/14 04:30:02 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:30:02 [DEFENSE-POLL] from 127.0.0.1:46080
+2026/04/14 04:30:03 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:30:04 [DEFENSE-POLL] from 127.0.0.1:46092
+2026/04/14 04:30:04 [DEFENSE-POLL] from 127.0.0.1:45356
+2026/04/14 04:30:06 [DEFENSE-POLL] from 127.0.0.1:45358
+2026/04/14 04:30:06 [DEFENSE-POLL] from 127.0.0.1:45374
+2026/04/14 04:30:08 [DEFENSE-POLL] from 127.0.0.1:45388
+2026/04/14 04:30:08 [DEFENSE-POLL] from 127.0.0.1:45396
+2026/04/14 04:30:10 [DEFENSE-POLL] from 127.0.0.1:45412
+2026/04/14 04:30:10 [DEFENSE-POLL] from 127.0.0.1:45422
+2026/04/14 04:30:12 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:30:12 [DEFENSE-POLL] from 127.0.0.1:45428
+2026/04/14 04:30:12 [DEFENSE-POLL] from 127.0.0.1:45434
+2026/04/14 04:30:13 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:30:14 [DEFENSE-POLL] from 127.0.0.1:33546
+2026/04/14 04:30:15 [DEFENSE-POLL] from 127.0.0.1:33548
+2026/04/14 04:30:16 [DEFENSE-POLL] from 127.0.0.1:33560
+2026/04/14 04:30:17 [DEFENSE-POLL] from 127.0.0.1:33562
+2026/04/14 04:30:18 [DEFENSE-POLL] from 127.0.0.1:33576
+2026/04/14 04:30:19 [DEFENSE-POLL] from 127.0.0.1:33592
+2026/04/14 04:30:20 [DEFENSE-POLL] from 127.0.0.1:33598
+2026/04/14 04:30:21 [DEFENSE-POLL] from 127.0.0.1:33612
+2026/04/14 04:30:22 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:30:23 [DEFENSE-POLL] from 127.0.0.1:33628
+2026/04/14 04:30:23 [DEFENSE-POLL] from 127.0.0.1:33638
+2026/04/14 04:30:23 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:30:25 [DEFENSE-POLL] from 127.0.0.1:44004
+2026/04/14 04:30:25 [DEFENSE-POLL] from 127.0.0.1:44010
+2026/04/14 04:30:27 [DEFENSE-POLL] from 127.0.0.1:44024
+2026/04/14 04:30:27 [DEFENSE-POLL] from 127.0.0.1:44030
+2026/04/14 04:30:29 [DEFENSE-POLL] from 127.0.0.1:44040
+2026/04/14 04:30:29 [DEFENSE-POLL] from 127.0.0.1:44052
+2026/04/14 04:30:31 [DEFENSE-POLL] from 127.0.0.1:44060
+2026/04/14 04:30:31 [DEFENSE-POLL] from 127.0.0.1:44068
+2026/04/14 04:30:32 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:30:33 [DEFENSE-POLL] from 127.0.0.1:44076
+2026/04/14 04:30:33 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:30:33 [DEFENSE-POLL] from 127.0.0.1:44082
+2026/04/14 04:30:35 [DEFENSE-POLL] from 127.0.0.1:44286
+2026/04/14 04:30:35 [DEFENSE-POLL] from 127.0.0.1:44290
+2026/04/14 04:30:37 [DEFENSE-POLL] from 127.0.0.1:44292
+2026/04/14 04:30:37 [DEFENSE-POLL] from 127.0.0.1:44296
+2026/04/14 04:30:39 [DEFENSE-POLL] from 127.0.0.1:44298
+2026/04/14 04:30:39 [DEFENSE-POLL] from 127.0.0.1:44304
+2026/04/14 04:30:41 [DEFENSE-POLL] from 127.0.0.1:44318
+2026/04/14 04:30:41 [DEFENSE-POLL] from 127.0.0.1:44324
+2026/04/14 04:30:42 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:30:43 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:30:43 [DEFENSE-POLL] from 127.0.0.1:44338
+2026/04/14 04:30:44 [DEFENSE-POLL] from 127.0.0.1:44350
+2026/04/14 04:30:45 [DEFENSE-POLL] from 127.0.0.1:35468
+2026/04/14 04:30:46 [DEFENSE-POLL] from 127.0.0.1:35482
+2026/04/14 04:30:47 [DEFENSE-POLL] from 127.0.0.1:35498
+2026/04/14 04:30:48 [DEFENSE-POLL] from 127.0.0.1:35502
+2026/04/14 04:30:49 [DEFENSE-POLL] from 127.0.0.1:35516
+2026/04/14 04:30:50 [DEFENSE-POLL] from 127.0.0.1:35526
+2026/04/14 04:30:51 [DEFENSE-POLL] from 127.0.0.1:35532
+2026/04/14 04:30:52 [DEFENSE-POLL] from 127.0.0.1:35548
+2026/04/14 04:30:52 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:30:53 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:30:54 [DEFENSE-POLL] from 127.0.0.1:35554
+2026/04/14 04:30:54 [DEFENSE-POLL] from 127.0.0.1:35564
+2026/04/14 04:30:56 [DEFENSE-POLL] from 127.0.0.1:47486
+2026/04/14 04:30:56 [DEFENSE-POLL] from 127.0.0.1:47494
+2026/04/14 04:30:58 [DEFENSE-POLL] from 127.0.0.1:47510
+2026/04/14 04:30:58 [DEFENSE-POLL] from 127.0.0.1:47516
+2026/04/14 04:31:00 [DEFENSE-POLL] from 127.0.0.1:47528
+2026/04/14 04:31:00 [DEFENSE-POLL] from 127.0.0.1:47542
+2026/04/14 04:31:02 [DEFENSE-POLL] from 127.0.0.1:47548
+2026/04/14 04:31:02 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:31:02 [DEFENSE-POLL] from 127.0.0.1:47550
+2026/04/14 04:31:03 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:31:04 [DEFENSE-POLL] from 127.0.0.1:47556
+2026/04/14 04:31:04 [DEFENSE-POLL] from 127.0.0.1:41940
+2026/04/14 04:31:06 [DEFENSE-POLL] from 127.0.0.1:41954
+2026/04/14 04:31:06 [DEFENSE-POLL] from 127.0.0.1:41966
+2026/04/14 04:31:08 [DEFENSE-POLL] from 127.0.0.1:41968
+2026/04/14 04:31:08 [DEFENSE-POLL] from 127.0.0.1:41982
+2026/04/14 04:31:10 [DEFENSE-POLL] from 127.0.0.1:41984
+2026/04/14 04:31:10 [DEFENSE-POLL] from 127.0.0.1:41996
+2026/04/14 04:31:12 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:31:12 [DEFENSE-POLL] from 127.0.0.1:42000
+2026/04/14 04:31:13 [DEFENSE-POLL] from 127.0.0.1:42008
+2026/04/14 04:31:13 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:31:14 [DEFENSE-POLL] from 127.0.0.1:45034
+2026/04/14 04:31:15 [DEFENSE-POLL] from 127.0.0.1:45040
+2026/04/14 04:31:16 [DEFENSE-POLL] from 127.0.0.1:45052
+2026/04/14 04:31:17 [DEFENSE-POLL] from 127.0.0.1:45056
+2026/04/14 04:31:18 [DEFENSE-POLL] from 127.0.0.1:45060
+2026/04/14 04:31:19 [DEFENSE-POLL] from 127.0.0.1:45070
+2026/04/14 04:31:20 [DEFENSE-POLL] from 127.0.0.1:45072
+2026/04/14 04:31:21 [DEFENSE-POLL] from 127.0.0.1:45080
+2026/04/14 04:31:22 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:31:23 [DEFENSE-POLL] from 127.0.0.1:45092
+2026/04/14 04:31:23 [DEFENSE-POLL] from 127.0.0.1:45096
+2026/04/14 04:31:23 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:31:25 [DEFENSE-POLL] from 127.0.0.1:54976
+2026/04/14 04:31:25 [DEFENSE-POLL] from 127.0.0.1:54980
+2026/04/14 04:31:27 [DEFENSE-POLL] from 127.0.0.1:54982
+2026/04/14 04:31:27 [DEFENSE-POLL] from 127.0.0.1:54994
+2026/04/14 04:31:29 [DEFENSE-POLL] from 127.0.0.1:54998
+2026/04/14 04:31:29 [DEFENSE-POLL] from 127.0.0.1:55000
+2026/04/14 04:31:31 [DEFENSE-POLL] from 127.0.0.1:55016
+2026/04/14 04:31:31 [DEFENSE-POLL] from 127.0.0.1:55024
+2026/04/14 04:31:32 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:31:33 [DEFENSE-POLL] from 127.0.0.1:55030
+2026/04/14 04:31:33 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:31:33 [DEFENSE-POLL] from 127.0.0.1:55044
+2026/04/14 04:31:35 [DEFENSE-POLL] from 127.0.0.1:43230
+2026/04/14 04:31:35 [DEFENSE-POLL] from 127.0.0.1:43236
+2026/04/14 04:31:37 [DEFENSE-POLL] from 127.0.0.1:43250
+2026/04/14 04:31:37 [DEFENSE-POLL] from 127.0.0.1:43256
+2026/04/14 04:31:39 [DEFENSE-POLL] from 127.0.0.1:43266
+2026/04/14 04:31:39 [DEFENSE-POLL] from 127.0.0.1:43274
+2026/04/14 04:31:41 [DEFENSE-POLL] from 127.0.0.1:43276
+2026/04/14 04:31:41 [DEFENSE-POLL] from 127.0.0.1:43278
+2026/04/14 04:31:42 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:31:43 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:31:43 [DEFENSE-POLL] from 127.0.0.1:43290
+2026/04/14 04:31:44 [DEFENSE-POLL] from 127.0.0.1:43298
+2026/04/14 04:31:45 [DEFENSE-POLL] from 127.0.0.1:37346
+2026/04/14 04:31:46 [DEFENSE-POLL] from 127.0.0.1:37356
+2026/04/14 04:31:47 [DEFENSE-POLL] from 127.0.0.1:37370
+2026/04/14 04:31:48 [DEFENSE-POLL] from 127.0.0.1:37380
+2026/04/14 04:31:49 [DEFENSE-POLL] from 127.0.0.1:37386
+2026/04/14 04:31:50 [DEFENSE-POLL] from 127.0.0.1:37394
+2026/04/14 04:31:51 [DEFENSE-POLL] from 127.0.0.1:37402
+2026/04/14 04:31:52 [DEFENSE-POLL] from 127.0.0.1:37410
+2026/04/14 04:31:52 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:31:53 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:31:54 [DEFENSE-POLL] from 127.0.0.1:37414
+2026/04/14 04:31:54 [DEFENSE-POLL] from 127.0.0.1:37428
+2026/04/14 04:31:56 [DEFENSE-POLL] from 127.0.0.1:50878
+2026/04/14 04:31:56 [DEFENSE-POLL] from 127.0.0.1:50886
+2026/04/14 04:31:58 [DEFENSE-POLL] from 127.0.0.1:50902
+2026/04/14 04:31:58 [DEFENSE-POLL] from 127.0.0.1:50914
+2026/04/14 04:32:00 [DEFENSE-POLL] from 127.0.0.1:50924
+2026/04/14 04:32:00 [DEFENSE-POLL] from 127.0.0.1:50940
+2026/04/14 04:32:02 [DEFENSE-POLL] from 127.0.0.1:50950
+2026/04/14 04:32:02 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:32:02 [DEFENSE-POLL] from 127.0.0.1:50952
+2026/04/14 04:32:03 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:32:04 [DEFENSE-POLL] from 127.0.0.1:50954
+2026/04/14 04:32:04 [DEFENSE-POLL] from 127.0.0.1:43576
+2026/04/14 04:32:06 [DEFENSE-POLL] from 127.0.0.1:43580
+2026/04/14 04:32:06 [DEFENSE-POLL] from 127.0.0.1:43588
+2026/04/14 04:32:08 [DEFENSE-POLL] from 127.0.0.1:43598
+2026/04/14 04:32:08 [DEFENSE-POLL] from 127.0.0.1:43614
+2026/04/14 04:32:10 [DEFENSE-POLL] from 127.0.0.1:43618
+2026/04/14 04:32:10 [DEFENSE-POLL] from 127.0.0.1:43624
+2026/04/14 04:32:12 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:32:12 [DEFENSE-POLL] from 127.0.0.1:43638
+2026/04/14 04:32:13 [DEFENSE-POLL] from 127.0.0.1:43644
+2026/04/14 04:32:13 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:32:14 [DEFENSE-POLL] from 127.0.0.1:53356
+2026/04/14 04:32:15 [DEFENSE-POLL] from 127.0.0.1:53370
+2026/04/14 04:32:16 [DEFENSE-POLL] from 127.0.0.1:53382
+2026/04/14 04:32:17 [DEFENSE-POLL] from 127.0.0.1:53396
+2026/04/14 04:32:18 [DEFENSE-POLL] from 127.0.0.1:53404
+2026/04/14 04:32:19 [DEFENSE-POLL] from 127.0.0.1:53410
+2026/04/14 04:32:20 [DEFENSE-POLL] from 127.0.0.1:53418
+2026/04/14 04:32:21 [DEFENSE-POLL] from 127.0.0.1:53424
+2026/04/14 04:32:22 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:32:23 [DEFENSE-POLL] from 127.0.0.1:53428
+2026/04/14 04:32:23 [DEFENSE-POLL] from 127.0.0.1:53442
+2026/04/14 04:32:23 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:32:25 [DEFENSE-POLL] from 127.0.0.1:53712
+2026/04/14 04:32:25 [DEFENSE-POLL] from 127.0.0.1:53726
+2026/04/14 04:32:27 [DEFENSE-POLL] from 127.0.0.1:53742
+2026/04/14 04:32:27 [DEFENSE-POLL] from 127.0.0.1:53756
+2026/04/14 04:32:29 [DEFENSE-POLL] from 127.0.0.1:53766
+2026/04/14 04:32:29 [DEFENSE-POLL] from 127.0.0.1:53768
+2026/04/14 04:32:31 [DEFENSE-POLL] from 127.0.0.1:53772
+2026/04/14 04:32:31 [DEFENSE-POLL] from 127.0.0.1:53788
+2026/04/14 04:32:32 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:32:33 [DEFENSE-POLL] from 127.0.0.1:53800
+2026/04/14 04:32:33 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:32:33 [DEFENSE-POLL] from 127.0.0.1:53814
+2026/04/14 04:32:35 [DEFENSE-POLL] from 127.0.0.1:59392
+2026/04/14 04:32:35 [DEFENSE-POLL] from 127.0.0.1:59402
+2026/04/14 04:32:37 [DEFENSE-POLL] from 127.0.0.1:59414
+2026/04/14 04:32:37 [DEFENSE-POLL] from 127.0.0.1:59428
+2026/04/14 04:32:39 [DEFENSE-POLL] from 127.0.0.1:59440
+2026/04/14 04:32:39 [DEFENSE-POLL] from 127.0.0.1:59450
+2026/04/14 04:32:41 [DEFENSE-POLL] from 127.0.0.1:59456
+2026/04/14 04:32:42 [DEFENSE-POLL] from 127.0.0.1:59460
+2026/04/14 04:32:42 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:32:43 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:32:43 [DEFENSE-POLL] from 127.0.0.1:59472
+2026/04/14 04:32:44 [DEFENSE-POLL] from 127.0.0.1:59482
+2026/04/14 04:32:45 [DEFENSE-POLL] from 127.0.0.1:32972
+2026/04/14 04:32:46 [DEFENSE-POLL] from 127.0.0.1:32988
+2026/04/14 04:32:47 [DEFENSE-POLL] from 127.0.0.1:32990
+2026/04/14 04:32:48 [DEFENSE-POLL] from 127.0.0.1:32996
+2026/04/14 04:32:49 [DEFENSE-POLL] from 127.0.0.1:33012
+2026/04/14 04:32:50 [DEFENSE-POLL] from 127.0.0.1:33014
+2026/04/14 04:32:51 [DEFENSE-POLL] from 127.0.0.1:33030
+2026/04/14 04:32:52 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:32:52 [DEFENSE-POLL] from 127.0.0.1:33046
+2026/04/14 04:32:53 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:32:54 [DEFENSE-POLL] from 127.0.0.1:33056
+2026/04/14 04:32:54 [DEFENSE-POLL] from 127.0.0.1:33072
+2026/04/14 04:32:56 [DEFENSE-POLL] from 127.0.0.1:36684
+2026/04/14 04:32:56 [DEFENSE-POLL] from 127.0.0.1:36692
+2026/04/14 04:32:58 [DEFENSE-POLL] from 127.0.0.1:36708
+2026/04/14 04:32:58 [DEFENSE-POLL] from 127.0.0.1:36718
+2026/04/14 04:33:00 [DEFENSE-POLL] from 127.0.0.1:36726
+2026/04/14 04:33:00 [DEFENSE-POLL] from 127.0.0.1:36740
+2026/04/14 04:33:02 [DEFENSE-POLL] from 127.0.0.1:36744
+2026/04/14 04:33:02 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:33:02 [DEFENSE-POLL] from 127.0.0.1:36746
+2026/04/14 04:33:03 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:33:04 [DEFENSE-POLL] from 127.0.0.1:36748
+2026/04/14 04:33:04 [DEFENSE-POLL] from 127.0.0.1:52372
+2026/04/14 04:33:06 [DEFENSE-POLL] from 127.0.0.1:52376
+2026/04/14 04:33:06 [DEFENSE-POLL] from 127.0.0.1:52390
+2026/04/14 04:33:08 [DEFENSE-POLL] from 127.0.0.1:52402
+2026/04/14 04:33:08 [DEFENSE-POLL] from 127.0.0.1:52408
+2026/04/14 04:33:10 [DEFENSE-POLL] from 127.0.0.1:52418
+2026/04/14 04:33:11 [DEFENSE-POLL] from 127.0.0.1:52420
+2026/04/14 04:33:12 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:33:12 [DEFENSE-POLL] from 127.0.0.1:52430
+2026/04/14 04:33:13 [DEFENSE-POLL] from 127.0.0.1:52432
+2026/04/14 04:33:13 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:33:14 [DEFENSE-POLL] from 127.0.0.1:56448
+2026/04/14 04:33:15 [DEFENSE-POLL] from 127.0.0.1:56456
+2026/04/14 04:33:16 [DEFENSE-POLL] from 127.0.0.1:56464
+2026/04/14 04:33:17 [DEFENSE-POLL] from 127.0.0.1:56466
+2026/04/14 04:33:18 [DEFENSE-POLL] from 127.0.0.1:56480
+2026/04/14 04:33:19 [DEFENSE-POLL] from 127.0.0.1:56488
+2026/04/14 04:33:20 [DEFENSE-POLL] from 127.0.0.1:56498
+2026/04/14 04:33:21 [DEFENSE-POLL] from 127.0.0.1:56510
+2026/04/14 04:33:22 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:33:23 [DEFENSE-POLL] from 127.0.0.1:56514
+2026/04/14 04:33:23 [DEFENSE-POLL] from 127.0.0.1:56530
+2026/04/14 04:33:23 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:33:25 [DEFENSE-POLL] from 127.0.0.1:55444
+2026/04/14 04:33:25 [DEFENSE-POLL] from 127.0.0.1:55458
+2026/04/14 04:33:27 [DEFENSE-POLL] from 127.0.0.1:55466
+2026/04/14 04:33:27 [DEFENSE-POLL] from 127.0.0.1:55468
+2026/04/14 04:33:29 [DEFENSE-POLL] from 127.0.0.1:55480
+2026/04/14 04:33:29 [DEFENSE-POLL] from 127.0.0.1:55484
+2026/04/14 04:33:31 [DEFENSE-POLL] from 127.0.0.1:55494
+2026/04/14 04:33:31 [DEFENSE-POLL] from 127.0.0.1:55508
+2026/04/14 04:33:32 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:33:33 [DEFENSE-POLL] from 127.0.0.1:55514
+2026/04/14 04:33:33 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:33:33 [DEFENSE-POLL] from 127.0.0.1:55530
+2026/04/14 04:33:35 [DEFENSE-POLL] from 127.0.0.1:46140
+2026/04/14 04:33:35 [DEFENSE-POLL] from 127.0.0.1:46156
+2026/04/14 04:33:37 [DEFENSE-POLL] from 127.0.0.1:46170
+2026/04/14 04:33:37 [DEFENSE-POLL] from 127.0.0.1:46184
+2026/04/14 04:33:39 [DEFENSE-POLL] from 127.0.0.1:46188
+2026/04/14 04:33:39 [DEFENSE-POLL] from 127.0.0.1:46190
+2026/04/14 04:33:41 [DEFENSE-POLL] from 127.0.0.1:46198
+2026/04/14 04:33:42 [DEFENSE-POLL] from 127.0.0.1:46204
+2026/04/14 04:33:42 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:33:43 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:33:43 [DEFENSE-POLL] from 127.0.0.1:46206
+2026/04/14 04:33:44 [DEFENSE-POLL] from 127.0.0.1:46216
+2026/04/14 04:33:45 [DEFENSE-POLL] from 127.0.0.1:60572
+2026/04/14 04:33:46 [DEFENSE-POLL] from 127.0.0.1:60580
+2026/04/14 04:33:47 [DEFENSE-POLL] from 127.0.0.1:60590
+2026/04/14 04:33:48 [DEFENSE-POLL] from 127.0.0.1:60596
+2026/04/14 04:33:49 [DEFENSE-POLL] from 127.0.0.1:60604
+2026/04/14 04:33:50 [DEFENSE-POLL] from 127.0.0.1:60616
+2026/04/14 04:33:51 [DEFENSE-POLL] from 127.0.0.1:60618
+2026/04/14 04:33:52 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:33:52 [DEFENSE-POLL] from 127.0.0.1:60622
+2026/04/14 04:33:53 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:33:54 [DEFENSE-POLL] from 127.0.0.1:60628
+2026/04/14 04:33:54 [DEFENSE-POLL] from 127.0.0.1:60630
+2026/04/14 04:33:56 [DEFENSE-POLL] from 127.0.0.1:50240
+2026/04/14 04:33:56 [DEFENSE-POLL] from 127.0.0.1:50256
+2026/04/14 04:33:58 [DEFENSE-POLL] from 127.0.0.1:50272
+2026/04/14 04:33:58 [DEFENSE-POLL] from 127.0.0.1:50286
+2026/04/14 04:34:00 [DEFENSE-POLL] from 127.0.0.1:50288
+2026/04/14 04:34:00 [DEFENSE-POLL] from 127.0.0.1:50292
+2026/04/14 04:34:02 [DEFENSE-POLL] from 127.0.0.1:50298
+2026/04/14 04:34:02 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:34:02 [DEFENSE-POLL] from 127.0.0.1:50300
+2026/04/14 04:34:03 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:34:04 [DEFENSE-POLL] from 127.0.0.1:50302
+2026/04/14 04:34:04 [DEFENSE-POLL] from 127.0.0.1:56582
+2026/04/14 04:34:06 [DEFENSE-POLL] from 127.0.0.1:56596
+2026/04/14 04:34:06 [DEFENSE-POLL] from 127.0.0.1:56606
+2026/04/14 04:34:08 [DEFENSE-POLL] from 127.0.0.1:56612
+2026/04/14 04:34:08 [DEFENSE-POLL] from 127.0.0.1:56620
+2026/04/14 04:34:10 [DEFENSE-POLL] from 127.0.0.1:56622
+2026/04/14 04:34:11 [DEFENSE-POLL] from 127.0.0.1:56624
+2026/04/14 04:34:12 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:34:12 [DEFENSE-POLL] from 127.0.0.1:56630
+2026/04/14 04:34:13 [DEFENSE-POLL] from 127.0.0.1:56640
+2026/04/14 04:34:13 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:34:14 [DEFENSE-POLL] from 127.0.0.1:47520
+2026/04/14 04:34:15 [DEFENSE-POLL] from 127.0.0.1:47524
+2026/04/14 04:34:16 [DEFENSE-POLL] from 127.0.0.1:47530
+2026/04/14 04:34:17 [DEFENSE-POLL] from 127.0.0.1:47544
+2026/04/14 04:34:18 [DEFENSE-POLL] from 127.0.0.1:47556
+2026/04/14 04:34:19 [DEFENSE-POLL] from 127.0.0.1:47558
+2026/04/14 04:34:20 [DEFENSE-POLL] from 127.0.0.1:47566
+2026/04/14 04:34:21 [DEFENSE-POLL] from 127.0.0.1:47576
+2026/04/14 04:34:22 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:34:23 [DEFENSE-POLL] from 127.0.0.1:47582
+2026/04/14 04:34:23 [DEFENSE-POLL] from 127.0.0.1:47588
+2026/04/14 04:34:23 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:34:25 [DEFENSE-POLL] from 127.0.0.1:42618
+2026/04/14 04:34:25 [DEFENSE-POLL] from 127.0.0.1:42632
+2026/04/14 04:34:27 [DEFENSE-POLL] from 127.0.0.1:42634
+2026/04/14 04:34:27 [DEFENSE-POLL] from 127.0.0.1:42638
+2026/04/14 04:34:29 [DEFENSE-POLL] from 127.0.0.1:42648
+2026/04/14 04:34:29 [DEFENSE-POLL] from 127.0.0.1:42662
+2026/04/14 04:34:31 [DEFENSE-POLL] from 127.0.0.1:42664
+2026/04/14 04:34:31 [DEFENSE-POLL] from 127.0.0.1:42680
+2026/04/14 04:34:32 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:34:33 [DEFENSE-POLL] from 127.0.0.1:42686
+2026/04/14 04:34:33 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:34:33 [DEFENSE-POLL] from 127.0.0.1:42696
+2026/04/14 04:34:35 [DEFENSE-POLL] from 127.0.0.1:39030
+2026/04/14 04:34:35 [DEFENSE-POLL] from 127.0.0.1:39046
+2026/04/14 04:34:37 [DEFENSE-POLL] from 127.0.0.1:39062
+2026/04/14 04:34:37 [DEFENSE-POLL] from 127.0.0.1:39070
+2026/04/14 04:34:39 [DEFENSE-POLL] from 127.0.0.1:39074
+2026/04/14 04:34:39 [DEFENSE-POLL] from 127.0.0.1:39078
+2026/04/14 04:34:41 [DEFENSE-POLL] from 127.0.0.1:39080
+2026/04/14 04:34:42 [DEFENSE-POLL] from 127.0.0.1:39090
+2026/04/14 04:34:42 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:34:43 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:34:43 [DEFENSE-POLL] from 127.0.0.1:39096
+2026/04/14 04:34:44 [DEFENSE-POLL] from 127.0.0.1:39108
+2026/04/14 04:34:45 [DEFENSE-POLL] from 127.0.0.1:59138
+2026/04/14 04:34:46 [DEFENSE-POLL] from 127.0.0.1:59154
+2026/04/14 04:34:47 [DEFENSE-POLL] from 127.0.0.1:59160
+2026/04/14 04:34:48 [DEFENSE-POLL] from 127.0.0.1:59172
+2026/04/14 04:34:49 [DEFENSE-POLL] from 127.0.0.1:59174
+2026/04/14 04:34:50 [DEFENSE-POLL] from 127.0.0.1:59190
+2026/04/14 04:34:51 [DEFENSE-POLL] from 127.0.0.1:59200
+2026/04/14 04:34:52 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:34:52 [DEFENSE-POLL] from 127.0.0.1:59214
+2026/04/14 04:34:53 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:34:54 [DEFENSE-POLL] from 127.0.0.1:59224
+2026/04/14 04:34:54 [DEFENSE-POLL] from 127.0.0.1:59228
+2026/04/14 04:34:56 [DEFENSE-POLL] from 127.0.0.1:48242
+2026/04/14 04:34:56 [DEFENSE-POLL] from 127.0.0.1:48250
+2026/04/14 04:34:58 [DEFENSE-POLL] from 127.0.0.1:48258
+2026/04/14 04:34:58 [DEFENSE-POLL] from 127.0.0.1:48260
+2026/04/14 04:35:00 [DEFENSE-POLL] from 127.0.0.1:48274
+2026/04/14 04:35:00 [DEFENSE-POLL] from 127.0.0.1:48288
+2026/04/14 04:35:02 [DEFENSE-POLL] from 127.0.0.1:48304
+2026/04/14 04:35:02 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:35:02 [DEFENSE-POLL] from 127.0.0.1:48316
+2026/04/14 04:35:03 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:35:04 [DEFENSE-POLL] from 127.0.0.1:48322
+2026/04/14 04:35:04 [DEFENSE-POLL] from 127.0.0.1:35500
+2026/04/14 04:35:06 [DEFENSE-POLL] from 127.0.0.1:35504
+2026/04/14 04:35:06 [DEFENSE-POLL] from 127.0.0.1:35516
+2026/04/14 04:35:08 [DEFENSE-POLL] from 127.0.0.1:35528
+2026/04/14 04:35:08 [DEFENSE-POLL] from 127.0.0.1:35530
+2026/04/14 04:35:10 [DEFENSE-POLL] from 127.0.0.1:35540
+2026/04/14 04:35:11 [DEFENSE-POLL] from 127.0.0.1:35552
+2026/04/14 04:35:12 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:35:12 [DEFENSE-POLL] from 127.0.0.1:35560
+2026/04/14 04:35:13 [DEFENSE-POLL] from 127.0.0.1:35566
+2026/04/14 04:35:13 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:35:14 [DEFENSE-POLL] from 127.0.0.1:47880
+2026/04/14 04:35:15 [DEFENSE-POLL] from 127.0.0.1:47890
+2026/04/14 04:35:16 [DEFENSE-POLL] from 127.0.0.1:47906
+2026/04/14 04:35:17 [DEFENSE-POLL] from 127.0.0.1:47912
+2026/04/14 04:35:18 [DEFENSE-POLL] from 127.0.0.1:47922
+2026/04/14 04:35:19 [DEFENSE-POLL] from 127.0.0.1:47926
+2026/04/14 04:35:20 [DEFENSE-POLL] from 127.0.0.1:47934
+2026/04/14 04:35:21 [DEFENSE-POLL] from 127.0.0.1:47940
+2026/04/14 04:35:22 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:35:23 [DEFENSE-POLL] from 127.0.0.1:47942
+2026/04/14 04:35:23 [DEFENSE-POLL] from 127.0.0.1:47954
+2026/04/14 04:35:23 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:35:25 [DEFENSE-POLL] from 127.0.0.1:58900
+2026/04/14 04:35:25 [DEFENSE-POLL] from 127.0.0.1:58908
+2026/04/14 04:35:27 [DEFENSE-POLL] from 127.0.0.1:58918
+2026/04/14 04:35:27 [DEFENSE-POLL] from 127.0.0.1:58932
+2026/04/14 04:35:29 [DEFENSE-POLL] from 127.0.0.1:58946
+2026/04/14 04:35:29 [DEFENSE-POLL] from 127.0.0.1:58956
+2026/04/14 04:35:31 [DEFENSE-POLL] from 127.0.0.1:58968
+2026/04/14 04:35:31 [DEFENSE-POLL] from 127.0.0.1:58982
+2026/04/14 04:35:32 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:35:33 [DEFENSE-POLL] from 127.0.0.1:58992
+2026/04/14 04:35:33 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:35:33 [DEFENSE-POLL] from 127.0.0.1:59008
+2026/04/14 04:35:35 [DEFENSE-POLL] from 127.0.0.1:36528
+2026/04/14 04:35:35 [DEFENSE-POLL] from 127.0.0.1:36538
+2026/04/14 04:35:37 [DEFENSE-POLL] from 127.0.0.1:36552
+2026/04/14 04:35:37 [DEFENSE-POLL] from 127.0.0.1:36562
+2026/04/14 04:35:39 [DEFENSE-POLL] from 127.0.0.1:36578
+2026/04/14 04:35:39 [DEFENSE-POLL] from 127.0.0.1:36588
+2026/04/14 04:35:41 [DEFENSE-POLL] from 127.0.0.1:36600
+2026/04/14 04:35:42 [DEFENSE-POLL] from 127.0.0.1:36606
+2026/04/14 04:35:42 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:35:43 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:35:43 [DEFENSE-POLL] from 127.0.0.1:36608
+2026/04/14 04:35:44 [DEFENSE-POLL] from 127.0.0.1:36610
+2026/04/14 04:35:45 [DEFENSE-POLL] from 127.0.0.1:48478
+2026/04/14 04:35:46 [DEFENSE-POLL] from 127.0.0.1:48490
+2026/04/14 04:35:47 [DEFENSE-POLL] from 127.0.0.1:48506
+2026/04/14 04:35:48 [DEFENSE-POLL] from 127.0.0.1:48512
+2026/04/14 04:35:49 [DEFENSE-POLL] from 127.0.0.1:48520
+2026/04/14 04:35:50 [DEFENSE-POLL] from 127.0.0.1:48532
+2026/04/14 04:35:51 [DEFENSE-POLL] from 127.0.0.1:48534
+2026/04/14 04:35:52 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:35:52 [DEFENSE-POLL] from 127.0.0.1:48550
+2026/04/14 04:35:53 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:35:54 [DEFENSE-POLL] from 127.0.0.1:48554
+2026/04/14 04:35:54 [DEFENSE-POLL] from 127.0.0.1:48556
+2026/04/14 04:35:56 [DEFENSE-POLL] from 127.0.0.1:47786
+2026/04/14 04:35:56 [DEFENSE-POLL] from 127.0.0.1:47800
+2026/04/14 04:35:58 [DEFENSE-POLL] from 127.0.0.1:47806
+2026/04/14 04:35:58 [DEFENSE-POLL] from 127.0.0.1:47820
+2026/04/14 04:36:00 [DEFENSE-POLL] from 127.0.0.1:47836
+2026/04/14 04:36:00 [DEFENSE-POLL] from 127.0.0.1:47844
+2026/04/14 04:36:02 [DEFENSE-POLL] from 127.0.0.1:47858
+2026/04/14 04:36:02 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:36:02 [DEFENSE-POLL] from 127.0.0.1:47872
+2026/04/14 04:36:03 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:36:04 [DEFENSE-POLL] from 127.0.0.1:47884
+2026/04/14 04:36:04 [DEFENSE-POLL] from 127.0.0.1:36728
+2026/04/14 04:36:06 [DEFENSE-POLL] from 127.0.0.1:36732
+2026/04/14 04:36:06 [DEFENSE-POLL] from 127.0.0.1:36740
+2026/04/14 04:36:08 [DEFENSE-POLL] from 127.0.0.1:36748
+2026/04/14 04:36:08 [DEFENSE-POLL] from 127.0.0.1:36750
+2026/04/14 04:36:10 [DEFENSE-POLL] from 127.0.0.1:36754
+2026/04/14 04:36:11 [DEFENSE-POLL] from 127.0.0.1:36758
+2026/04/14 04:36:12 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:36:12 [DEFENSE-POLL] from 127.0.0.1:36768
+2026/04/14 04:36:13 [DEFENSE-POLL] from 127.0.0.1:36778
+2026/04/14 04:36:13 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:36:14 [DEFENSE-POLL] from 127.0.0.1:56812
+2026/04/14 04:36:15 [DEFENSE-POLL] from 127.0.0.1:56818
+2026/04/14 04:36:16 [DEFENSE-POLL] from 127.0.0.1:56824
+2026/04/14 04:36:17 [DEFENSE-POLL] from 127.0.0.1:56832
+2026/04/14 04:36:18 [DEFENSE-POLL] from 127.0.0.1:56848
+2026/04/14 04:36:19 [DEFENSE-POLL] from 127.0.0.1:56862
+2026/04/14 04:36:20 [DEFENSE-POLL] from 127.0.0.1:56868
+2026/04/14 04:36:21 [DEFENSE-POLL] from 127.0.0.1:56882
+2026/04/14 04:36:22 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:36:22 [DEFENSE-POLL] from 127.0.0.1:56898
+2026/04/14 04:36:23 [DEFENSE-POLL] from 127.0.0.1:56902
+2026/04/14 04:36:23 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:36:25 [DEFENSE-POLL] from 127.0.0.1:43144
+2026/04/14 04:36:25 [DEFENSE-POLL] from 127.0.0.1:43148
+2026/04/14 04:36:27 [DEFENSE-POLL] from 127.0.0.1:43164
+2026/04/14 04:36:27 [DEFENSE-POLL] from 127.0.0.1:43178
+2026/04/14 04:36:29 [DEFENSE-POLL] from 127.0.0.1:43180
+2026/04/14 04:36:29 [DEFENSE-POLL] from 127.0.0.1:43182
+2026/04/14 04:36:31 [DEFENSE-POLL] from 127.0.0.1:43198
+2026/04/14 04:36:31 [DEFENSE-POLL] from 127.0.0.1:43214
+2026/04/14 04:36:32 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:36:33 [DEFENSE-POLL] from 127.0.0.1:43228
+2026/04/14 04:36:33 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:36:33 [DEFENSE-POLL] from 127.0.0.1:43240
+2026/04/14 04:36:35 [DEFENSE-POLL] from 127.0.0.1:46136
+2026/04/14 04:36:35 [DEFENSE-POLL] from 127.0.0.1:46140
+2026/04/14 04:36:37 [DEFENSE-POLL] from 127.0.0.1:46148
+2026/04/14 04:36:37 [DEFENSE-POLL] from 127.0.0.1:46162
+2026/04/14 04:36:39 [DEFENSE-POLL] from 127.0.0.1:46172
+2026/04/14 04:36:40 [DEFENSE-POLL] from 127.0.0.1:46188
+2026/04/14 04:36:41 [DEFENSE-POLL] from 127.0.0.1:46194
+2026/04/14 04:36:42 [DEFENSE-POLL] from 127.0.0.1:46202
+2026/04/14 04:36:42 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:36:43 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:36:43 [DEFENSE-POLL] from 127.0.0.1:46214
+2026/04/14 04:36:44 [DEFENSE-POLL] from 127.0.0.1:46220
+2026/04/14 04:36:45 [DEFENSE-POLL] from 127.0.0.1:38418
+2026/04/14 04:36:46 [DEFENSE-POLL] from 127.0.0.1:38430
+2026/04/14 04:36:47 [DEFENSE-POLL] from 127.0.0.1:38436
+2026/04/14 04:36:48 [DEFENSE-POLL] from 127.0.0.1:38444
+2026/04/14 04:36:49 [DEFENSE-POLL] from 127.0.0.1:38448
+2026/04/14 04:36:50 [DEFENSE-POLL] from 127.0.0.1:38458
+2026/04/14 04:36:51 [DEFENSE-POLL] from 127.0.0.1:38462
+2026/04/14 04:36:52 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:36:52 [DEFENSE-POLL] from 127.0.0.1:38472
+2026/04/14 04:36:53 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:36:54 [DEFENSE-POLL] from 127.0.0.1:38478
+2026/04/14 04:36:54 [DEFENSE-POLL] from 127.0.0.1:38492
+2026/04/14 04:36:56 [DEFENSE-POLL] from 127.0.0.1:34336
+2026/04/14 04:36:56 [DEFENSE-POLL] from 127.0.0.1:34350
+2026/04/14 04:36:58 [DEFENSE-POLL] from 127.0.0.1:34362
+2026/04/14 04:36:58 [DEFENSE-POLL] from 127.0.0.1:34364
+2026/04/14 04:37:00 [DEFENSE-POLL] from 127.0.0.1:34374
+2026/04/14 04:37:00 [DEFENSE-POLL] from 127.0.0.1:34390
+2026/04/14 04:37:02 [DEFENSE-POLL] from 127.0.0.1:34404
+2026/04/14 04:37:02 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:37:02 [DEFENSE-POLL] from 127.0.0.1:34406
+2026/04/14 04:37:03 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:37:04 [DEFENSE-POLL] from 127.0.0.1:34412
+2026/04/14 04:37:04 [DEFENSE-POLL] from 127.0.0.1:34706
+2026/04/14 04:37:06 [DEFENSE-POLL] from 127.0.0.1:34714
+2026/04/14 04:37:06 [DEFENSE-POLL] from 127.0.0.1:34724
+2026/04/14 04:37:08 [DEFENSE-POLL] from 127.0.0.1:34732
+2026/04/14 04:37:08 [DEFENSE-POLL] from 127.0.0.1:34742
+2026/04/14 04:37:10 [DEFENSE-POLL] from 127.0.0.1:34754
+2026/04/14 04:37:11 [DEFENSE-POLL] from 127.0.0.1:34766
+2026/04/14 04:37:12 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:37:12 [DEFENSE-POLL] from 127.0.0.1:34780
+2026/04/14 04:37:13 [DEFENSE-POLL] from 127.0.0.1:34790
+2026/04/14 04:37:13 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:37:14 [DEFENSE-POLL] from 127.0.0.1:57168
+2026/04/14 04:37:15 [DEFENSE-POLL] from 127.0.0.1:57170
+2026/04/14 04:37:16 [DEFENSE-POLL] from 127.0.0.1:57180
+2026/04/14 04:37:17 [DEFENSE-POLL] from 127.0.0.1:57188
+2026/04/14 04:37:18 [DEFENSE-POLL] from 127.0.0.1:57194
+2026/04/14 04:37:19 [DEFENSE-POLL] from 127.0.0.1:57204
+2026/04/14 04:37:20 [DEFENSE-POLL] from 127.0.0.1:57208
+2026/04/14 04:37:21 [DEFENSE-POLL] from 127.0.0.1:57218
+2026/04/14 04:37:22 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:37:23 [DEFENSE-POLL] from 127.0.0.1:57224
+2026/04/14 04:37:23 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:37:23 [DEFENSE-POLL] from 127.0.0.1:57228
+2026/04/14 04:37:25 [DEFENSE-POLL] from 127.0.0.1:45566
+2026/04/14 04:37:25 [DEFENSE-POLL] from 127.0.0.1:45576
+2026/04/14 04:37:27 [DEFENSE-POLL] from 127.0.0.1:45580
+2026/04/14 04:37:27 [DEFENSE-POLL] from 127.0.0.1:45586
+2026/04/14 04:37:29 [DEFENSE-POLL] from 127.0.0.1:45602
+2026/04/14 04:37:29 [DEFENSE-POLL] from 127.0.0.1:45616
+2026/04/14 04:37:31 [DEFENSE-POLL] from 127.0.0.1:45618
+2026/04/14 04:37:31 [DEFENSE-POLL] from 127.0.0.1:45630
+2026/04/14 04:37:32 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:37:33 [DEFENSE-POLL] from 127.0.0.1:45642
+2026/04/14 04:37:33 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:37:33 [DEFENSE-POLL] from 127.0.0.1:45656
+2026/04/14 04:37:35 [DEFENSE-POLL] from 127.0.0.1:49802
+2026/04/14 04:37:35 [DEFENSE-POLL] from 127.0.0.1:49808
+2026/04/14 04:37:37 [DEFENSE-POLL] from 127.0.0.1:49822
+2026/04/14 04:37:37 [DEFENSE-POLL] from 127.0.0.1:49834
+2026/04/14 04:37:39 [DEFENSE-POLL] from 127.0.0.1:49850
+2026/04/14 04:37:39 [DEFENSE-POLL] from 127.0.0.1:49858
+2026/04/14 04:37:41 [DEFENSE-POLL] from 127.0.0.1:49864
+2026/04/14 04:37:42 [DEFENSE-POLL] from 127.0.0.1:49870
+2026/04/14 04:37:42 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:37:43 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:37:43 [DEFENSE-POLL] from 127.0.0.1:49884
+2026/04/14 04:37:44 [DEFENSE-POLL] from 127.0.0.1:49886
+2026/04/14 04:37:45 [DEFENSE-POLL] from 127.0.0.1:60744
+2026/04/14 04:37:46 [DEFENSE-POLL] from 127.0.0.1:60760
+2026/04/14 04:37:47 [DEFENSE-POLL] from 127.0.0.1:60774
+2026/04/14 04:37:48 [DEFENSE-POLL] from 127.0.0.1:60778
+2026/04/14 04:37:49 [DEFENSE-POLL] from 127.0.0.1:60792
+2026/04/14 04:37:50 [DEFENSE-POLL] from 127.0.0.1:60802
+2026/04/14 04:37:51 [DEFENSE-POLL] from 127.0.0.1:60816
+2026/04/14 04:37:52 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:37:52 [DEFENSE-POLL] from 127.0.0.1:60818
+2026/04/14 04:37:53 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:37:54 [DEFENSE-POLL] from 127.0.0.1:60824
+2026/04/14 04:37:54 [DEFENSE-POLL] from 127.0.0.1:60826
+2026/04/14 04:37:56 [DEFENSE-POLL] from 127.0.0.1:37442
+2026/04/14 04:37:56 [DEFENSE-POLL] from 127.0.0.1:37444
+2026/04/14 04:37:58 [DEFENSE-POLL] from 127.0.0.1:37446
+2026/04/14 04:37:58 [DEFENSE-POLL] from 127.0.0.1:37456
+2026/04/14 04:38:00 [DEFENSE-POLL] from 127.0.0.1:37468
+2026/04/14 04:38:00 [DEFENSE-POLL] from 127.0.0.1:37480
+2026/04/14 04:38:02 [DEFENSE-POLL] from 127.0.0.1:37488
+2026/04/14 04:38:02 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:38:02 [DEFENSE-POLL] from 127.0.0.1:37494
+2026/04/14 04:38:03 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:38:04 [DEFENSE-POLL] from 127.0.0.1:37502
+2026/04/14 04:38:04 [DEFENSE-POLL] from 127.0.0.1:55424
+2026/04/14 04:38:06 [DEFENSE-POLL] from 127.0.0.1:55440
+2026/04/14 04:38:06 [DEFENSE-POLL] from 127.0.0.1:55450
+2026/04/14 04:38:08 [DEFENSE-POLL] from 127.0.0.1:55452
+2026/04/14 04:38:08 [DEFENSE-POLL] from 127.0.0.1:55466
+2026/04/14 04:38:10 [DEFENSE-POLL] from 127.0.0.1:55472
+2026/04/14 04:38:11 [DEFENSE-POLL] from 127.0.0.1:55480
+2026/04/14 04:38:12 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:38:12 [DEFENSE-POLL] from 127.0.0.1:55482
+2026/04/14 04:38:13 [DEFENSE-POLL] from 127.0.0.1:55498
+2026/04/14 04:38:13 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:38:14 [DEFENSE-POLL] from 127.0.0.1:41842
+2026/04/14 04:38:15 [DEFENSE-POLL] from 127.0.0.1:41846
+2026/04/14 04:38:16 [DEFENSE-POLL] from 127.0.0.1:41862
+2026/04/14 04:38:17 [DEFENSE-POLL] from 127.0.0.1:41876
+2026/04/14 04:38:18 [DEFENSE-POLL] from 127.0.0.1:41880
+2026/04/14 04:38:19 [DEFENSE-POLL] from 127.0.0.1:41882
+2026/04/14 04:38:21 [DEFENSE-POLL] from 127.0.0.1:41894
+2026/04/14 04:38:21 [DEFENSE-POLL] from 127.0.0.1:41904
+2026/04/14 04:38:22 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:38:23 [DEFENSE-POLL] from 127.0.0.1:41906
+2026/04/14 04:38:23 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:38:23 [DEFENSE-POLL] from 127.0.0.1:41916
+2026/04/14 04:38:25 [DEFENSE-POLL] from 127.0.0.1:56262
+2026/04/14 04:38:25 [DEFENSE-POLL] from 127.0.0.1:56264
+2026/04/14 04:38:27 [DEFENSE-POLL] from 127.0.0.1:56280
+2026/04/14 04:38:27 [DEFENSE-POLL] from 127.0.0.1:56284
+2026/04/14 04:38:29 [DEFENSE-POLL] from 127.0.0.1:56290
+2026/04/14 04:38:29 [DEFENSE-POLL] from 127.0.0.1:56296
+2026/04/14 04:38:31 [DEFENSE-POLL] from 127.0.0.1:56308
+2026/04/14 04:38:31 [DEFENSE-POLL] from 127.0.0.1:56312
+2026/04/14 04:38:32 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:38:33 [DEFENSE-POLL] from 127.0.0.1:56326
+2026/04/14 04:38:33 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:38:33 [DEFENSE-POLL] from 127.0.0.1:56334
+2026/04/14 04:38:35 [DEFENSE-POLL] from 127.0.0.1:32852
+2026/04/14 04:38:35 [DEFENSE-POLL] from 127.0.0.1:32868
+2026/04/14 04:38:37 [DEFENSE-POLL] from 127.0.0.1:32870
+2026/04/14 04:38:37 [DEFENSE-POLL] from 127.0.0.1:32880
+2026/04/14 04:38:39 [DEFENSE-POLL] from 127.0.0.1:32888
+2026/04/14 04:38:40 [DEFENSE-POLL] from 127.0.0.1:32894
+2026/04/14 04:38:41 [DEFENSE-POLL] from 127.0.0.1:32908
+2026/04/14 04:38:42 [DEFENSE-POLL] from 127.0.0.1:32924
+2026/04/14 04:38:42 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:38:43 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:38:43 [DEFENSE-POLL] from 127.0.0.1:32928
+2026/04/14 04:38:44 [DEFENSE-POLL] from 127.0.0.1:32940
+2026/04/14 04:38:45 [DEFENSE-POLL] from 127.0.0.1:59910
+2026/04/14 04:38:46 [DEFENSE-POLL] from 127.0.0.1:59924
+2026/04/14 04:38:47 [DEFENSE-POLL] from 127.0.0.1:59938
+2026/04/14 04:38:48 [DEFENSE-POLL] from 127.0.0.1:59950
+2026/04/14 04:38:49 [DEFENSE-POLL] from 127.0.0.1:59966
+2026/04/14 04:38:50 [DEFENSE-POLL] from 127.0.0.1:59974
+2026/04/14 04:38:52 [DEFENSE-POLL] from 127.0.0.1:59978
+2026/04/14 04:38:52 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:38:52 [DEFENSE-POLL] from 127.0.0.1:59982
+2026/04/14 04:38:53 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:38:54 [DEFENSE-POLL] from 127.0.0.1:59996
+2026/04/14 04:38:54 [DEFENSE-POLL] from 127.0.0.1:38628
+2026/04/14 04:38:56 [DEFENSE-POLL] from 127.0.0.1:38630
+2026/04/14 04:38:56 [DEFENSE-POLL] from 127.0.0.1:38646
+2026/04/14 04:38:58 [DEFENSE-POLL] from 127.0.0.1:38656
+2026/04/14 04:38:58 [DEFENSE-POLL] from 127.0.0.1:38670
+2026/04/14 04:39:00 [DEFENSE-POLL] from 127.0.0.1:38686
+2026/04/14 04:39:00 [DEFENSE-POLL] from 127.0.0.1:38700
+2026/04/14 04:39:02 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:39:02 [DEFENSE-POLL] from 127.0.0.1:38702
+2026/04/14 04:39:02 [DEFENSE-POLL] from 127.0.0.1:38710
+2026/04/14 04:39:03 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:39:04 [DEFENSE-POLL] from 127.0.0.1:38714
+2026/04/14 04:39:04 [DEFENSE-POLL] from 127.0.0.1:49132
+2026/04/14 04:39:06 [DEFENSE-POLL] from 127.0.0.1:49138
+2026/04/14 04:39:06 [DEFENSE-POLL] from 127.0.0.1:49154
+2026/04/14 04:39:08 [DEFENSE-POLL] from 127.0.0.1:49160
+2026/04/14 04:39:08 [DEFENSE-POLL] from 127.0.0.1:49162
+2026/04/14 04:39:10 [DEFENSE-POLL] from 127.0.0.1:49166
+2026/04/14 04:39:11 [DEFENSE-POLL] from 127.0.0.1:49176
+2026/04/14 04:39:12 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:39:12 [DEFENSE-POLL] from 127.0.0.1:49188
+2026/04/14 04:39:13 [DEFENSE-POLL] from 127.0.0.1:49192
+2026/04/14 04:39:13 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:39:14 [DEFENSE-POLL] from 127.0.0.1:59510
+2026/04/14 04:39:15 [DEFENSE-POLL] from 127.0.0.1:59526
+2026/04/14 04:39:16 [DEFENSE-POLL] from 127.0.0.1:59536
+2026/04/14 04:39:17 [DEFENSE-POLL] from 127.0.0.1:59550
+2026/04/14 04:39:19 [DEFENSE-POLL] from 127.0.0.1:59556
+2026/04/14 04:39:19 [DEFENSE-POLL] from 127.0.0.1:59562
+2026/04/14 04:39:21 [DEFENSE-POLL] from 127.0.0.1:59568
+2026/04/14 04:39:21 [DEFENSE-POLL] from 127.0.0.1:59570
+2026/04/14 04:39:22 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:39:23 [DEFENSE-POLL] from 127.0.0.1:59582
+2026/04/14 04:39:23 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:39:23 [DEFENSE-POLL] from 127.0.0.1:59588
+2026/04/14 04:39:25 [DEFENSE-POLL] from 127.0.0.1:51122
+2026/04/14 04:39:25 [DEFENSE-POLL] from 127.0.0.1:51130
+2026/04/14 04:39:27 [DEFENSE-POLL] from 127.0.0.1:51134
+2026/04/14 04:39:27 [DEFENSE-POLL] from 127.0.0.1:51136
+2026/04/14 04:39:29 [DEFENSE-POLL] from 127.0.0.1:51144
+2026/04/14 04:39:29 [DEFENSE-POLL] from 127.0.0.1:51158
+2026/04/14 04:39:31 [DEFENSE-POLL] from 127.0.0.1:51162
+2026/04/14 04:39:31 [DEFENSE-POLL] from 127.0.0.1:51176
+2026/04/14 04:39:32 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:39:33 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:39:33 [DEFENSE-POLL] from 127.0.0.1:51184
+2026/04/14 04:39:33 [DEFENSE-POLL] from 127.0.0.1:51188
+2026/04/14 04:39:35 [DEFENSE-POLL] from 127.0.0.1:60820
+2026/04/14 04:39:35 [DEFENSE-POLL] from 127.0.0.1:60824
+2026/04/14 04:39:37 [DEFENSE-POLL] from 127.0.0.1:60840
+2026/04/14 04:39:37 [DEFENSE-POLL] from 127.0.0.1:60850
+2026/04/14 04:39:39 [DEFENSE-POLL] from 127.0.0.1:60852
+2026/04/14 04:39:40 [DEFENSE-POLL] from 127.0.0.1:60854
+2026/04/14 04:39:41 [DEFENSE-POLL] from 127.0.0.1:60866
+2026/04/14 04:39:42 [DEFENSE-POLL] from 127.0.0.1:60882
+2026/04/14 04:39:42 [AGGREGATOR] count=0 window=10s
+2026/04/14 04:39:43 [MERGE] node=laptop-agent incoming=0 before=0 after=0 hasSparse=false hasDense=true
+2026/04/14 04:39:43 [DEFENSE-POLL] from 127.0.0.1:60890
+2026/04/14 04:39:44 [DEFENSE-POLL] from 127.0.0.1:60894
+2026/04/14 04:39:45 [DEFENSE-POLL] from 127.0.0.1:39778
+2026/04/14 04:39:46 [DEFENSE-POLL] from 127.0.0.1:39782
+2026/04/14 04:39:48 [DEFENSE-POLL] from 127.0.0.1:39792
+2026/04/14 04:39:48 [DEFENSE-POLL] from 127.0.0.1:39796

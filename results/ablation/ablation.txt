@@ -1,0 +1,14 @@
+detector        recall      prec        f1     fpr    TP    FP    FN    TN         ttd
+--------------------------------------------------------------------------------------------
+2026/04/14 02:43:15 experiment output: dir=results/ablation/threshold precision=1.0000 recall=0.8333 f1=0.9091
+threshold       0.8333    1.0000    0.9091  0.0000     5     0     1    14  1.002283906s
+2026/04/14 02:43:36 experiment output: dir=results/ablation/zscore precision=1.0000 recall=0.1667 f1=0.2857
+zscore          0.1667    1.0000    0.2857  0.0000     1     0     5    14  2.001145657s
+2026/04/14 02:43:58 experiment output: dir=results/ablation/ewma precision=1.0000 recall=0.1667 f1=0.2857
+ewma            0.1667    1.0000    0.2857  0.0000     1     0     5    14  1.000571582s
+2026/04/14 02:44:19 experiment output: dir=results/ablation/loda precision=1.0000 recall=0.1667 f1=0.2857
+loda            0.1667    1.0000    0.2857  0.0000     1     0     5    14  1.002528785s
+2026/04/14 02:44:40 experiment output: dir=results/ablation/hst precision=0.8000 recall=0.6667 f1=0.7273
+hst             0.6667    0.8000    0.7273  0.0714     4     1     2    13  1.000827849s
+2026/04/14 02:45:01 experiment output: dir=results/ablation/ensemble precision=0.8333 recall=0.8333 f1=0.8333
+ensemble        0.8333    0.8333    0.8333  0.0714     5     1     1    13  2.001735842s

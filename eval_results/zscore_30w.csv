@@ -1,0 +1,9 @@
+metric,value
+recall,0.1667
+false_positives,0
+false_negatives,5
+true_positives,1
+time_to_detect_ns,1001440274
+
+window_id,at,count,reason
+15,2026-04-11T22:51:19.480563543+05:30,15272,eval_detected

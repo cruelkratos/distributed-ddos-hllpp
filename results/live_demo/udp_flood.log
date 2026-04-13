@@ -1,0 +1,13 @@
+UDP target: 10.201.115.205:50052
+
+[NORMAL] 50 IPs/s for 20s
+[NORMAL] sent 950 IPs
+
+[ATTACK] 5000 IPs/s for 40s
+[ATTACK] sent 199950 IPs
+
+[RECOVERY] 50 IPs/s for 30s
+[RECOVERY] sent 1450 IPs
+
+
+Done.

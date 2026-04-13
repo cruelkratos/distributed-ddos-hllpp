@@ -69,6 +69,11 @@ uint64_t localCount = 0;
 // OLED init status — skip display calls if false.
 bool oledReady = false;
 
+// Resource metrics for benchmarking.
+uint32_t lastLoopTimeUs = 0;
+uint32_t lastShipLatencyMs = 0;
+uint32_t loopStartUs = 0;
+
 // ===================== HELPERS ===========================
 
 // Set onboard NeoPixel colour (built-in on ESP32 Arduino core ≥2.0.4).
@@ -88,6 +93,16 @@ void shipSketch() {
     localCount = hll_count();
     int anomalyState = (localCount > ATTACK_THRESHOLD) ? 1 : 0;
 
+    // Simple on-device attack classification.
+    const char *attackType = "NONE";
+    double attackConfidence = 0.0;
+    if (localCount > ATTACK_THRESHOLD) {
+        attackType = "UDP_FLOOD";  // ESP32 agent only sees UDP traffic
+        attackConfidence = (localCount > ATTACK_THRESHOLD * 3) ? 0.9 : 0.6;
+    }
+
+    uint32_t freeHeap = ESP.getFreeHeap();
+
     // Base64 encode registers.
     static unsigned char b64[16400];
     size_t b64_len = 0;
@@ -99,30 +114,36 @@ void shipSketch() {
     }
     b64[b64_len] = '\0';
 
-    // Build JSON.  ~16.5 KB payload.
-    size_t jsonCap = b64_len + 256;
+    // Build JSON with extended telemetry.
+    size_t jsonCap = b64_len + 512;
     char *json = (char *)malloc(jsonCap);
     if (!json) {
         Serial.println("[SHIP] malloc failed");
         return;
     }
     snprintf(json, jsonCap,
-             "{\"node_id\":\"%s\",\"p\":%d,\"registers\":\"%s\",\"anomaly_state\":%d}",
-             NODE_ID, HLL_P, (char *)b64, anomalyState);
+             "{\"node_id\":\"%s\",\"p\":%d,\"registers\":\"%s\",\"anomaly_state\":%d,"
+             "\"attack_type\":\"%s\",\"attack_confidence\":%.2f,"
+             "\"free_heap\":%u,\"ship_latency_ms\":%u,\"loop_time_us\":%u}",
+             NODE_ID, HLL_P, (char *)b64, anomalyState,
+             attackType, attackConfidence,
+             freeHeap, lastShipLatencyMs, lastLoopTimeUs);
 
     char url[128];
     snprintf(url, sizeof(url),
              "http://%s:%d/api/merge", AGGREGATOR_HOST, AGGREGATOR_PORT);
 
+    uint32_t shipStart = millis();
     HTTPClient http;
     http.begin(url);
     http.addHeader("Content-Type", "application/json");
     http.setTimeout(5000);
     int code = http.POST(json);
+    lastShipLatencyMs = millis() - shipStart;
 
     if (code > 0) {
-        Serial.printf("[SHIP] HTTP %d  count=%llu  window=%u  inserts=%u\n",
-                      code, localCount, hll_window_id, hll_inserts);
+        Serial.printf("[SHIP] HTTP %d  count=%llu  heap=%u  latency=%ums\n",
+                      code, localCount, freeHeap, lastShipLatencyMs);
     } else {
         Serial.printf("[SHIP] FAILED: %s\n",
                       http.errorToString(code).c_str());
@@ -297,6 +318,7 @@ void setup() {
 // ===================== LOOP ==============================
 
 void loop() {
+    loopStartUs = micros();
     uint32_t now = millis();
 
     // --- 0. WiFi reconnect ---
@@ -373,4 +395,7 @@ void loop() {
         WiFi.reconnect();
         delay(5000);
     }
+
+    // --- 7. Record loop execution time ---
+    lastLoopTimeUs = micros() - loopStartUs;
 }

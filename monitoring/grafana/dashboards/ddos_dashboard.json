@@ -330,6 +330,132 @@
           "refId": "A"
         }
       ]
+    },
+    {
+      "title": "Attack Type Classification",
+      "type": "stat",
+      "gridPos": { "h": 4, "w": 12, "x": 0, "y": 48 },
+      "id": 20,
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "steps": [
+              { "value": null, "color": "green" },
+              { "value": 1, "color": "red" }
+            ]
+          }
+        }
+      },
+      "options": {
+        "graphMode": "none",
+        "textMode": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"] }
+      },
+      "targets": [
+        {
+          "expr": "ddos_attack_type_classification",
+          "legendFormat": "{{node}} - {{attack_type}}",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "title": "Detection State Timeline",
+      "type": "state-timeline",
+      "gridPos": { "h": 6, "w": 24, "x": 0, "y": 52 },
+      "id": 21,
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "targets": [
+        {
+          "expr": "ddos_anomaly_state",
+          "legendFormat": "{{instance}}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "steps": [
+              { "value": null, "color": "green" },
+              { "value": 1, "color": "red" },
+              { "value": 2, "color": "orange" }
+            ]
+          },
+          "mappings": [
+            { "type": "value", "options": { "0": { "text": "NORMAL", "color": "green" } } },
+            { "type": "value", "options": { "1": { "text": "UNDER_ATTACK", "color": "red" } } },
+            { "type": "value", "options": { "2": { "text": "RECOVERY", "color": "orange" } } }
+          ]
+        }
+      }
+    },
+    {
+      "title": "Per-Detector Scores (LODA, HST, ZScore, EWMA)",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 58 },
+      "id": 22,
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": { "lineWidth": 2, "fillOpacity": 5 },
+          "unit": "short"
+        }
+      },
+      "targets": [
+        {
+          "expr": "ddos_loda_score",
+          "legendFormat": "LODA {{instance}}",
+          "refId": "A"
+        },
+        {
+          "expr": "ddos_hst_score",
+          "legendFormat": "HST {{instance}}",
+          "refId": "B"
+        },
+        {
+          "expr": "ddos_ensemble_score",
+          "legendFormat": "Ensemble {{instance}}",
+          "refId": "C"
+        }
+      ]
+    },
+    {
+      "title": "Resource: Memory RSS",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 66 },
+      "id": 23,
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "fieldConfig": {
+        "defaults": { "unit": "bytes" }
+      },
+      "targets": [
+        {
+          "expr": "ddos_memory_rss_bytes",
+          "legendFormat": "{{instance}}",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "title": "Resource: CPU %",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 66 },
+      "id": 24,
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "fieldConfig": {
+        "defaults": { "unit": "percent", "min": 0 }
+      },
+      "targets": [
+        {
+          "expr": "ddos_cpu_percent",
+          "legendFormat": "{{instance}}",
+          "refId": "A"
+        }
+      ]
     }
   ],
   "refresh": "5s",

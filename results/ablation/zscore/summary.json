@@ -1,0 +1,19 @@
+{
+  "detector": "zscore",
+  "dataset": "synthetic",
+  "precision": 1,
+  "recall": 0.16666666666666666,
+  "f1_score": 0.2857142857142857,
+  "false_positive_rate": 0,
+  "false_negative_rate": 0.8333333333333334,
+  "true_positives": 1,
+  "false_positives": 0,
+  "true_negatives": 14,
+  "false_negatives": 5,
+  "detection_latency_ms": 0,
+  "classification_accuracy": 0,
+  "avg_rss_bytes": 0,
+  "peak_rss_bytes": 0,
+  "avg_cpu_percent": 0,
+  "total_windows": 20
+}

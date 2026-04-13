@@ -44,20 +44,26 @@ var (
 		Name: "ddos_global_defense_active",
 		Help: "1 if global defense is activated, 0 otherwise.",
 	})
+	attackTypeGauge = prometheus.NewGaugeVec(prometheus.GaugeOpts{
+		Name: "ddos_attack_type_classification",
+		Help: "Attack type reported by nodes (1=active, label=type).",
+	}, []string{"node", "attack_type"})
 )
 
 func init() {
-	prometheus.MustRegister(nodesTotalGauge, nodesUnderAttackGauge, globalDefenseGauge)
+	prometheus.MustRegister(nodesTotalGauge, nodesUnderAttackGauge, globalDefenseGauge, attackTypeGauge)
 }
 
 // nodeMetrics holds per-node telemetry received from agents.
 type nodeMetrics struct {
-	ensembleScore float64
-	lodaScore     float64
-	hstScore      float64
-	anomalyState  int32
-	packetCount   uint64
-	lastSeen      time.Time
+	ensembleScore   float64
+	lodaScore       float64
+	hstScore        float64
+	anomalyState    int32
+	packetCount     uint64
+	attackType      string
+	attackConfidence float64
+	lastSeen        time.Time
 }
 
 type aggregatorServer struct {
@@ -113,12 +119,14 @@ func (s *aggregatorServer) MergeSketch(_ context.Context, req *pb.MergeRequest) 
 	if req.NodeId != "" {
 		s.nodesMu.Lock()
 		s.nodes[req.NodeId] = &nodeMetrics{
-			ensembleScore: req.EnsembleScore,
-			lodaScore:     req.LodaScore,
-			hstScore:      req.HstScore,
-			anomalyState:  req.AnomalyState,
-			packetCount:   req.PacketCount,
-			lastSeen:      time.Now(),
+			ensembleScore:    req.EnsembleScore,
+			lodaScore:        req.LodaScore,
+			hstScore:         req.HstScore,
+			anomalyState:     req.AnomalyState,
+			packetCount:      req.PacketCount,
+			attackType:       req.AttackType,
+			attackConfidence: req.AttackConfidence,
+			lastSeen:         time.Now(),
 		}
 		s.nodesMu.Unlock()
 	}
@@ -182,10 +190,15 @@ func (s *aggregatorServer) Insert(_ context.Context, _ *pb.InsertRequest) (*pb.I
 // --- HTTP REST API for lightweight agents (ESP32-C3) ---
 
 type httpMergeRequest struct {
-	NodeID       string `json:"node_id"`
-	P            int    `json:"p"`
-	Registers    string `json:"registers"`
-	AnomalyState int32  `json:"anomaly_state"`
+	NodeID         string  `json:"node_id"`
+	P              int     `json:"p"`
+	Registers      string  `json:"registers"`
+	AnomalyState   int32   `json:"anomaly_state"`
+	AttackType     string  `json:"attack_type,omitempty"`
+	AttackConf     float64 `json:"attack_confidence,omitempty"`
+	FreeHeap       uint32  `json:"free_heap,omitempty"`
+	ShipLatencyMs  float64 `json:"ship_latency_ms,omitempty"`
+	LoopTimeUs     uint32  `json:"loop_time_us,omitempty"`
 }
 
 func (s *aggregatorServer) handleHTTPMerge(w http.ResponseWriter, r *http.Request) {
@@ -233,10 +246,23 @@ func (s *aggregatorServer) handleHTTPMerge(w http.ResponseWriter, r *http.Reques
 	if req.NodeID != "" {
 		s.nodesMu.Lock()
 		s.nodes[req.NodeID] = &nodeMetrics{
-			anomalyState: req.AnomalyState,
-			lastSeen:     time.Now(),
+			anomalyState:    req.AnomalyState,
+			attackType:      req.AttackType,
+			attackConfidence: req.AttackConf,
+			lastSeen:        time.Now(),
 		}
 		s.nodesMu.Unlock()
+
+		// Record ESP32 resource metrics if present.
+		if req.FreeHeap > 0 {
+			metrics.ESP32FreeHeapGauge.WithLabelValues(req.NodeID).Set(float64(req.FreeHeap))
+		}
+		if req.ShipLatencyMs > 0 {
+			metrics.ESP32ShipLatencyGauge.WithLabelValues(req.NodeID).Set(req.ShipLatencyMs)
+		}
+		if req.LoopTimeUs > 0 {
+			metrics.ESP32LoopTimeGauge.WithLabelValues(req.NodeID).Set(float64(req.LoopTimeUs))
+		}
 	}
 	w.Header().Set("Content-Type", "application/json")
 	w.Write([]byte(`{"ok":true}`))
@@ -374,6 +400,15 @@ func (s *aggregatorServer) runCorrelation(staleTimeout time.Duration) {
 	if activated {
 		log.Printf("[GLOBAL-DEFENSE] activated: %d/%d nodes under attack, maxScore=%.3f", underAttack, total, maxScore)
 	}
+
+	// Update per-node attack type metrics.
+	for nodeID, nm := range s.nodes {
+		if nm.attackType != "" && nm.attackType != "NONE" {
+			attackTypeGauge.WithLabelValues(nodeID, nm.attackType).Set(1)
+		} else {
+			attackTypeGauge.WithLabelValues(nodeID, "NONE").Set(0)
+		}
+	}
 }
 
 // detectionLoop runs anomaly detection on the aggregated cardinality.
@@ -437,6 +472,10 @@ func main() {
 
 	srv := newAggregatorServer(*windowDur)
 
+	// Start resource collector for benchmarking metrics.
+	resourceCollector := metrics.NewResourceCollector(5 * time.Second)
+	resourceCollector.Start()
+
 	// Initialize NSG firewall controller if enabled.
 	if *nsgEnabled {
 		subID := *azSubscription
@@ -496,5 +535,6 @@ func main() {
 	<-sig
 	log.Println("aggregator shutting down...")
 	close(stop)
+	resourceCollector.Stop()
 	grpcServer.GracefulStop()
 }
