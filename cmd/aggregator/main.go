@@ -81,15 +81,23 @@ type aggregatorServer struct {
 	defenseReason    string
 	windowDur        time.Duration
 
+	// Aggregator-level detector (for reset).
+	det detector.Detector
+
+	// Grace period: suppress defense activation after a reset so detectors can warm up.
+	resetAt         time.Time
+	graceAfterReset time.Duration
+
 	// NSG firewall controller (nil if disabled).
 	nsg *firewall.NSGController
 }
 
 func newAggregatorServer(windowDur time.Duration) *aggregatorServer {
 	return &aggregatorServer{
-		globalSet: hll.GetHLLPP(true),
-		nodes:     make(map[string]*nodeMetrics),
-		windowDur: windowDur,
+		globalSet:       hll.GetHLLPP(true),
+		nodes:           make(map[string]*nodeMetrics),
+		windowDur:       windowDur,
+		graceAfterReset: 70 * time.Second, // allow 60s warm-up + 10s margin
 	}
 }
 
@@ -285,6 +293,34 @@ func (s *aggregatorServer) handleHTTPDefense(w http.ResponseWriter, r *http.Requ
 	json.NewEncoder(w).Encode(resp)
 }
 
+// handleHTTPReset clears all node state and defense activation so a fresh demo can start clean.
+func (s *aggregatorServer) handleHTTPReset(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "POST only", http.StatusMethodNotAllowed)
+		return
+	}
+	s.mu.Lock()
+	s.globalSet = hll.GetHLLPP(true)
+	s.mu.Unlock()
+
+	s.nodesMu.Lock()
+	s.nodes = make(map[string]*nodeMetrics)
+	s.defenseActivated = false
+	s.defenseScore = 0
+	s.defenseReason = ""
+	s.resetAt = time.Now()
+	s.nodesMu.Unlock()
+
+	// Reset the aggregator-level detector history so it doesn't fire on the first window.
+	if zd, ok := s.det.(*detector.ZScoreDetector); ok {
+		zd.Reset()
+	}
+
+	log.Printf("[RESET] all state cleared by %s (grace period %.0fs)", r.RemoteAddr, s.graceAfterReset.Seconds())
+	w.Header().Set("Content-Type", "application/json")
+	w.Write([]byte(`{"ok":true,"reset":true}`))
+}
+
 // correlationLoop runs cross-node correlation and updates global defense state.
 func (s *aggregatorServer) correlationLoop(stop <-chan struct{}) {
 	ticker := time.NewTicker(s.windowDur)
@@ -323,10 +359,13 @@ func (s *aggregatorServer) runCorrelation(staleTimeout time.Duration) {
 		}
 	}
 
-	// Global defense: activate if ≥50% of nodes are under attack.
+	// Grace period: suppress defense activation while detectors warm up after a reset.
+	inGrace := !s.resetAt.IsZero() && now.Sub(s.resetAt) < s.graceAfterReset
+
+	// Global defense: activate if ≥50% of nodes are under attack (and not in grace period).
 	activated := false
 	reason := ""
-	if total > 0 && float64(underAttack)/float64(total) >= 0.5 {
+	if !inGrace && total > 0 && float64(underAttack)/float64(total) >= 0.5 {
 		activated = true
 		reason = "majority_nodes_under_attack"
 	}
@@ -362,6 +401,12 @@ func (s *aggregatorServer) runCorrelation(staleTimeout time.Duration) {
 		}
 	} else if activated && !wasActivated {
 		log.Printf("[GLOBAL-DEFENSE] NSG controller is nil — skipping lockdown")
+	}
+
+	// Log grace period suppression.
+	if inGrace && underAttack > 0 {
+		remaining := s.graceAfterReset - now.Sub(s.resetAt)
+		log.Printf("[GRACE-PERIOD] suppressing defense: %d/%d nodes under attack (%.0fs remaining)", underAttack, total, remaining.Seconds())
 	}
 
 	// Update Prometheus.
@@ -471,6 +516,7 @@ func main() {
 	}
 
 	srv := newAggregatorServer(*windowDur)
+	srv.det = det
 
 	// Start resource collector for benchmarking metrics.
 	resourceCollector := metrics.NewResourceCollector(5 * time.Second)
@@ -508,6 +554,7 @@ func main() {
 	httpMux.Handle("/metrics", metrics.Handler())
 	httpMux.HandleFunc("/api/merge", srv.handleHTTPMerge)
 	httpMux.HandleFunc("/api/defense", srv.handleHTTPDefense)
+	httpMux.HandleFunc("/api/reset", srv.handleHTTPReset)
 	go func() {
 		log.Printf("HTTP server (metrics + REST API) on %s", *metricsAddr)
 		if err := http.ListenAndServe(*metricsAddr, httpMux); err != nil {

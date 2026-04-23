@@ -69,6 +69,13 @@ func (z *ZScoreDetector) appendHistory(v float64) {
 	}
 }
 
+// Reset clears all history so the detector starts fresh.
+func (z *ZScoreDetector) Reset() {
+	z.mu.Lock()
+	defer z.mu.Unlock()
+	z.history = z.history[:0]
+}
+
 // Name returns the detector name for metrics and AttackEvent.Reason.
 func (z *ZScoreDetector) Name() string {
 	return "zscore_anomaly"

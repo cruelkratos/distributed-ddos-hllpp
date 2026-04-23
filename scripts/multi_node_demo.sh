@@ -7,8 +7,8 @@ BASEDIR="$(cd "$(dirname "$0")/.." && pwd)"
 RESULTS="$BASEDIR/results/multi_node"
 mkdir -p "$RESULTS"
 
-ESP32_IP="10.201.115.205"
-PI_IP="10.201.115.221"
+ESP32_IP="10.120.149.205"
+PI_IP="10.120.149.221"
 LAPTOP_IP="127.0.0.1"
 AGGREGATOR="http://localhost:9091"
 
@@ -39,6 +39,22 @@ capture_timeline() {
 echo "Building UDP flood tool..."
 cd "$BASEDIR"
 go build -o /tmp/udp-flood ./cmd/udp-flood/
+
+# Reset aggregator state so previous demo doesn't contaminate baselines.
+echo "Resetting aggregator state..."
+curl -s -X POST http://localhost:9091/api/reset | python3 -m json.tool
+
+# Warm-up: send normal-rate traffic for 60s so detectors learn the baseline.
+# Without this, the z-score sees 0→300 as a spike and false-triggers.
+echo "Warming up detectors with normal traffic (60s)..."
+/tmp/udp-flood -target "$ESP32_IP:50052" -rate 30 -attack-rate 30 -normal "60s" -attack 0s -recovery 0s &
+WU_ESP=$!
+/tmp/udp-flood -target "$PI_IP:50052" -rate 30 -attack-rate 30 -normal "60s" -attack 0s -recovery 0s &
+WU_PI=$!
+/tmp/udp-flood -target "$LAPTOP_IP:50053" -rate 30 -attack-rate 30 -normal "60s" -attack 0s -recovery 0s &
+WU_LAPTOP=$!
+wait $WU_ESP $WU_PI $WU_LAPTOP 2>/dev/null
+echo "Warm-up done. Detectors have a stable baseline."
 
 echo ""
 echo "--- Phase 1: NORMAL (${NORMAL_DUR}s) ---"
@@ -101,4 +117,4 @@ ROWS=$(wc -l < "$RESULTS/defense_timeline.csv")
 echo "Timeline rows: $ROWS"
 echo ""
 echo "Defense activation events:"
-grep "true" "$RESULTS/defense_timeline.csv" | head -5 || echo "  (none)"
+grep -i "true" "$RESULTS/defense_timeline.csv" | head -5 || echo "  (none)"

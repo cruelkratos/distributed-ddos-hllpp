@@ -18,7 +18,7 @@ const char *WIFI_SSID = "13r";
 const char *WIFI_PASS = "ballball";
 
 // Aggregator HTTP endpoint (laptop Wi-Fi IP, port 9091).
-const char *AGGREGATOR_HOST = "10.201.115.150";
+const char *AGGREGATOR_HOST = "10.120.149.150";
 const int   AGGREGATOR_PORT = 9091;
 
 // Node identity reported to the aggregator.
@@ -27,8 +27,75 @@ const char *NODE_ID = "esp32-xc3";
 // UDP port for receiving IPs from the load-test tool.
 const int UDP_PORT = 50052;
 
-// Detection threshold (simple on-device threshold).
-const uint64_t ATTACK_THRESHOLD = 2000;
+// ===================== ON-DEVICE EWMA + Z-SCORE DETECTOR ====
+// Mirrors the Go agent's ensemble approach but lightweight for MCU.
+#define EWMA_ALPHA        0.2f   // smoothing factor (lower = smoother baseline)
+#define EWMA_DEVIATION    2.0f   // deviation multiplier above baseline
+#define EWMA_WARMUP       3      // windows before EWMA detection starts
+#define ZSCORE_HISTORY    10     // ring buffer size for Z-score
+#define ZSCORE_SENSITIVITY 3.0f  // std-devs above mean to flag
+#define ANOMALY_THRESHOLD  0.6f  // combined score above which = attack
+
+float ewma_baseline = 0;
+int   ewma_seen = 0;
+float zscore_ring[ZSCORE_HISTORY];
+int   zscore_count = 0;
+int   zscore_idx = 0;
+float local_anomaly_score = 0;
+
+void detector_update(uint64_t count) {
+    float fc = (float)count;
+
+    // --- EWMA ---
+    float prev_ewma = ewma_baseline;
+    if (ewma_seen == 0) {
+        ewma_baseline = fc;
+    } else {
+        ewma_baseline = EWMA_ALPHA * fc + (1.0f - EWMA_ALPHA) * ewma_baseline;
+    }
+    ewma_seen++;
+
+    float ewma_score = 0;
+    if (ewma_seen > EWMA_WARMUP && prev_ewma > 0) {
+        float thresh = prev_ewma * (1.0f + EWMA_DEVIATION);
+        if (fc > thresh) {
+            ewma_score = fminf(1.0f, (fc - prev_ewma) / (prev_ewma * EWMA_DEVIATION));
+        }
+    }
+
+    // --- Z-Score ---
+    float zs_score = 0;
+    int n = (zscore_count < ZSCORE_HISTORY) ? zscore_count : ZSCORE_HISTORY;
+    if (n >= 5) {
+        float sum = 0, sumsq = 0;
+        for (int i = 0; i < n; i++) { sum += zscore_ring[i]; sumsq += zscore_ring[i] * zscore_ring[i]; }
+        float mean = sum / n;
+        float variance = (sumsq / n) - (mean * mean);
+        if (variance < 0) variance = 0;
+        float sd = sqrtf(variance);
+        float zval = (sd > 0) ? (fc - mean) / sd : ((fc > mean) ? ZSCORE_SENSITIVITY + 1 : 0);
+        if (zval > ZSCORE_SENSITIVITY) {
+            zs_score = fminf(1.0f, zval / (ZSCORE_SENSITIVITY * 2));
+        }
+    }
+
+    // Append to ring buffer.
+    zscore_ring[zscore_idx] = fc;
+    zscore_idx = (zscore_idx + 1) % ZSCORE_HISTORY;
+    if (zscore_count < ZSCORE_HISTORY) zscore_count++;
+
+    // --- Combined score (equal weight) ---
+    local_anomaly_score = 0.5f * ewma_score + 0.5f * zs_score;
+}
+
+void detector_reset() {
+    ewma_baseline = 0;
+    ewma_seen = 0;
+    zscore_count = 0;
+    zscore_idx = 0;
+    local_anomaly_score = 0;
+    memset(zscore_ring, 0, sizeof(zscore_ring));
+}
 
 // ===================== PIN CONFIGURATION =================
 // Adjust these for your PandaByte xC3 + Grove expansion shield.
@@ -91,14 +158,15 @@ void beep(int ms) {
 // Base64-encode the 12 288-byte register array and POST to /api/merge.
 void shipSketch() {
     localCount = hll_count();
-    int anomalyState = (localCount > ATTACK_THRESHOLD) ? 1 : 0;
+    detector_update(localCount);
+    int anomalyState = (local_anomaly_score > ANOMALY_THRESHOLD) ? 1 : 0;
 
-    // Simple on-device attack classification.
+    // Attack classification based on anomaly score.
     const char *attackType = "NONE";
     double attackConfidence = 0.0;
-    if (localCount > ATTACK_THRESHOLD) {
-        attackType = "UDP_FLOOD";  // ESP32 agent only sees UDP traffic
-        attackConfidence = (localCount > ATTACK_THRESHOLD * 3) ? 0.9 : 0.6;
+    if (local_anomaly_score > ANOMALY_THRESHOLD) {
+        attackType = "UDP_FLOOD";
+        attackConfidence = (double)local_anomaly_score;
     }
 
     uint32_t freeHeap = ESP.getFreeHeap();
@@ -124,9 +192,11 @@ void shipSketch() {
     snprintf(json, jsonCap,
              "{\"node_id\":\"%s\",\"p\":%d,\"registers\":\"%s\",\"anomaly_state\":%d,"
              "\"attack_type\":\"%s\",\"attack_confidence\":%.2f,"
+             "\"local_score\":%.3f,\"ewma_baseline\":%.1f,"
              "\"free_heap\":%u,\"ship_latency_ms\":%u,\"loop_time_us\":%u}",
              NODE_ID, HLL_P, (char *)b64, anomalyState,
              attackType, attackConfidence,
+             local_anomaly_score, ewma_baseline,
              freeHeap, lastShipLatencyMs, lastLoopTimeUs);
 
     char url[128];
@@ -213,13 +283,15 @@ void updateDisplay() {
 
     if (defenseActivated) {
         display.println("!! GLOBAL DEFENSE !!");
-    } else if (localCount > ATTACK_THRESHOLD) {
-        display.println("** LOCAL ATTACK **");
+    } else if (local_anomaly_score > ANOMALY_THRESHOLD) {
+        display.println("** LOCAL ANOMALY **");
+    } else if (local_anomaly_score > 0.3f) {
+        display.println("~  SUSPICIOUS  ~");
     } else {
         display.println("Status: NORMAL");
     }
 
-    display.printf("Score: %.3f", globalScore);
+    display.printf("L:%.2f G:%.3f", local_anomaly_score, globalScore);
     display.display();
 }
 
@@ -230,10 +302,12 @@ void updateLED() {
             setLED(255, 0, 0);
         else
             setLED(0, 0, 0);
-    } else if (localCount > ATTACK_THRESHOLD) {
-        setLED(255, 0, 0);     // solid red
+    } else if (local_anomaly_score > ANOMALY_THRESHOLD) {
+        setLED(255, 0, 0);     // solid red — local anomaly
+    } else if (local_anomaly_score > 0.3f) {
+        setLED(255, 165, 0);   // orange — suspicious
     } else {
-        setLED(0, 255, 0);     // green
+        setLED(0, 255, 0);     // green — normal
     }
 }
 
@@ -306,6 +380,7 @@ void setup() {
 
     // HLL init.
     hll_reset();
+    detector_reset();
     hll_window_id = 0;    // first window is 0
     lastShipTime    = millis();
     lastDefenseTime = millis();
