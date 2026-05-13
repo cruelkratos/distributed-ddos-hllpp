@@ -1,10 +1,14 @@
-# Distributed DDoS Detection with HyperLogLog++
+# Distributed Low-Memory DDoS Detection
+
+> **Distributed Low-Memory DDoS Detection at the Edge Using Sketch-Based Traffic Analysis**
 
 ![Go](https://img.shields.io/badge/Go-00ADD8?logo=Go&logoColor=white&style=for-the-badge)
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![C++](https://img.shields.io/badge/C++-00599C?style=for-the-badge&logo=c%2B%2B&logoColor=white)
+![Azure](https://img.shields.io/badge/azure-%230072C6.svg?style=for-the-badge&logo=microsoftazure&logoColor=white)
 
 [![CI](https://github.com/cruelkratos/distributed-ddos-hllpp/actions/workflows/ci.yml/badge.svg)](https://github.com/cruelkratos/distributed-ddos-hllpp/actions/workflows/ci.yml)
-[![Go build](https://github.com/cruelkratos/distributed-ddos-hllpp/actions/workflows/go_build_test_pipeline.yml/badge.svg)](https://github.com/cruelkratos/distributed-ddos-hllpp/actions/workflows/go_build_test_pipeline.yml)
+
 
 ## Overview
 
@@ -25,13 +29,13 @@ the Google research paper *"HyperLogLog in Practice"* (Heule et al., 2013).
 ┌──────────────────────────────────────────────────────────────────┐
 │  Kubernetes Cluster                                              │
 │                                                                  │
-│  ┌──────────────┐   ┌──────────────┐   ┌──────────────┐        │
-│  │  Agent       │   │  Agent       │   │  Agent       │        │
-│  │  (DaemonSet) │   │  (DaemonSet) │   │  (DaemonSet) │        │
-│  │  pcap→HLL++  │   │  pcap→HLL++  │   │  pcap→HLL++  │        │
-│  └──────┬───────┘   └──────┬───────┘   └──────┬───────┘        │
-│         │  gRPC MergeSketch│                  │                 │
-│         └──────────────────▼──────────────────┘                 │
+│  ┌──────────────┐   ┌──────────────┐   ┌──────────────┐          │
+│  │  Agent       │   │  Agent       │   │  Agent       │          │
+│  │  (DaemonSet) │   │  (DaemonSet) │   │  (DaemonSet) │          │
+│  │  pcap→HLL++  │   │  pcap→HLL++  │   │  pcap→HLL++  │          │
+│  └──────┬───────┘   └──────┬───────┘   └──────┬───────┘          │
+│         │  gRPC MergeSketch│                  │                  │
+│         └──────────────────▼──────────────────┘                  │
 │                    ┌──────────────┐                              │
 │                    │  Aggregator  │                              │
 │                    │  (Deployment)│                              │
@@ -43,6 +47,13 @@ the Google research paper *"HyperLogLog in Practice"* (Heule et al., 2013).
 ```
 
 ---
+
+## Two-Layer Defense & Mitigation
+
+The system does not just detect anomalies; it executes an autonomous, two-tiered mitigation strategy designed to protect both the vulnerable edge and the core cloud infrastructure.
+
+* **Layer 1: Local Edge Mitigation (Microsecond Latency):** Raw packets first hit a **Global Token Bucket** rate limiter to prevent the IoT device's network interface from saturating. Packets that pass are hashed against a highly compressed **4 KB Count-Min Sketch (CMS)**. If a specific IP exceeds the dynamic frequency threshold, its traffic is dropped locally, protecting the device without requiring cloud intervention.
+* **Layer 2: Global Cloud Lockdown (Azure NSG Integration):** If local ML inference breaches the anomaly threshold for 3 consecutive 10-second windows (hysteresis logic), the edge agent triggers an `UNDER_ATTACK` state. If the Cloud Aggregator receives this state from $\ge 50\%$ of active edge nodes, it utilizes the Azure SDK to automatically inject a Priority 100 `Deny-All-Inbound` lockdown rule into the global Azure Network Security Group (NSG), neutralizing the distributed threat at the perimeter.
 
 ## Key Features
 
@@ -160,19 +171,22 @@ go test -v ./ddos/detector/
 
 ---
 
-## Detectors
+## The Machine Learning Ensemble & Detectors
 
-| Detector | Flag | When to use |
+Instead of relying purely on unique IP counts, the system extracts an 8-dimensional feature vector (SYN ratios, unique ports, total byte volume, average packet size) to classify specific attack heuristics (e.g., SYN Floods vs. UDP Floods).
+
+The edge agents run a lightweight, 4-part machine learning ensemble locally every 10 seconds:
+
+| Detector | Type | Target Use Case |
 |---|---|---|
-| Threshold | `threshold` | Known baseline; simple fixed limit |
-| Z-Score | `zscore` | Stationary traffic with occasional spikes |
-| EWMA | `ewma` | Slowly varying baseline; rewards gradual adaptation |
+| **LODA** | Lightweight On-line Detector of Anomalies | Multi-dimensional outlier detection for complex, zero-day volume anomalies. |
+| **HST** | Half-Space Trees | Fast, memory-bounded anomaly scoring for streaming data. |
+| **Z-Score** | Statistical | Captures sudden, massive volumetric spikes (Flash crowds vs. Floods). |
+| **EWMA** | Exponential Moving Avg | Tracks gradual baseline shifts to catch stealthy "low-and-slow" attacks. |
 
-**EWMA tuning flags:** `--ewma-alpha` (0<α≤1), `--ewma-deviation` (e.g. `2.0` = alert when count is 2× above baseline), `--ewma-warmup` (windows before alerts fire).
-
-**Z-Score tuning flags:** `--zs-history` (rolling window length), `--zs-threshold` (sigma).
-
----
+**Tuning Flags:**
+* **EWMA:** `--ewma-alpha` (0<α≤1), `--ewma-deviation` (e.g., `2.0` = alert when count is 2× above baseline), `--ewma-warmup`.
+* **Z-Score:** `--zs-history` (rolling window length), `--zs-threshold` (sigma).
 
 ## Docker
 
@@ -227,6 +241,15 @@ deployment on real hardware with a **tiered architecture**:
 └─────────────────────┘                     └─────────────────────┘               └──────────────┘
 ```
 
+
+### ESP32-C3 Bare-Metal Edge Deployment
+A core achievement of this architecture is the ability to run enterprise-grade anomaly detection on extremely constrained bare-metal hardware. 
+
+Alongside the Go-based Raspberry Pi agents, the system includes a complete C++ firmware implementation designed specifically for the **ESP32-C3 microcontroller** running FreeRTOS.
+* **Memory Constraint:** Operates entirely within the ESP32's available 400 KB SRAM.
+* **Protocol Adaptation:** Because standard gRPC requires HTTP/2 (which lacks a production-grade client on the Arduino-ESP32 core), the ESP32 agent serializes the 32 KB HLL++ sketch and transmits it via lightweight HTTP/JSON POST requests to the Cloud Aggregator.
+
+
 ### Memory Comparison
 
 | Device | RAM | Precision | Registers | Sketch Size | Std Error | Cost |
@@ -279,32 +302,11 @@ go build -o bin/agent ./cmd/agent
 sudo ./bin/agent -iface eth0 -aggregator <LAPTOP_IP>:50051
 ```
 
-### Arduino Setup
+## Acknowledgments
 
-1. Flash `arduino/micro_hll/micro_hll.ino` via Arduino IDE
-2. Connect Arduino to Pi (or laptop) via USB cable
-3. Run the serial bridge on the Pi:
-   ```bash
-   go run ./cmd/serial-bridge --serial /dev/ttyACM0 --agent localhost:50052
-   ```
+This system was designed and developed as a B.Tech. Project at the **Indian Institute of Technology Roorkee (IIT Roorkee)**, Department of Computer Science and Engineering. 
 
-### Precision Benchmark
-
-```bash
-go run ./cmd/benchmark-precision/
-# Outputs: precision_benchmark.csv with p=4,6,8,10,12,14 × various cardinalities
-```
-
-### New Files
-
-| Path | Description |
-|------|-------------|
-| `arduino/micro_hll/micro_hll.ino` | Arduino dual-mode HLL sketch (p=4 + sensor) |
-| `cmd/serial-bridge/main.go` | Go bridge: Arduino serial → agent gRPC |
-| `cmd/benchmark-precision/main.go` | Multi-precision memory/accuracy benchmark |
-| `tools/arduino_bridge/bridge.py` | Python bridge + comparison tool |
-| `demo/run_iot_demo.sh` | IoT demo orchestration script |
+* **Researchers/Engineers:** [Garv Sethi](https://github.com/cruelkratos) & [Granth Gaud](https://github.com/gaud4) 
+* **Project Supervisor:** Dr. Sateesh K. Peddoju, Professor, IIT Roorkee.
 
 ---
-
-[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
