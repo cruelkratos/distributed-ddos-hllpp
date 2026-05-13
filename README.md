@@ -7,7 +7,7 @@
 ![C++](https://img.shields.io/badge/C++-00599C?style=for-the-badge&logo=c%2B%2B&logoColor=white)
 ![Azure](https://img.shields.io/badge/azure-%230072C6.svg?style=for-the-badge&logo=microsoftazure&logoColor=white)
 
-[![CI](https://github.com/cruelkratos/distributed-ddos-hllpp/actions/workflows/ci.yml/badge.svg)](https://github.com/cruelkratos/distributed-ddos-hllpp/actions/workflows/ci.yml)
+[![CI](https://github.com/cruelkratos/edge-sentinel-ddos/actions/workflows/ci.yml/badge.svg)](https://github.com/cruelkratos/edge-sentinel-ddos/actions/workflows/ci.yml)
 
 
 ## Overview
